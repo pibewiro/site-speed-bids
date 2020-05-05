@@ -1,24 +1,54 @@
 <template>
   <div class="site-nav">
-    <div>
+    <div class="div-left">
       <img
         src="../../assets/logo.png"
         alt=""
       >
-      <h1>Speed Bids</h1>
+      <h1
+        @click="homePage"
+        class="navheader"
+      >Speed Bids</h1>
     </div>
 
-    <div class="nav-items">
-      <router-link to="dash2">Home</router-link>
-      <router-link to="dash2">Home</router-link>
-      <router-link to="dash2">Home</router-link>
+    <input
+      type="checkbox"
+      class="hamMenu"
+    >
+
+    <div
+      id="nav"
+      class="nav-items-ham nav-items"
+    >
+      <router-link
+        id="navLink"
+        class="nav-items-ham-a"
+        to="login"
+      >Login</router-link>
+      <router-link
+        class="nav-items-ham-a"
+        id="navLink"
+        to="register"
+      >Register</router-link>
+      <router-link
+        class="nav-items-ham-a"
+        id="navLink"
+        to="items"
+      >View Items</router-link>
     </div>
+
   </div>
 </template>
 
 <script>
 export default {
   name: 'Navbar',
+
+  methods: {
+    homePage() {
+      this.$router.push('/');
+    },
+  },
 };
 </script>
 
@@ -30,9 +60,10 @@ export default {
   justify-content: space-between;
   align-items: center;
   padding-left: 40px;
+  overflow: hidden;
 }
 
-.site-nav div {
+.site-nav .div-left {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -42,6 +73,10 @@ export default {
   width: 50px;
   height: 50px;
   margin-right: 20px;
+}
+
+.navheader:hover {
+  cursor: pointer;
 }
 
 .nav-items a {
@@ -55,5 +90,66 @@ export default {
   background: var(--hoverColor);
   color: #fff;
   text-decoration: none;
+}
+
+.hamMenu {
+  position: relative;
+  display: none;
+}
+
+.nav-items-ham {
+  display: none;
+}
+
+.nav-items {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+@media (max-width: 1000px) {
+  .nav-items {
+    display: none;
+  }
+
+  .hamMenu {
+    display: block;
+  }
+
+  .nav-items a {
+    display: block;
+    text-align: center;
+    padding: 10px;
+    border-bottom: 1px solid #e0e0e0;
+    text-decoration: none;
+    color: var(--siteText);
+  }
+
+  .nav-items a:first-child {
+    border-top: 1px solid #e0e0e0;
+  }
+
+  .hamMenu:before .hamMenu:checked ~ .nav-items-ham {
+    display: block;
+    position: absolute;
+    top: 50px;
+    left: 0;
+    z-index: 9999;
+    background: var(--primaryColor);
+    width: 100%;
+  }
+}
+
+@media (min-width: 1000px) {
+  .nav-items-ham {
+    display: none;
+  }
+
+  .nav-items {
+    display: block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 }
 </style>

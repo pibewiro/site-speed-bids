@@ -1,17 +1,19 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import home from '../src/components/template/Home.vue';
-import Register from '../src/components/home/Register.vue';
-import Login from '../src/components/home/Login.vue';
+import Home from '../src/components/pages/Home/index.vue';
+import Register from '../src/components/pages/Register.vue';
+import Login from '../src/components/pages/Login.vue';
 import Dashboard from '../src/components/template/Dashboard';
 import Dashboard2 from '../src/components/template/Dashboard2';
+import Items from '../src/components/organisms/Items/index.vue'
 
 Vue.use(VueRouter);
 
 const routes = [
-  { path: '/', component: home },
+  { path: '/', component: Home },
   { path: '/login', component: Login },
   { path: '/register', component: Register },
+  { path: '/items', component: Items },
   {
     path: '/dash',
     component: Dashboard, children: [
