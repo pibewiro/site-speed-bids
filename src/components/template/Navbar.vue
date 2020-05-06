@@ -21,11 +21,13 @@
       class="nav-items-ham nav-items"
     >
       <router-link
+        v-if="!this.token"
         id="navLink"
         class="nav-items-ham-a"
         to="login"
       >Login</router-link>
       <router-link
+        v-if="!this.token"
         class="nav-items-ham-a"
         id="navLink"
         to="register"
@@ -35,6 +37,13 @@
         id="navLink"
         to="items"
       >View Items</router-link>
+
+      <a
+        v-if="this.token"
+        @click="logoutClick"
+        class="nav-items-ham-a logout"
+        id="navLink"
+      >Logout</a>
     </div>
 
   </div>
@@ -44,10 +53,25 @@
 export default {
   name: 'Navbar',
 
+  data() {
+    return {
+      token: null,
+    };
+  },
+
   methods: {
     homePage() {
       this.$router.push('/');
     },
+
+    logoutClick() {
+      localStorage.removeItem('_speedBids');
+      this.$router.push('/');
+    },
+  },
+
+  created() {
+    this.token = localStorage.getItem('_speedBids');
   },
 };
 </script>
@@ -105,6 +129,10 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.logout {
+  cursor: pointer;
 }
 
 @media (max-width: 1000px) {

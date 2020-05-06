@@ -10,6 +10,7 @@
             alt=""
           >
         </div>
+        <p class="error">{{this.error.invalid}}</p>
         <div class="form-group">
           <label for="">Email</label>
           <input
@@ -47,7 +48,7 @@
 
 <script>
 import Navbar from '../template/Navbar';
-import { mapActions } from 'vuex';
+import { mapActions, mapState } from 'vuex';
 export default {
   components: {
     Navbar,
@@ -57,15 +58,35 @@ export default {
     return {
       email: null,
       password: null,
+      error: {},
     };
   },
 
+  computed: {
+    ...mapState('Auth', ['token']),
+  },
+
   methods: {
-    ...mapActions('Login', ['login']),
+    ...mapActions('Auth', ['login']),
 
     async loginClick() {
-      this.login({ email: this.email, password: this.password });
+      try {
+        await this.login({
+          email: this.email,
+          password: this.password,
+        });
+        localStorage.setItem('_speedBids', this.token);
+        this.$router.push('/dashboard');
+      } catch (err) {
+        this.error = err.response.data;
+      }
     },
+  },
+
+  created() {
+    if (localStorage.getItem('_speedBids')) {
+      this.$router.push('/dashboard');
+    }
   },
 };
 </script>
@@ -80,6 +101,12 @@ export default {
 .forgotPassword {
   color: var(--primaryColor);
   cursor: pointer;
+}
+
+.error {
+  color: red;
+  text-align: center;
+  margin: 0;
 }
 
 @media (max-width: 1000px) {

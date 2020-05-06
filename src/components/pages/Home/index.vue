@@ -89,6 +89,12 @@ export default {
       this.$router.push('/register');
     },
   },
+
+  created() {
+    if (localStorage.getItem('_speedBids')) {
+      this.$router.push('/dashboard');
+    }
+  },
 };
 </script>
 

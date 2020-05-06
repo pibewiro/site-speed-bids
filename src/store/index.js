@@ -1,10 +1,11 @@
 import Vuex from 'vuex'
 import Vue from 'vue'
-import Login from './Login'
+import Auth from './Auth'
+import User from './User'
 
 Vue.use(Vuex);
 
-const modules = { Login };
+const modules = { Auth, User };
 
 export default new Vuex.Store({
   modules

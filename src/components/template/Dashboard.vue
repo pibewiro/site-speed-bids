@@ -1,6 +1,6 @@
 <template>
   <div class="dashboard">
-    <p>Main Dash</p>
+    <Navbar />
     <div>
       <router-view></router-view>
     </div>
@@ -8,7 +8,18 @@
 </template>
 
 <script>
-export default {};
+import Navbar from '../template/Navbar';
+export default {
+  components: {
+    Navbar,
+  },
+
+  created() {
+    if (!localStorage.getItem('_speedBids')) {
+      this.$router.push('/');
+    }
+  },
+};
 </script>
 
 <style>

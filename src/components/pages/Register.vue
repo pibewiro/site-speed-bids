@@ -11,59 +11,106 @@
           >
         </div>
 
-        <div class="form-row">
+        <div class="form-row1">
           <div class="form-group regInline">
             <label for="">First Name</label>
             <input
               type="text"
               class="form-control"
+              v-model="form.firstname"
             >
+            <p class="text-danger m-0">{{this.error.firstname}}</p>
           </div>
           <div class="form-group regInline">
-            <label for="">First Name</label>
+            <label for="">Last Name</label>
             <input
               type="text"
               class="form-control"
+              v-model="form.lastname"
             >
+            <p class="text-danger m-0">{{this.error.lastname}}</p>
+          </div>
+
+          <div class="form-group regInline">
+            <label for="">CPF</label>
+            <input
+              type="text"
+              class="form-control"
+              v-model="form.cpf"
+            >
+            <p class="text-danger m-0">{{this.error.cpf}}</p>
           </div>
         </div>
 
-        <div class="form-row">
+        <div class="form-row1">
           <div class="form-group regInline">
-            <label for="">First Name</label>
+            <label for="">Email</label>
             <input
               type="text"
               class="form-control"
+              v-model="form.email"
             >
+            <p class="text-danger m-0">{{this.error.email}}</p>
           </div>
+
           <div class="form-group regInline">
-            <label for="">First Name</label>
+            <label for="">Username</label>
             <input
               type="text"
               class="form-control"
+              v-model="form.username"
             >
+            <p class="text-danger m-0">{{this.error.username}}</p>
+          </div>
+
+          <div class="form-group regInline">
+            <label for="">Password</label>
+            <input
+              type="password"
+              class="form-control"
+              v-model="form.password"
+            >
+            <p class="text-danger m-0">{{this.error.password}}</p>
           </div>
         </div>
 
-        <div class="form-row">
+        <div class="form-row1">
           <div class="form-group regInline">
-            <label for="">First Name</label>
+            <label for="">City</label>
             <input
               type="text"
               class="form-control"
+              v-model="form.address.city"
             >
+            <p class="text-danger m-0">{{this.error.city}}</p>
           </div>
+
           <div class="form-group regInline">
-            <label for="">First Name</label>
+            <label for="">State</label>
             <input
               type="text"
               class="form-control"
+              v-model="form.address.state"
             >
+            <p class="text-danger m-0">{{this.error.state}}</p>
+          </div>
+
+          <div class="form-group regInline">
+            <label for="">Country</label>
+            <input
+              type="text"
+              class="form-control"
+              v-model="form.address.country"
+            >
+            <p class="text-danger m-0">{{this.error.country}}</p>
           </div>
         </div>
 
         <div class="text-center mt-3">
-          <button class="site-btn btn btn-lg">Enter</button>
+          <button
+            @click="registerClick"
+            class="site-btn btn btn-lg"
+          >Enter</button>
         </div>
       </div>
     </div>
@@ -72,19 +119,65 @@
 
 <script>
 import Navbar from '../template/Navbar';
+import { mapActions } from 'vuex';
+import swal from 'sweetalert2';
+
 export default {
   components: {
     Navbar,
+  },
+
+  data() {
+    return {
+      form: {
+        firstname: null,
+        lastname: null,
+        cpf: null,
+        email: null,
+        username: null,
+        password: null,
+        address: {
+          city: null,
+          state: null,
+          country: null,
+        },
+      },
+
+      error: {},
+    };
+  },
+
+  methods: {
+    ...mapActions('User', ['register']),
+
+    async registerClick() {
+      try {
+        await this.register(this.form);
+
+        await swal.fire('Successivley Registered', 'Welcome!', 'success');
+
+        this.$router.push('/login');
+      } catch (err) {
+        this.error = err.response.data;
+      }
+    },
+  },
+
+  created() {
+    if (localStorage.getItem('_speedBids')) {
+      this.$router.push('/dashboard');
+    }
   },
 };
 </script>
 
 <style>
-.form-row {
+.form-row1 {
   display: flex;
   justify-content: center;
-  align-items: center;
+  /* align-items: center; */
   width: 100%;
+  margin-bottom: 15px;
 }
 
 .formReg {
@@ -96,6 +189,7 @@ export default {
 .regInline {
   width: 30%;
   margin-right: 10px;
+  margin-bottom: 0;
 }
 
 .logo-div {
@@ -108,13 +202,21 @@ export default {
 }
 
 @media (max-width: 1000px) {
-  .form-row {
+  .form-row1 {
     display: block;
+  }
+
+  .hide {
+    display: none;
   }
 
   .regInline {
     margin-right: 0;
     width: 100%;
+  }
+
+  .formReg {
+    margin-bottom: 30px;
   }
 }
 </style>

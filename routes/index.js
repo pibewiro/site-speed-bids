@@ -4,8 +4,8 @@ import Home from '../src/components/pages/Home/index.vue';
 import Register from '../src/components/pages/Register.vue';
 import Login from '../src/components/pages/Login.vue';
 import Dashboard from '../src/components/template/Dashboard';
-import Dashboard2 from '../src/components/template/Dashboard2';
 import Items from '../src/components/organisms/Items/index.vue'
+import DashHome from '../src/components/organisms/Dashboard/index.vue'
 
 Vue.use(VueRouter);
 
@@ -15,9 +15,9 @@ const routes = [
   { path: '/register', component: Register },
   { path: '/items', component: Items },
   {
-    path: '/dash',
+    path: '/dashboard',
     component: Dashboard, children: [
-      { path: '/', component: Dashboard2 },
+      { path: '/', component: DashHome },
       { path: '/login', component: Login }
 
     ]
