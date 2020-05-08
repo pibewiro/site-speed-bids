@@ -1,7 +1,9 @@
 <template>
-  <div class="register">
+  <div class="login">
     <Navbar />
-    <h1 class="text-center my-3">Login</h1>
+    <div class="titleDiv">
+      <h1 class="text-center">Login</h1>
+    </div>
     <div class="loginDiv">
       <div class="loginForm border p-4">
         <div class="logo-div text-center">
@@ -18,6 +20,7 @@
             class="form-control"
             v-model="email"
           >
+          <p class="text-danger">{{this.error.email}}</p>
         </div>
 
         <div class="form-group">
@@ -27,6 +30,7 @@
             class="form-control"
             v-model="password"
           >
+          <p class="text-danger">{{this.error.password}}</p>
         </div>
 
         <div class="form-group">
@@ -63,7 +67,7 @@ export default {
   },
 
   computed: {
-    ...mapState('Auth', ['token']),
+    ...mapState('Auth', ['token', 'auth']),
   },
 
   methods: {
@@ -75,7 +79,7 @@ export default {
           email: this.email,
           password: this.password,
         });
-        localStorage.setItem('_speedBids', this.token);
+        localStorage.setItem('_speedbids', JSON.stringify(this.auth.user));
         this.$router.push('/dashboard');
       } catch (err) {
         this.error = err.response.data;
@@ -92,6 +96,11 @@ export default {
 </script>
 
 <style>
+.titleDiv {
+  margin-top: 100px;
+  margin-bottom: 20px;
+}
+
 .loginDiv {
   width: 25%;
   margin: 0 auto;

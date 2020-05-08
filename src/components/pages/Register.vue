@@ -1,7 +1,10 @@
 <template>
   <div class="register">
     <Navbar />
-    <h1 class="my-3 text-center">Register</h1>
+
+    <div class="titleDiv">
+      <h1 class="text-center">Register</h1>
+    </div>
     <div class="form-div">
       <div class="formReg p-4 border">
         <div class="logo-div text-center">
@@ -172,6 +175,11 @@ export default {
 </script>
 
 <style>
+.regsiter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .form-row1 {
   display: flex;
   justify-content: center;
@@ -217,6 +225,7 @@ export default {
 
   .formReg {
     margin-bottom: 30px;
+    width: 90%;
   }
 }
 </style>

@@ -91,7 +91,7 @@ export default {
   },
 
   created() {
-    if (localStorage.getItem('_speedBids')) {
+    if (localStorage.getItem('_speedbids')) {
       this.$router.push('/dashboard');
     }
   },

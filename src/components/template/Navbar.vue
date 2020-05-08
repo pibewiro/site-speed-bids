@@ -85,6 +85,11 @@ export default {
   align-items: center;
   padding-left: 40px;
   overflow: hidden;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 10;
 }
 
 .site-nav .div-left {
