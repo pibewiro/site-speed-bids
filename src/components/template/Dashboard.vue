@@ -64,7 +64,7 @@
         <router-link
           id="menuItem"
           :class="`${this.menuClass} m-0`"
-          to="products"
+          to="dashboard"
         >
           <div class="m-0 text-center">
             <span>
@@ -176,7 +176,7 @@ export default {
 
   methods: {
     homePage() {
-      this.$router.push('/products');
+      this.$router.push('/');
     },
 
     mydiv() {
@@ -202,7 +202,6 @@ export default {
         menu.style.width = '12%';
         overlayDiv.classList.add('overlayDiv');
         this.menuClass = 'menuItem2';
-        console.log(this.menuClass);
         mainSec.style.position = 'fixed';
         this.size = true;
       } else {
@@ -254,6 +253,7 @@ export default {
 .menuItem2:hover {
   text-decoration: none;
   color: var(--siteText);
+  background: var(--hoverColor);
 }
 
 .menuItem2 {
@@ -284,6 +284,7 @@ export default {
   z-index: -0;
   padding-top: 30px;
   padding-bottom: 30px;
+  transition: ease-in 0.5s;
 }
 
 .site-nav {
@@ -356,6 +357,7 @@ export default {
   height: calc(100vh - 74px);
   background: rgba(0, 0, 0, 0.4);
   overflow: hidden;
+  transition: ease-in 0.5s;
 }
 
 @media (max-width: 1000px) {

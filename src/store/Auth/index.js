@@ -16,7 +16,7 @@ const actions = {
     const response = await axios.post(`${process.env.VUE_APP_API_ROOT}/auth`, { ...obj });
     console.log(response.data)
     commit('authData', response.data);
-  }
+  },
 };
 const getters = {
 };

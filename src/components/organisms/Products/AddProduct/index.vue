@@ -47,11 +47,13 @@
         <p class="text-danger">{{this.error.description}}</p>
       </div>
 
+      <p class="text-center text-danger mb-0">{{this.error.images}}</p>
       <div class="form-group">
         <label for="">Default Image</label>
         <input
           class="d-block"
           type="file"
+          @change="selectImage"
         >
       </div>
 
@@ -69,7 +71,10 @@
             class="d-block"
             for=""
           >Add Images</label>
-          <input type="file">
+          <input
+            type="file"
+            @change="selectImages"
+          >
           <span
             class="addSpan"
             @click="addImage"
@@ -108,14 +113,25 @@ export default {
         category: null,
         description: null,
         user: null,
+        image: { defaultImage: null, productImages: [] },
       },
       error: {},
       userAuth: null,
+      defaultImage: null,
+      productImages: [],
     };
   },
 
   methods: {
     ...mapActions('Product', ['storeProduct']),
+
+    selectImages(e) {
+      this.form.image.productImages.push(e.target.files[0]);
+    },
+
+    selectImage(e) {
+      this.form.image.defaultImage = e.target.files[0];
+    },
 
     makeid: function(length) {
       var result = '';

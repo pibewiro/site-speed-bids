@@ -151,15 +151,25 @@ export default {
   },
 
   methods: {
-    ...mapActions('User', ['register']),
+    ...mapActions('User', ['register', 'registerEmail']),
 
     async registerClick() {
       try {
         await this.register(this.form);
 
-        await swal.fire('Successivley Registered', 'Welcome!', 'success');
+        await swal.fire(
+          'Successivley Registered',
+          'Welcome!\nA confirmation email will be sent to you',
+          'success',
+        );
 
         this.$router.push('/login');
+
+        await this.registerEmail({
+          email: this.form.email,
+          firstname: this.form.firstname,
+          lastname: this.form.lastname,
+        });
       } catch (err) {
         this.error = err.response.data;
       }

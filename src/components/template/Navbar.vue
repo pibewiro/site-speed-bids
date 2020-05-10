@@ -35,7 +35,7 @@
       <router-link
         class="nav-items-ham-a"
         id="navLink"
-        to="items"
+        to="products"
       >View Items</router-link>
 
       <a
