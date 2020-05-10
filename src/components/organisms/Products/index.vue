@@ -38,7 +38,7 @@
               <div class="imgOverlay"></div>
             </div>
             <div class="itemInfo">
-              <p><span class="font-weight-bold">Product Name:</span> {{product.productName}}</p>
+              <p><span class="font-weight-bold">Product1111 :</span> {{product.productName}}</p>
               <p><span class="font-weight-bold">Price:</span> {{product.price}}</p>
               <p><span class="font-weight-bold">Category:</span> {{product.category}}</p>
               <p><span class="font-weight-bold">Username:</span> {{product.user.username}}</p>
