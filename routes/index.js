@@ -7,6 +7,10 @@ import Dashboard from '../src/components/template/Dashboard';
 import Products from '../src/components/organisms/Products/index.vue'
 // import DashHome from '../src/components/organisms/Dashboard/index.vue'
 import AddProduct from '../src/components/organisms/Products/AddProduct/index.vue'
+import Product from '../src/components/organisms/Products/Product/index.vue'
+import MyProduct from '../src/components/organisms/Products/MyProduct/index.vue'
+import EditProduct from '../src/components/organisms/Products/EditProduct/index.vue'
+import UserConfig from '../src/components/organisms/User/index.vue'
 
 Vue.use(VueRouter);
 
@@ -20,7 +24,11 @@ const routes = [
     component: Dashboard, children: [
       { path: '/', component: Products },
       { path: '/products', component: Products },
-      { path: '/add-product', component: AddProduct }
+      { path: '/add-product', component: AddProduct },
+      { path: '/product/:id', component: Product },
+      { path: '/my-product', component: MyProduct },
+      { path: '/my-product/:id', component: EditProduct },
+      { path: '/user-config/:id', component: UserConfig }
     ]
   }
 ]

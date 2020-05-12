@@ -38,12 +38,15 @@
               <div class="imgOverlay"></div>
             </div>
             <div class="itemInfo">
-              <p><span class="font-weight-bold">Product1111 :</span> {{product.productName}}</p>
+              <p><span class="font-weight-bold">Product :</span> {{product.productName}}</p>
               <p><span class="font-weight-bold">Price:</span> {{product.price}}</p>
               <p><span class="font-weight-bold">Category:</span> {{product.category}}</p>
               <p><span class="font-weight-bold">Username:</span> {{product.user.username}}</p>
               <div class="text-center">
-                <button class="site-btn btn">Enter</button>
+                <button
+                  @click="viewProduct(product._id)"
+                  class="site-btn btn btn-lg"
+                >Enter</button>
               </div>
             </div>
           </div>
@@ -68,6 +71,11 @@ export default {
 
   methods: {
     ...mapActions('Product', ['getProducts']),
+
+    viewProduct(id) {
+      this.$router.push(`/product/${id}`);
+    },
+
     changeDivs() {
       let up = document.getElementById('arrowUp');
       let down = document.getElementById('arrowDown');
@@ -101,7 +109,7 @@ export default {
   position: absolute;
   top: 0;
   left: 0;
-  z-index: 9999;
+  z-index: 9988;
 }
 
 .filter2 {

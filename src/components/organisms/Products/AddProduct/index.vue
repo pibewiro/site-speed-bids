@@ -92,7 +92,7 @@
       <div class="form-group text-center mt-5 mb-0">
         <button
           @click="saveProduct"
-          class="site-btn btn"
+          class="site-btn btn btn-lg"
         >Enter</button>
       </div>
     </div>

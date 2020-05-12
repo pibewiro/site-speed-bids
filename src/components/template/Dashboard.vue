@@ -36,23 +36,29 @@
           to="login"
         >Login</router-link>
         <router-link
-          v-if="!this.token"
+          v-if="this.token"
           class="nav-items-ham-a"
           id="navLink"
           to="register"
+          style="visibility:hidden;"
         >Register</router-link>
-        <router-link
-          class="nav-items-ham-a"
-          id="navLink"
-          to="products"
-        >View Items</router-link>
-
-        <a
-          v-if="this.token"
-          @click="logoutClick"
-          class="nav-items-ham-a logout"
-          id="navLink"
-        >Logout</a>
+        <div class="navPic">
+          <img
+            :src="`${imageUrl}/default.jpg`"
+            alt=""
+          >
+          <div class="navOptions">
+            <p
+              v-if="this.token"
+              @click="logoutClick"
+              class="border-bottom m-0 p-3"
+            >Logout</p>
+            <router-link
+              class="userConfig border-bottom m-0 p-3"
+              :to="`user-config/${this.userAuth.userId}`"
+            >User</router-link>
+          </div>
+        </div>
       </div>
 
     </div>
@@ -77,7 +83,7 @@
         <router-link
           id="menuItem"
           :class="`${this.menuClass} m-0`"
-          to="products"
+          to="/products"
         >
           <div class="m-0 text-center">
             <span>
@@ -90,7 +96,7 @@
         <router-link
           id="menuItem"
           :class="`${this.menuClass} m-0`"
-          to="products"
+          to="/products"
         >
           <div class="m-0 text-center">
             <span>
@@ -103,7 +109,7 @@
         <router-link
           id="menuItem"
           :class="`${this.menuClass} m-0`"
-          to="products"
+          to="/products"
         >
           <div class="m-0 text-center">
             <span>
@@ -116,7 +122,7 @@
         <router-link
           id="menuItem"
           :class="`${this.menuClass} m-0`"
-          to="add-product"
+          to="/add-product"
         >
           <div class="m-0 text-center">
             <span>
@@ -129,7 +135,7 @@
         <router-link
           id="menuItem"
           :class="`${this.menuClass} m-0`"
-          to="add-product"
+          to="/my-product"
         >
           <div class="m-0 text-center">
             <span>
@@ -161,6 +167,8 @@ export default {
       size: false,
       menuClass: null,
       token: null,
+      imageUrl: null,
+      userAuth: null,
     };
   },
 
@@ -172,6 +180,9 @@ export default {
 
     this.token = localStorage.getItem('_speedbids');
     this.menuClass = 'menuItem';
+
+    this.userAuth = JSON.parse(localStorage.getItem('_speedbids'));
+    this.imageUrl = process.env.VUE_APP_API_IMAGES;
   },
 
   methods: {
@@ -282,22 +293,19 @@ export default {
   right: 0;
   top: 74px;
   z-index: -0;
-  padding-top: 30px;
-  padding-bottom: 30px;
-  transition: ease-in 0.5s;
+  padding: 30px 20px 30px 20px;
+  transition: ease-in 0.2s;
 }
 
 .site-nav {
   background: var(--primaryColor);
   color: var(--siteText);
-  display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-left: 30px;
   overflow: hidden;
   position: fixed;
   width: 100%;
-  z-index: 10;
+  z-index: 9999;
 }
 
 .site-nav .div-left {
@@ -360,6 +368,45 @@ export default {
   transition: ease-in 0.5s;
 }
 
+.navPic {
+  width: 50px;
+  height: 50px;
+  border-radius: 100%;
+  margin-right: 20px;
+}
+
+.navPic img {
+  width: 100%;
+  height: 100%;
+  border-radius: 100%;
+}
+
+.navPic:hover {
+  cursor: pointer;
+}
+
+.navOptions {
+  display: none;
+  position: fixed;
+  top: 55px;
+  right: 30px;
+  width: 200px;
+  background: var(--primaryColor);
+  color: var(--site);
+}
+
+.navPic:hover > .navOptions {
+  display: block;
+}
+
+.navOptions:hover {
+  display: block;
+}
+
+.navOptions p:hover {
+  background: var(--hoverColor);
+}
+
 @media (max-width: 1000px) {
   .nav-items {
     display: none;
@@ -420,6 +467,10 @@ export default {
 
 .line:last-child {
   margin-bottom: 0;
+}
+
+.userConfig {
+  display: block;
 }
 
 @media (min-width: 1000px) {

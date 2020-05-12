@@ -28,8 +28,8 @@ export default {
 .site-btn {
   background: var(--primaryColor);
   color: var(--siteText);
-  padding-left: 70px;
-  padding-right: 70px;
+  /* padding-left: 70px;
+  padding-right: 70px; */
   border: none;
 }
 

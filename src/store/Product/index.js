@@ -1,10 +1,21 @@
 const axios = require('axios');
 const state = {
   products: null,
+  product: null,
+  productIm: null
 };
 const mutations = {
   GET_PRODUCTS: function (state, payload) {
     state.products = payload.data;
+  },
+
+  GET_PRODUCT: function (state, payload) {
+    state.product = payload.data
+    state.productIm = payload.data.image.productImages.shift();
+  },
+
+  GET_MY_PRODUCTS: function (state, payload) {
+    state.products = payload.data
   }
 };
 const actions = {
@@ -29,6 +40,23 @@ const actions = {
   async getProducts({ commit }) {
     const response = await axios.get(`${process.env.VUE_APP_API_ROOT}/product`);
     commit('GET_PRODUCTS', response.data);
+  },
+
+  async getProduct({ commit }, obj) {
+    const response = await axios.get(`${process.env.VUE_APP_API_ROOT}/product/${obj.id}`);
+    commit('GET_PRODUCT', response.data)
+  },
+
+  async getMyProducts({ commit }, obj) {
+    const response = await axios.get(`${process.env.VUE_APP_API_ROOT}/product/my-products/${obj.id}`, {
+      headers: { 'x-access-token': obj.token }
+    });
+    commit('GET_MY_PRODUCTS', response.data)
+  },
+
+  async getSimilarProducts({ commit }, obj) {
+    const response = await axios.get(`${process.env.VUE_APP_API_ROOT}/product/${obj.category}/${obj.id}`)
+    commit('GET_PRODUCTS', response.data)
   }
 };
 const getters = {};
