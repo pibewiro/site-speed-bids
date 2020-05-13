@@ -13,13 +13,29 @@ const mutations = {
 };
 
 const actions = {
-  async updateUser() {
-    console.log(state)
+  async updateUser({ commit }, obj) {
+
+    const fd = new FormData();
+    fd.set('firstname', state.user.firstname)
+    fd.set('lastname', state.user.lastname)
+    fd.set('cpf', state.user.cpf)
+    fd.set('email', state.user.email)
+    fd.set('username', state.user.username)
+    fd.set('city', state.user.address.city)
+    fd.set('state', state.user.address.state)
+    fd.set('country', state.user.address.country)
+    fd.set('image', state.user.image)
+    fd.append('userImage', obj.selectedFile)
+
+    const response = await axios.put(`${process.env.VUE_APP_API_ROOT}/user/${obj.id}`, fd, {
+      headers: { 'x-access-token': obj.token }
+    })
+
+    commit('GET_USER', response.data);
   },
 
   async getUser({ commit }, obj) {
     const response = await axios.get(`${process.env.VUE_APP_API_ROOT}/user/${obj.id}`)
-    console.log(response.data.data)
     commit('GET_USER', response.data);
   },
   async register(commit, obj) {

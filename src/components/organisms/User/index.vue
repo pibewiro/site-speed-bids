@@ -3,11 +3,10 @@
     <div class="form-div">
       <div class="formReg p-4 border">
         <h1 class="text-center mb-4">My Profile</h1>
-
         <div class="userImgDiv text-center">
           <div class="userImg">
             <img
-              :src="`${imageUrl}/default.jpg`"
+              :src="`${imageUrl}/${user.image}`"
               alt=""
             >
           </div>
@@ -16,11 +15,15 @@
             class="mt-3"
             v-if="this.fileDiv"
           >
-            <input type="file" />
+            <input
+              type="file"
+              @change="handleFile"
+            />
             <button
               @click="showFileClick()"
               class="site-btn btn btn-lg"
             >Cancel</button>
+            <p class="text-danger">{{this.error.image}}</p>
           </div>
 
           <button
@@ -118,7 +121,7 @@
 
         <div class="text-center mt-3">
           <button
-            @click="updateUserClick"
+            @click="handleEditUser"
             class="site-btn btn btn-lg"
           >Enter</button>
         </div>
@@ -130,6 +133,7 @@
 <script>
 import { mapActions } from 'vuex';
 import { mapFields } from 'vuex-map-fields';
+import swal from 'sweetalert2';
 
 export default {
   computed: {
@@ -139,24 +143,46 @@ export default {
   data: () => ({
     imageUrl: null,
     fileDiv: false,
+    selectedFile: null,
+    userAuth: null,
+    error: {},
   }),
 
   methods: {
     ...mapActions('User', ['getUser', 'updateUser']),
 
-    showFileClick() {
-      this.fileDiv = !this.fileDiv;
+    handleFile(e) {
+      this.selectedFile = e.target.files[0];
     },
 
-    async updateUserClick() {
-      this.updateUser();
+    async handleEditUser() {
+      try {
+        await this.updateUser({
+          id: this.userAuth.userId,
+          token: this.userAuth.token,
+          selectedFile: this.selectedFile,
+        });
+
+        await swal.fire(
+          'Successivley updated user information',
+          'User Updated!',
+          'success',
+        );
+
+        await this.getUser({ id: this.$route.params.id });
+      } catch (err) {
+        this.error = err.response.data;
+      }
+    },
+
+    showFileClick() {
+      this.fileDiv = !this.fileDiv;
     },
   },
 
   async created() {
-    console.log(this.$route.params.id);
+    this.userAuth = JSON.parse(localStorage.getItem('_speedbids'));
     await this.getUser({ id: this.$route.params.id });
-
     this.imageUrl = process.env.VUE_APP_API_IMAGES;
   },
 };
@@ -167,7 +193,6 @@ export default {
   width: 20%;
   margin: 0 auto;
   height: 200px;
-  background: blueviolet;
 }
 
 .userImg img {

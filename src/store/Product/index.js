@@ -1,3 +1,5 @@
+import { getField, updateField } from 'vuex-map-fields';
+
 const axios = require('axios');
 const state = {
   products: null,
@@ -5,6 +7,8 @@ const state = {
   productIm: null
 };
 const mutations = {
+  updateField,
+
   GET_PRODUCTS: function (state, payload) {
     state.products = payload.data;
   },
@@ -19,6 +23,18 @@ const mutations = {
   }
 };
 const actions = {
+
+  async deleteImage(commit, obj) {
+    await axios.delete(`${process.env.VUE_APP_API_ROOT}/product/deleteImage/${obj.imageName}/${obj.id}`,
+      { headers: { 'x-access-token': obj.token } });
+  },
+
+  async updateProduct({ commit }, obj) {
+    const response = await axios.put(`${process.env.VUE_APP_API_ROOT}/product/${obj.id}`,
+      { ...state.product }, { headers: { 'x-access-token': obj.token } })
+    commit('GET_PRODUCT', response.data);
+  },
+
   async storeProduct(commit, obj) {
     console.log(obj)
     const fd = new FormData();
@@ -59,7 +75,9 @@ const actions = {
     commit('GET_PRODUCTS', response.data)
   }
 };
-const getters = {};
+const getters = {
+  getField
+};
 
 export default {
   namespaced: true,

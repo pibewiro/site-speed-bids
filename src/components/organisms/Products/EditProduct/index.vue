@@ -2,6 +2,7 @@
   <div class="editProduct">
     <div class="prdEditForm border">
       <h1 class="text-center">Edit Product</h1>
+      <p>{{product}}</p>
       <div class="form-group">
         <label for="">Product Name</label>
         <input
@@ -43,7 +44,10 @@
       </div>
 
       <div class="form-group text-center m-0">
-        <button class="site-btn btn btn-lg">Enter</button>
+        <button
+          @click="handleEditProduct"
+          class="site-btn btn btn-lg"
+        >Enter</button>
       </div>
     </div>
 
@@ -61,7 +65,7 @@
         <div class="imageOptions">
           <span
             class="deleteSpan"
-            @click="deleteImage(i)"
+            @click="handleDeleteImg(product.image.defaultImage)"
           >
             <i class="far fa-trash-alt"></i>
           </span>
@@ -82,7 +86,7 @@
         <div class="imageOptions">
           <span
             class="deleteSpan"
-            @click="deleteImage(i)"
+            @click="handleDeleteImg(productImage)"
           >
             <i class="far fa-trash-alt"></i>
           </span>
@@ -93,7 +97,9 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex';
+import { mapActions } from 'vuex';
+import { mapFields } from 'vuex-map-fields';
+import swal from 'sweetalert2';
 
 export default {
   data: () => ({
@@ -103,11 +109,55 @@ export default {
   }),
 
   computed: {
-    ...mapState('Product', ['product', 'productIm']),
+    ...mapFields('Product', ['product']),
   },
 
   methods: {
-    ...mapActions('Product', ['getProduct']),
+    ...mapActions('Product', ['getProduct', 'updateProduct', 'deleteImage']),
+
+    async handleDeleteImg(imageName) {
+      await this.deleteImage({
+        id: this.id,
+        token: this.userAuth.token,
+        imageName,
+      });
+
+      await swal
+        .fire({
+          title: 'Are you sure?',
+          text: "You won't be able to revert this!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonText: 'Yes, delete it!',
+          cancelButtonText: 'No, cancel!',
+          reverseButtons: true,
+        })
+        .then(async result => {
+          if (result.value) {
+            await swal.fire(
+              'Deleted!',
+              'Your file has been deleted.',
+              'success',
+            );
+            await this.getProduct({ id: this.id, token: this.userAuth.token });
+          }
+        });
+    },
+
+    async handleEditProduct() {
+      try {
+        await this.updateProduct({
+          id: this.product._id,
+          token: this.userAuth.token,
+        });
+
+        await swal.fire('Product Successively updated', 'Updated', 'success');
+
+        await this.getProduct({ id: this.id, token: this.userAuth.token });
+      } catch (err) {
+        console.log(err);
+      }
+    },
   },
 
   async created() {

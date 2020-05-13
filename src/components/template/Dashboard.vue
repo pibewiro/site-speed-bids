@@ -44,7 +44,7 @@
         >Register</router-link>
         <div class="navPic">
           <img
-            :src="`${imageUrl}/default.jpg`"
+            :src="`${imageUrl}/${user.image}`"
             alt=""
           >
           <div class="navOptions">
@@ -161,6 +161,8 @@
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex';
+
 export default {
   data() {
     return {
@@ -172,8 +174,11 @@ export default {
     };
   },
 
-  created() {
-    console.log(this.$route.params.auth);
+  computed: {
+    ...mapState('User', ['user']),
+  },
+
+  async created() {
     if (!localStorage.getItem('_speedbids')) {
       this.$router.push('/');
     }
@@ -182,10 +187,13 @@ export default {
     this.menuClass = 'menuItem';
 
     this.userAuth = JSON.parse(localStorage.getItem('_speedbids'));
+    await this.getUser({ id: this.userAuth.userId });
     this.imageUrl = process.env.VUE_APP_API_IMAGES;
   },
 
   methods: {
+    ...mapActions('User', ['getUser']),
+
     homePage() {
       this.$router.push('/');
     },
