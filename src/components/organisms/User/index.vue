@@ -182,7 +182,7 @@ export default {
 
   async created() {
     this.userAuth = JSON.parse(localStorage.getItem('_speedbids'));
-    await this.getUser({ id: this.$route.params.id });
+    await this.getUser({ id: this.userAuth.userId });
     this.imageUrl = process.env.VUE_APP_API_IMAGES;
   },
 };

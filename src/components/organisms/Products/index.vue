@@ -35,7 +35,17 @@
                 :src="`${imageUrl}/${product.image.defaultImage}`"
                 alt=""
               >
-              <div class="imgOverlay"></div>
+              <div
+                v-b-modal="`productImageModal${product._id}`"
+                class="imgOverlay"
+              >
+              </div>
+
+              <ProductModal
+                :id="product._id"
+                :images="product.image.productImages"
+              />
+
             </div>
             <div class="itemInfo">
               <p><span class="font-weight-bold">Product :</span> {{product.productName}}</p>
@@ -58,8 +68,12 @@
 
 <script>
 import { mapState, mapActions } from 'vuex';
-
+import ProductModal from './Product/ProductModal.vue';
 export default {
+  components: {
+    ProductModal,
+  },
+
   data: () => ({
     size: false,
     imageUrl: null,
@@ -71,6 +85,10 @@ export default {
 
   methods: {
     ...mapActions('Product', ['getProducts']),
+
+    showImages() {
+      alert(111);
+    },
 
     viewProduct(id) {
       this.$router.push(`/product/${id}`);

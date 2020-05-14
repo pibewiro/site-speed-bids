@@ -55,7 +55,7 @@
             >Logout</p>
             <router-link
               class="userConfig border-bottom m-0 p-3"
-              :to="`user-config/${this.userAuth.userId}`"
+              :to="`/user-config/${this.userAuth.userId}`"
             >User</router-link>
           </div>
         </div>
@@ -70,7 +70,7 @@
         <router-link
           id="menuItem"
           :class="`${this.menuClass} m-0`"
-          to="dashboard"
+          to="/dashboard"
         >
           <div class="m-0 text-center">
             <span>

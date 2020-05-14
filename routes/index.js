@@ -27,7 +27,7 @@ const routes = [
       { path: '/add-product', component: AddProduct },
       { path: '/product/:id', component: Product },
       { path: '/my-product', component: MyProduct },
-      { path: '/my-product/:id', component: EditProduct },
+      { path: '/my-product/:id', component: EditProduct, name: 'my-product' },
       { path: '/user-config/:id', component: UserConfig }
     ]
   }

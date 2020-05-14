@@ -8,7 +8,15 @@
               :src="`${imageUrl}/${product.image.defaultImage}`"
               alt=""
             >
-            <div class="imgOverlayProduct"></div>
+            <div
+              v-b-modal="`productImageModal${product._id}`"
+              class="imgOverlayProduct"
+            ></div>
+
+            <ProductModal
+              :id="product._id"
+              :images="product.image.productImages"
+            />
           </div>
           <div class="d-flex justify-content-between align-items-center pt-3">
             <h1>{{product.productName}}</h1>
@@ -52,12 +60,17 @@
 
 <script>
 import { mapActions, mapState } from 'vuex';
+import ProductModal from '../Product/ProductModal.vue';
 
 export default {
   data: () => ({
     imageUrl: null,
     loading: false,
   }),
+
+  components: {
+    ProductModal,
+  },
 
   computed: {
     ...mapState('Product', ['product', 'products']),

@@ -14,8 +14,14 @@ const mutations = {
   },
 
   GET_PRODUCT: function (state, payload) {
-    state.product = payload.data
-    state.productIm = payload.data.image.productImages.shift();
+    state.product = payload.response.data.data
+
+    if (payload.url === 'my-product') {
+      state.productIm = payload.response.data.data.image.productImages.shift();
+    } else {
+      state.productIm = payload.response.data.data.image.productImages
+    }
+
   },
 
   GET_MY_PRODUCTS: function (state, payload) {
@@ -23,6 +29,21 @@ const mutations = {
   }
 };
 const actions = {
+
+  async updateDefaultImg({ commit }, obj) {
+
+    const fd = new FormData();
+    fd.set('defaultImage', obj.defaultImage);
+    fd.set('id', obj.id);
+    fd.append('newDefaultImage', obj.newDefaultImage)
+
+    const response = await axios.put(`${process.env.VUE_APP_API_ROOT}/product/defaultImage/${obj.id}`, fd,
+      {
+        headers: { 'x-access-token': obj.token }
+      })
+
+    commit('GET_PRODUCT', response.data)
+  },
 
   async deleteImage(commit, obj) {
     await axios.delete(`${process.env.VUE_APP_API_ROOT}/product/deleteImage/${obj.imageName}/${obj.id}`,
@@ -60,7 +81,8 @@ const actions = {
 
   async getProduct({ commit }, obj) {
     const response = await axios.get(`${process.env.VUE_APP_API_ROOT}/product/${obj.id}`);
-    commit('GET_PRODUCT', response.data)
+    console.log(response)
+    commit('GET_PRODUCT', { response, url: obj.url })
   },
 
   async getMyProducts({ commit }, obj) {

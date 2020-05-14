@@ -63,13 +63,27 @@
           >
         </div>
         <div class="imageOptions">
-          <span
-            class="deleteSpan"
-            @click="handleDeleteImg(product.image.defaultImage)"
-          >
-            <i class="far fa-trash-alt"></i>
-          </span>
-          <p class="text-center m-0 ml-3">Default Image</p>
+          <button
+            v-if="!defaultImageFile"
+            @click="defaultImageFile = true"
+            class="site-btn btn btn-lg"
+          >Replace Default Image</button>
+          <div v-if="defaultImageFile">
+            <input
+              type="file"
+              @change="defaultFileChange"
+            >
+            <div>
+              <button
+                @click="defaultImageFile = false"
+                class="site-btn btn btn-lg mt-3"
+              >Cancel</button>
+              <button
+                @click="handleDefaultImg(product.image.defaultImage)"
+                class="site-btn btn btn-lg mt-3 ml-3"
+              >Enter</button>
+            </div>
+          </div>
         </div>
       </div>
       <div
@@ -106,6 +120,9 @@ export default {
     userAuth: null,
     id: null,
     imageUrl: null,
+    defaultImageFile: false,
+    selectedDefaultFile: null,
+    error: {},
   }),
 
   computed: {
@@ -113,7 +130,34 @@ export default {
   },
 
   methods: {
-    ...mapActions('Product', ['getProduct', 'updateProduct', 'deleteImage']),
+    ...mapActions('Product', [
+      'getProduct',
+      'updateProduct',
+      'deleteImage',
+      'updateDefaultImg',
+    ]),
+
+    defaultFileChange(e) {
+      this.selectedDefaultFile = e.target.files[0];
+    },
+
+    async handleDefaultImg(image) {
+      try {
+        await this.updateDefaultImg({
+          id: this.product._id,
+          token: this.userAuth.token,
+          defaultImage: image,
+          newDefaultImage: this.selectedDefaultFile,
+        });
+
+        this.defaultImageFile = await false;
+
+        await swal.fire('Default Image Updated', '', 'success');
+      } catch (err) {
+        this.error = err.response.data;
+        swal.fire(this.error.image, '', 'warning');
+      }
+    },
 
     async handleDeleteImg(imageName) {
       await this.deleteImage({
@@ -163,7 +207,11 @@ export default {
   async created() {
     this.userAuth = JSON.parse(localStorage.getItem('_speedbids'));
     this.id = this.$route.params.id;
-    await this.getProduct({ id: this.id, token: this.userAuth.token });
+    await this.getProduct({
+      id: this.id,
+      token: this.userAuth.token,
+      url: this.$route.name,
+    });
     this.imageUrl = process.env.VUE_APP_API_IMAGES;
   },
 };
