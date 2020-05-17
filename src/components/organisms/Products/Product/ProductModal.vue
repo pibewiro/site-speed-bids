@@ -14,7 +14,7 @@
         :interval="0"
       >
         <b-carousel-slide
-          v-for="(image, i) in images"
+          v-for="(image, i) in productImgs"
           :key="i"
         >
           <template v-slot:img>
@@ -31,9 +31,16 @@ export default {
   name: 'ProductModal',
   data: () => ({
     imageUrl: null,
+    productImgs: [],
   }),
   props: ['id', 'images', 'defaultImage'],
   created() {
+    this.productImgs.push(this.defaultImage);
+
+    this.images.map(res => {
+      this.productImgs.push(res);
+    });
+
     this.imageUrl = process.env.VUE_APP_API_IMAGES;
   },
 };

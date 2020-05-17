@@ -16,6 +16,7 @@
             <ProductModal
               :id="product._id"
               :images="product.image.productImages"
+              :defaultImage="product.image.defaultImage"
             />
           </div>
           <div class="d-flex justify-content-between align-items-center pt-3">

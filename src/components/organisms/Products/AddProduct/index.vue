@@ -155,7 +155,12 @@ export default {
 
     deleteImage(i) {
       if (this.images.length > 1) {
+        let indx = this.images.indexOf(i);
         this.images = this.images.filter(res => res !== i);
+        this.form.image.productImages = this.form.image.productImages.splice(
+          indx,
+          1,
+        );
       }
     },
 

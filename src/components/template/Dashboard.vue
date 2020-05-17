@@ -44,7 +44,7 @@
         >Register</router-link>
         <div class="navPic">
           <img
-            :src="`${imageUrl}/${user.image}`"
+            :src="`${imageUrl}/${image}`"
             alt=""
           >
           <div class="navOptions">
@@ -171,6 +171,7 @@ export default {
       token: null,
       imageUrl: null,
       userAuth: null,
+      image: null,
     };
   },
 
@@ -188,6 +189,7 @@ export default {
 
     this.userAuth = JSON.parse(localStorage.getItem('_speedbids'));
     await this.getUser({ id: this.userAuth.userId });
+    this.image = this.user.image;
     this.imageUrl = process.env.VUE_APP_API_IMAGES;
   },
 
@@ -374,6 +376,7 @@ export default {
   background: rgba(0, 0, 0, 0.4);
   overflow: hidden;
   transition: ease-in 0.5s;
+  z-index: 9999;
 }
 
 .navPic {

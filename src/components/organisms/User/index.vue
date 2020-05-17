@@ -119,12 +119,25 @@
           </div>
         </div>
 
-        <div class="text-center mt-3">
+        <div class="text-center mt-4 my-profile-btns">
+          <button
+            class="site-btn btn btn-lg"
+            v-b-modal.ModalChangePassword
+          >Change Password</button>
+          <button
+            class="btn btn-outline-danger btn-lg"
+            v-b-modal.ModalDeleteAccount
+          >Delete Account</button>
           <button
             @click="handleEditUser"
             class="site-btn btn btn-lg"
           >Enter</button>
         </div>
+        <ModalChangePassword :userAuth="userAuth" />
+        <ModalDeleteAccount
+          :userAuth="userAuth"
+          :user="user"
+        />
       </div>
     </div>
   </div>
@@ -134,12 +147,20 @@
 import { mapActions } from 'vuex';
 import { mapFields } from 'vuex-map-fields';
 import swal from 'sweetalert2';
+import ModalChangePassword from './ModalChangePassword';
+import ModalDeleteAccount from './ModalDeleteAccount';
 
 export default {
   computed: {
     // ...mapState('User', ['user']),
     ...mapFields('User', ['user']),
   },
+
+  components: {
+    ModalChangePassword,
+    ModalDeleteAccount,
+  },
+
   data: () => ({
     imageUrl: null,
     fileDiv: false,
@@ -189,6 +210,13 @@ export default {
 </script>
 
 <style>
+.my-profile-btns {
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+  width: 92%;
+  margin: 0 auto;
+}
 .userImg {
   width: 20%;
   margin: 0 auto;

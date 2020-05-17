@@ -44,10 +44,16 @@
               <ProductModal
                 :id="product._id"
                 :images="product.image.productImages"
+                :defaultImage="product.image.defaultImage"
               />
 
             </div>
             <div class="itemInfo">
+              <div :class="checkFavorites(product._id)  ? 'starDiv' : 'starDiv2'">
+                <span @click="handleFavorite(product._id)">
+                  <i class="fa fa-star"></i>
+                </span>
+              </div>
               <p><span class="font-weight-bold">Product :</span> {{product.productName}}</p>
               <p><span class="font-weight-bold">Price:</span> {{product.price}}</p>
               <p><span class="font-weight-bold">Category:</span> {{product.category}}</p>
@@ -69,6 +75,8 @@
 <script>
 import { mapState, mapActions } from 'vuex';
 import ProductModal from './Product/ProductModal.vue';
+// import Star from './Product/Star.vue';
+
 export default {
   components: {
     ProductModal,
@@ -77,21 +85,35 @@ export default {
   data: () => ({
     size: false,
     imageUrl: null,
+    fav: false,
+    favoriteColor: 'starDiv',
+    userAuth: null,
   }),
 
   computed: {
     ...mapState('Product', ['products']),
+    ...mapState('Favorite', ['favorites']),
   },
 
   methods: {
     ...mapActions('Product', ['getProducts']),
+    ...mapActions('Favorite', ['addFavorite', 'getFavorite']),
 
-    showImages() {
-      alert(111);
+    checkFavorites(productId) {
+      return this.favorites.productDetails.some(
+        obj => obj.productId === productId && obj.active === true,
+      );
     },
 
     viewProduct(id) {
       this.$router.push(`/product/${id}`);
+    },
+
+    handleFavorite(productId) {
+      this.addFavorite({
+        token: this.userAuth.token,
+        data: { userId: this.userAuth.userId, productId },
+      });
     },
 
     changeDivs() {
@@ -114,7 +136,12 @@ export default {
   },
 
   async created() {
+    this.userAuth = JSON.parse(localStorage.getItem('_speedbids'));
     await this.getProducts();
+    await this.getFavorite({
+      id: this.userAuth.userId,
+      token: this.userAuth.token,
+    });
     this.imageUrl = process.env.VUE_APP_API_IMAGES;
   },
 };
@@ -195,5 +222,25 @@ export default {
   position: absolute;
   top: 20px;
   right: 20px;
+}
+
+.starDiv,
+.starDiv2 {
+  background: var(--primaryColor);
+  font-size: 30px;
+  text-align: center;
+}
+
+.starDiv {
+  color: yellow;
+}
+
+.starDiv2 {
+  color: #fff;
+}
+
+.starDiv span:hover,
+.starDiv2 span:hover {
+  cursor: pointer;
 }
 </style>

@@ -14,14 +14,7 @@ const mutations = {
   },
 
   GET_PRODUCT: function (state, payload) {
-    state.product = payload.response.data.data
-
-    if (payload.url === 'my-product') {
-      state.productIm = payload.response.data.data.image.productImages.shift();
-    } else {
-      state.productIm = payload.response.data.data.image.productImages
-    }
-
+    state.product = payload.data
   },
 
   GET_MY_PRODUCTS: function (state, payload) {
@@ -81,8 +74,7 @@ const actions = {
 
   async getProduct({ commit }, obj) {
     const response = await axios.get(`${process.env.VUE_APP_API_ROOT}/product/${obj.id}`);
-    console.log(response)
-    commit('GET_PRODUCT', { response, url: obj.url })
+    commit('GET_PRODUCT', response.data)
   },
 
   async getMyProducts({ commit }, obj) {
@@ -95,6 +87,23 @@ const actions = {
   async getSimilarProducts({ commit }, obj) {
     const response = await axios.get(`${process.env.VUE_APP_API_ROOT}/product/${obj.category}/${obj.id}`)
     commit('GET_PRODUCTS', response.data)
+  },
+
+  async addMoreProductImage({ commit }, obj) {
+    const fd = new FormData();
+    fd.append('addedProductImage', obj.image);
+
+    const response = await axios.put(`${process.env.VUE_APP_API_ROOT}/product/addImages/${obj.id}`, fd, {
+      headers: { 'x-access-token': obj.token }
+    })
+
+    commit("GET_PRODUCT", response.data)
+  },
+
+  async deleteProduct(commit, obj) {
+    await axios.delete(`${process.env.VUE_APP_API_ROOT}/product/${obj.productName}/${obj.id}`,
+      { headers: { 'x-access-token': obj.token } }
+    );
   }
 };
 const getters = {

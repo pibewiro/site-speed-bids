@@ -2,7 +2,6 @@
   <div class="editProduct">
     <div class="prdEditForm border">
       <h1 class="text-center">Edit Product</h1>
-      <p>{{product}}</p>
       <div class="form-group">
         <label for="">Product Name</label>
         <input
@@ -43,12 +42,24 @@
         ></textarea>
       </div>
 
-      <div class="form-group text-center m-0">
+      <div
+        class="btn-edit-prd-div form-group text-center m-0"
+        v-if="product.active"
+      >
+        <button
+          v-b-modal.ModalDeleteProduct
+          class="btn btn-outline-danger btn-lg"
+        >Delete</button>
         <button
           @click="handleEditProduct"
           class="site-btn btn btn-lg"
         >Enter</button>
       </div>
+      <ModalDeleteProduct
+        :productName="product.productName"
+        :productId="product._id"
+        :userAuth="userAuth"
+      />
     </div>
 
     <div class="editImagesDiv">
@@ -106,6 +117,29 @@
           </span>
         </div>
       </div>
+      <div
+        class="addImageDiv border"
+        v-if="product.active"
+      >
+        <div @click="addImage">
+          <i class="fas fa-plus "></i>
+          <p
+            style="font-size:20px;"
+            class="m-0 text-center"
+          >Add image</p>
+        </div>
+
+        <p style="font-size:20px;">{{addedImageName}}</p>
+        <p
+          class="text-danger text-center"
+          style="font-size:20px;"
+        >{{this.error.image}}</p>
+        <button
+          @click="saveImage"
+          class="site-btn btn btn-lg"
+          v-if="!hideAddImage"
+        >Save Image</button>
+      </div>
     </div>
   </div>
 </template>
@@ -114,6 +148,7 @@
 import { mapActions } from 'vuex';
 import { mapFields } from 'vuex-map-fields';
 import swal from 'sweetalert2';
+import ModalDeleteProduct from './ModalDeleteProduct';
 
 export default {
   data: () => ({
@@ -122,8 +157,15 @@ export default {
     imageUrl: null,
     defaultImageFile: false,
     selectedDefaultFile: null,
+    hideAddImage: true,
+    addedImage: null,
+    addedImageName: null,
     error: {},
   }),
+
+  components: {
+    ModalDeleteProduct,
+  },
 
   computed: {
     ...mapFields('Product', ['product']),
@@ -135,7 +177,40 @@ export default {
       'updateProduct',
       'deleteImage',
       'updateDefaultImg',
+      'addMoreProductImage',
     ]),
+
+    async saveImage() {
+      try {
+        await this.addMoreProductImage({
+          token: this.userAuth.token,
+          id: this.product._id,
+          image: this.addedImage,
+        });
+
+        this.error = {};
+        this.addedImageName = null;
+        this.addedImage = null;
+        this.hideAddImage = true;
+      } catch (err) {
+        console.log(err.response);
+        this.error = err.response.data;
+        this.hideAddImage = true;
+      }
+    },
+
+    addImage() {
+      var input = document.createElement('input');
+      input.type = 'file';
+
+      input.onchange = e => {
+        this.addedImage = e.target.files[0];
+        this.addedImageName = e.target.files[0].name;
+        this.hideAddImage = false;
+      };
+
+      input.click();
+    },
 
     defaultFileChange(e) {
       this.selectedDefaultFile = e.target.files[0];
@@ -218,6 +293,12 @@ export default {
 </script>
 
 <style>
+.btn-edit-prd-div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .prdEditForm {
   margin: 0 auto;
   width: 50%;
@@ -226,7 +307,6 @@ export default {
 
 .editImagesDiv {
   width: 100%;
-  /* background: red; */
   margin-top: 20px;
   display: grid;
   justify-content: center;
@@ -258,5 +338,20 @@ export default {
 .editImagesDiv2 {
   padding: 1px;
   border: 1px solid #dee2e6;
+}
+
+.addImageDiv {
+  width: 350px;
+  height: 390px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 150px;
+  font-weight: 100;
+}
+
+.addImageDiv div:hover {
+  cursor: pointer;
 }
 </style>
