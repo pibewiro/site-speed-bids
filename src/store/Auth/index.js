@@ -19,6 +19,12 @@ const actions = {
     commit('authData', response.data);
   },
 
+  async logout(commit, obj) {
+    await axios.get(`${process.env.VUE_APP_API_ROOT}/auth`,
+      { headers: { 'x-access-token': obj.token } }
+    );
+  },
+
   async updatePassword(commit, obj) {
     await axios.put(`${process.env.VUE_APP_API_ROOT}/auth/change-password/${obj.id}`, { ...obj.data },
       { headers: { 'x-access-token': obj.token } }

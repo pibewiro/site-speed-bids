@@ -194,7 +194,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .productForm {
   width: 45%;
   margin: 0 auto;

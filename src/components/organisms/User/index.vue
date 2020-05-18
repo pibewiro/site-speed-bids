@@ -43,6 +43,7 @@
               class="form-control"
               v-model="user.firstname"
             >
+            <p class="text-danger">{{this.error.firstname}}</p>
           </div>
           <div class="form-group regInline">
             <label for="">Last Name</label>
@@ -51,6 +52,7 @@
               class="form-control"
               v-model="user.lastname"
             >
+            <p class="text-danger">{{this.error.lastname}}</p>
           </div>
 
           <div class="form-group regInline">
@@ -60,6 +62,7 @@
               class="form-control"
               v-model="user.cpf"
             >
+            <p class="text-danger">{{this.error.cpf}}</p>
           </div>
         </div>
 
@@ -70,7 +73,9 @@
               type="text"
               class="form-control"
               v-model="user.email"
-            > </div>
+            >
+            <p class="text-danger">{{this.error.email}}</p>
+          </div>
 
           <div class="form-group regInline">
             <label for="">Username</label>
@@ -79,6 +84,7 @@
               class="form-control"
               v-model="user.username"
             >
+            <p class="text-danger">{{this.error.username}}</p>
           </div>
 
           <div
@@ -96,8 +102,9 @@
             <input
               type="text"
               class="form-control"
-              v-model="this.user.address.city"
+              v-model="user.address.city"
             >
+            <p class="text-danger">{{this.error.city}}</p>
           </div>
 
           <div class="form-group regInline">
@@ -105,8 +112,9 @@
             <input
               type="text"
               class="form-control"
-              v-model="this.user.address.state"
+              v-model="user.address.state"
             >
+            <p class="text-danger">{{this.error.state}}</p>
           </div>
 
           <div class="form-group regInline">
@@ -114,8 +122,9 @@
             <input
               type="text"
               class="form-control"
-              v-model="this.user.address.country"
+              v-model="user.address.country"
             >
+            <p class="text-danger">{{this.error.country}}</p>
           </div>
         </div>
 
@@ -189,7 +198,7 @@ export default {
           'User Updated!',
           'success',
         );
-
+        this.fileDiv = false;
         await this.getUser({ id: this.$route.params.id });
       } catch (err) {
         this.error = err.response.data;

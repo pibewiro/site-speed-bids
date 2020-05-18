@@ -9,6 +9,7 @@ import Products from '../src/components/organisms/Products/index.vue'
 import AddProduct from '../src/components/organisms/Products/AddProduct/index.vue'
 import Product from '../src/components/organisms/Products/Product/index.vue'
 import MyProduct from '../src/components/organisms/Products/MyProduct/index.vue'
+import ProductsLogout from '../src/components/organisms/Products/ProductsLogout.vue'
 import EditProduct from '../src/components/organisms/Products/EditProduct/index.vue'
 import UserConfig from '../src/components/organisms/User/index.vue'
 
@@ -18,12 +19,11 @@ const routes = [
   { path: '/', component: Home },
   { path: '/login', component: Login },
   { path: '/register', component: Register },
-  { path: '/products', component: Products },
+  { path: '/products', component: ProductsLogout },
   {
     path: '/dashboard',
     component: Dashboard, children: [
       { path: '/', component: Products },
-      { path: '/products', component: Products },
       { path: '/add-product', component: AddProduct },
       { path: '/product/:id', component: Product },
       { path: '/my-product', component: MyProduct },

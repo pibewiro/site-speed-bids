@@ -2,29 +2,89 @@
   <div>
     <div class="filter">
       <div>
-        <div class="filter2 border-bottom">
-          <h1 class="text-center">Products</h1>
-          <span
-            class="divArrow"
-            @click="changeDivs"
-            id="arrowUp"
+        <div class="filterDiv">
+          <div class="filterDiv1">
+            <h1 class="text-center pt-2">Products</h1>
+            <label for="checkbox"><span>&#9660;</span></label>
+          </div>
+          <input
+            type="checkbox"
+            id="checkbox"
           >
-            <i class="fas fa-angle-double-up"></i>
-          </span>
+          <div class="filters">
+            <div class="filters2">
+              <div class="form-group">
+                <label for="">Product Name</label>
+                <input
+                  type="text"
+                  class="form-control"
+                >
+              </div>
 
-          <span
-            class="divArrow"
-            @click="changeDivs"
-            id="arrowDown"
-          >
-            <i
-              @click="changeDivs"
-              v-if="this.size"
-              class="fas fa-angle-double-down"
-            ></i>
-          </span>
+              <div class="form-group">
+                <label for="">Category</label>
+                <select
+                  name=""
+                  id=""
+                  class="form-control"
+                >
+                  <option value=""></option>
+                  <option value="">Electronics</option>
+                  <option value="">Electronics</option>
+                  <option value="">Electronics</option>
+                  <option value="">Electronics</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="">Min Price</label>
+                <input
+                  type="text"
+                  class="form-control"
+                >
+              </div>
+
+              <div class="form-group">
+                <label for="">Max Price</label>
+                <input
+                  type="text"
+                  class="form-control"
+                >
+              </div>
+            </div>
+
+            <div class="filters2">
+              <div class="form-group">
+                <label for="">Sort By Date:</label>
+                <select
+                  name=""
+                  id=""
+                  class="form-control"
+                >
+                  <option value="">Newest - Oldest</option>
+                  <option value="">Oldest - Newest</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="">Sort By Price:</label>
+                <select
+                  name=""
+                  id=""
+                  class="form-control"
+                >
+                  <option value="">Highest - Lowest</option>
+                  <option value="">Lowest - Highest</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="text-center mt-2">
+              <button class="site-btn btn btn-lg">Filter</button>
+            </div>
+          </div>
         </div>
-        <div class="itemsP">
+        <div class="itemsP border-top">
           <div
             class="itemP border"
             v-for="(product, i) in products"
@@ -148,6 +208,42 @@ export default {
 </script>
 
 <style>
+.filters {
+  height: 0;
+  overflow: hidden;
+}
+
+.filters2 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.filters2 div {
+  width: 20%;
+  margin-right: 20px;
+}
+
+#checkbox {
+  display: none;
+}
+
+#checkbox:checked + .filters {
+  height: 250px;
+  transition: all 0.5s;
+}
+
+.filterDiv1 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.filterDiv1 label {
+  position: absolute;
+  right: 15px;
+}
 .filter {
   width: 100%;
   height: 100%;

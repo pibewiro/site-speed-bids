@@ -292,7 +292,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .btn-edit-prd-div {
   display: flex;
   justify-content: space-between;
