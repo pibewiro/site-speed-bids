@@ -1,6 +1,9 @@
 <template>
   <div>
-    <div class="filter">
+    <div
+      v-if="!loading"
+      class="filter"
+    >
       <div>
         <div class="filterDiv">
           <div class="filterDiv1">
@@ -18,6 +21,7 @@
                 <input
                   type="text"
                   class="form-control"
+                  v-model="filter.productName"
                 >
               </div>
 
@@ -27,12 +31,13 @@
                   name=""
                   id=""
                   class="form-control"
+                  v-model="filter.category"
                 >
                   <option value=""></option>
-                  <option value="">Electronics</option>
-                  <option value="">Electronics</option>
-                  <option value="">Electronics</option>
-                  <option value="">Electronics</option>
+                  <option value="electronics">electronics</option>
+                  <option value="automobiles">Automobiles</option>
+                  <option value="">electronics</option>
+                  <option value="">electronics</option>
                 </select>
               </div>
 
@@ -41,6 +46,7 @@
                 <input
                   type="text"
                   class="form-control"
+                  v-model="filter.minPrice"
                 >
               </div>
 
@@ -49,6 +55,7 @@
                 <input
                   type="text"
                   class="form-control"
+                  v-model="filter.maxPrice"
                 >
               </div>
             </div>
@@ -57,30 +64,31 @@
               <div class="form-group">
                 <label for="">Sort By Date:</label>
                 <select
-                  name=""
-                  id=""
                   class="form-control"
+                  v-model="filter.sortDate"
                 >
-                  <option value="">Newest - Oldest</option>
-                  <option value="">Oldest - Newest</option>
+                  <option value="newOld">Newest - Oldest</option>
+                  <option value="oldNew">Oldest - Newest</option>
                 </select>
               </div>
 
               <div class="form-group">
                 <label for="">Sort By Price:</label>
                 <select
-                  name=""
-                  id=""
                   class="form-control"
+                  v-model="filter.sortPrice"
                 >
-                  <option value="">Highest - Lowest</option>
-                  <option value="">Lowest - Highest</option>
+                  <option value="highLow">Highest - Lowest</option>
+                  <option value="lowHigh">Lowest - Highest</option>
                 </select>
               </div>
             </div>
 
             <div class="text-center mt-2">
-              <button class="site-btn btn btn-lg">Filter</button>
+              <button
+                @click="handleFilter"
+                class="site-btn btn btn-lg"
+              >Filter</button>
             </div>
           </div>
         </div>
@@ -109,15 +117,18 @@
 
             </div>
             <div class="itemInfo">
-              <div :class="checkFavorites(product._id)  ? 'starDiv' : 'starDiv2'">
+              <div :class="favorites ? checkFavorites(product._id)  ? 'starDiv' : 'starDiv2' : 'starDiv2'">
                 <span @click="handleFavorite(product._id)">
                   <i class="fa fa-star"></i>
                 </span>
               </div>
               <p><span class="font-weight-bold">Product :</span> {{product.productName}}</p>
-              <p><span class="font-weight-bold">Price:</span> {{product.price}}</p>
+              <p><span class="font-weight-bold">Price:</span> R${{product.price}}</p>
               <p><span class="font-weight-bold">Category:</span> {{product.category}}</p>
-              <p><span class="font-weight-bold">Username:</span> {{product.user.username}}</p>
+              <p><span class="font-weight-bold">Username: </span>
+                <router-link :to="`/user/${product.user._id}`">{{product.user.username}}</router-link>
+              </p>
+              <p><span class="font-weight-bold">Uploaded:</span> {{formatProductTime(product.createdAt)}}</p>
               <div class="text-center">
                 <button
                   @click="viewProduct(product._id)"
@@ -135,7 +146,9 @@
 <script>
 import { mapState, mapActions } from 'vuex';
 import ProductModal from './Product/ProductModal.vue';
-// import Star from './Product/Star.vue';
+import { mapFields } from 'vuex-map-fields';
+import moment from 'moment';
+moment.locale('pt-br');
 
 export default {
   components: {
@@ -148,16 +161,26 @@ export default {
     fav: false,
     favoriteColor: 'starDiv',
     userAuth: null,
+    loading: false,
   }),
 
   computed: {
     ...mapState('Product', ['products']),
     ...mapState('Favorite', ['favorites']),
+    ...mapFields('Product', ['filter']),
   },
 
   methods: {
-    ...mapActions('Product', ['getProducts']),
+    ...mapActions('Product', ['getProducts', 'filterProducts']),
     ...mapActions('Favorite', ['addFavorite', 'getFavorite']),
+
+    formatProductTime(time) {
+      return moment(time).fromNow();
+    },
+
+    handleFilter() {
+      this.filterProducts({ ...this.filter });
+    },
 
     checkFavorites(productId) {
       return this.favorites.productDetails.some(
@@ -196,13 +219,15 @@ export default {
   },
 
   async created() {
-    this.userAuth = JSON.parse(localStorage.getItem('_speedbids'));
+    this.loading = true;
+    this.userAuth = await JSON.parse(localStorage.getItem('_speedbids'));
     await this.getProducts();
     await this.getFavorite({
       id: this.userAuth.userId,
       token: this.userAuth.token,
     });
     this.imageUrl = process.env.VUE_APP_API_IMAGES;
+    this.loading = false;
   },
 };
 </script>

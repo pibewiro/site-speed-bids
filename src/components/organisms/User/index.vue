@@ -161,7 +161,6 @@ import ModalDeleteAccount from './ModalDeleteAccount';
 
 export default {
   computed: {
-    // ...mapState('User', ['user']),
     ...mapFields('User', ['user']),
   },
 

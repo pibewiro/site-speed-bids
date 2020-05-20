@@ -2,7 +2,7 @@ import { getField, updateField } from 'vuex-map-fields';
 import axios from 'axios';
 
 const state = {
-  user: null,
+  user: {},
 };
 
 const mutations = {

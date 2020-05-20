@@ -4,7 +4,7 @@ const axios = require('axios');
 const state = {
   products: null,
   product: null,
-  productIm: null
+  filter: {}
 };
 const mutations = {
   updateField,
@@ -104,6 +104,20 @@ const actions = {
     await axios.delete(`${process.env.VUE_APP_API_ROOT}/product/${obj.productName}/${obj.id}`,
       { headers: { 'x-access-token': obj.token } }
     );
+  },
+
+  async filterProducts({ commit }, obj) {
+    const response = await axios.get(`${process.env.VUE_APP_API_ROOT}/product/filter`, {
+      params: {
+        productName: obj.productName,
+        category: obj.category,
+        minPrice: obj.minPrice,
+        maxPrice: obj.maxPrice,
+        sortDate: obj.sortDate,
+        sortPrice: obj.sortPrice,
+      }
+    })
+    commit('GET_PRODUCTS', response.data);
   }
 };
 const getters = {

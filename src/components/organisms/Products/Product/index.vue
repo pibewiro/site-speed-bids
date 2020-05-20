@@ -25,7 +25,7 @@
           </div>
           <div class="desc">
             <p>Price:${{product.price}}</p>
-            <router-link to="/user">{{product.user.username}}</router-link>
+            <router-link :to="`/user/${product.user._id}`">{{product.user.username}}</router-link>
             <h2
               class=""
               for=""
@@ -50,7 +50,7 @@
           </div>
           <div :to="`/product/${prd._id}`">
             <p class="m-0">{{prd.productName}}</p>
-            <p class="m-0">{{prd.price}}</p>
+            <p class="m-0">R${{prd.price}}</p>
             <p class="m-0">{{prd.user.username}}</p>
           </div>
         </div>
