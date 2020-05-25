@@ -21,7 +21,11 @@
           </div>
           <div class="d-flex justify-content-between align-items-center pt-3">
             <h1>{{product.productName}}</h1>
-            <button class="site-btn btn btn-lg">Enter</button>
+            <h3>End Date: {{formatProductTime2(product.endDate)}}</h3>
+            <router-link
+              class="site-btn btn btn-lg"
+              :to="`/buy-product/${product._id}`"
+            >Buy Product</router-link>
           </div>
           <div class="desc">
             <p>Price:${{product.price}}</p>
@@ -62,6 +66,8 @@
 <script>
 import { mapActions, mapState } from 'vuex';
 import ProductModal from '../Product/ProductModal.vue';
+import moment from 'moment';
+moment.locale('pt-br');
 
 export default {
   data: () => ({
@@ -79,7 +85,9 @@ export default {
 
   methods: {
     ...mapActions('Product', ['getProduct', 'getSimilarProducts']),
-
+    formatProductTime2(time) {
+      return moment(time).format('lll');
+    },
     async viewProduct(id) {
       await this.getProduct({ id });
 
@@ -105,6 +113,9 @@ export default {
 </script>
 
 <style>
+h3 {
+  font-weight: 100;
+}
 .productDiv {
   display: flex;
   justify-content: center;

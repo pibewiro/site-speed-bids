@@ -354,4 +354,17 @@ export default {
 .addImageDiv div:hover {
   cursor: pointer;
 }
+
+.deleteSpan {
+  color: red;
+  border: 1px solid red;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.deleteSpan:hover{
+  cursor: pointer;
+  background:red;
+  color: #fff;
+}
 </style>

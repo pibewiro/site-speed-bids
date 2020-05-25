@@ -7,90 +7,12 @@
       <div>
         <div class="filterDiv">
           <div class="filterDiv1">
-            <h1 class="text-center pt-2">Products</h1>
-            <label for="checkbox"><span>&#9660;</span></label>
+            <h1 class="text-center pt-2">Favorites</h1>
           </div>
           <input
             type="checkbox"
             id="checkbox"
           >
-          <div class="filters">
-            <div class="filters2">
-              <div class="form-group">
-                <label for="">Product Name</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  v-model="filter.productName"
-                >
-              </div>
-
-              <div class="form-group">
-                <label for="">Category</label>
-                <select
-                  name=""
-                  id=""
-                  class="form-control"
-                  v-model="filter.category"
-                >
-                  <option value=""></option>
-                  <option value="electronics">electronics</option>
-                  <option value="automobiles">Automobiles</option>
-                  <option value="">electronics</option>
-                  <option value="">electronics</option>
-                </select>
-              </div>
-
-              <div class="form-group">
-                <label for="">Min Price</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  v-model="filter.minPrice"
-                >
-              </div>
-
-              <div class="form-group">
-                <label for="">Max Price</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  v-model="filter.maxPrice"
-                >
-              </div>
-            </div>
-
-            <div class="filters2">
-              <div class="form-group">
-                <label for="">Sort By Date:</label>
-                <select
-                  class="form-control"
-                  v-model="filter.sortDate"
-                >
-                  <option value="newOld">Newest - Oldest</option>
-                  <option value="oldNew">Oldest - Newest</option>
-                </select>
-              </div>
-
-              <div class="form-group">
-                <label for="">Sort By Price:</label>
-                <select
-                  class="form-control"
-                  v-model="filter.sortPrice"
-                >
-                  <option value="highLow">Highest - Lowest</option>
-                  <option value="lowHigh">Lowest - Highest</option>
-                </select>
-              </div>
-            </div>
-
-            <div class="text-center mt-2">
-              <button
-                @click="handleFilter"
-                class="site-btn btn btn-lg"
-              >Filter</button>
-            </div>
-          </div>
         </div>
         <div class="itemsP border-top">
           <div
@@ -128,7 +50,6 @@
               <p><span class="font-weight-bold">Username: </span>
                 <router-link :to="`/user/${product.user._id}`">{{product.user.username}}</router-link>
               </p>
-              <p><span class="font-weight-bold">End Date:</span> {{formatProductTime2(product.endDate)}}</p>
               <p><span class="font-weight-bold">Uploaded:</span> {{formatProductTime(product.createdAt)}}</p>
               <div class="text-center">
                 <button
@@ -146,7 +67,7 @@
 
 <script>
 import { mapState, mapActions } from 'vuex';
-import ProductModal from './Product/ProductModal.vue';
+import ProductModal from '../Products/Product/ProductModal';
 import { mapFields } from 'vuex-map-fields';
 import moment from 'moment';
 moment.locale('pt-br');
@@ -172,15 +93,15 @@ export default {
   },
 
   methods: {
-    ...mapActions('Product', ['getProducts', 'filterProducts']),
+    ...mapActions('Product', [
+      'getProducts',
+      'filterProducts',
+      'getFavoriteProducts',
+    ]),
     ...mapActions('Favorite', ['addFavorite', 'getFavorite']),
 
     formatProductTime(time) {
       return moment(time).fromNow();
-    },
-
-    formatProductTime2(time) {
-      return moment(time).format('lll');
     },
 
     handleFilter() {
@@ -197,10 +118,15 @@ export default {
       this.$router.push(`/product/${id}`);
     },
 
-    handleFavorite(productId) {
-      this.addFavorite({
+    async handleFavorite(productId) {
+      await this.addFavorite({
         token: this.userAuth.token,
         data: { userId: this.userAuth.userId, productId },
+      });
+
+      await this.getFavoriteProducts({
+        id: this.userAuth.userId,
+        token: this.userAuth.token,
       });
     },
 
@@ -227,7 +153,10 @@ export default {
     this.loading = true;
     this.userAuth = await JSON.parse(localStorage.getItem('_speedbids'));
 
-    await this.getProducts();
+    await this.getFavoriteProducts({
+      id: this.userAuth.userId,
+      token: this.userAuth.token,
+    });
     await this.getFavorite({
       id: this.userAuth.userId,
       token: this.userAuth.token,
@@ -240,57 +169,6 @@ export default {
 </script>
 
 <style>
-.filters {
-  height: 0;
-  overflow: hidden;
-}
-
-.filters2 {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.filters2 div {
-  width: 20%;
-  margin-right: 20px;
-}
-
-#checkbox {
-  display: none;
-}
-
-#checkbox:checked + .filters {
-  height: 250px;
-  transition: all 0.5s;
-}
-
-.filterDiv1 {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-}
-
-.filterDiv1 label {
-  position: absolute;
-  right: 15px;
-}
-.filter {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 9988;
-}
-
-.filter2 {
-  width: 100%;
-  height: 20vh;
-  transition: ease-in 0.5s;
-}
-
 .itemsP {
   width: 100%;
   /* min-height: 71.5vh; */

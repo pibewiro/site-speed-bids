@@ -56,7 +56,9 @@ const actions = {
     fd.set('price', obj.data.price);
     fd.set('category', obj.data.category);
     fd.set('description', obj.data.description);
-    fd.set('user', obj.data.user)
+    fd.set('user', obj.data.user);
+    fd.set('endDate', obj.data.endDate)
+    fd.set('endTime', obj.data.endTime)
     fd.append('defaultImage', obj.data.image.defaultImage);
 
     for (let i = 0; i < obj.data.image.productImages.length; i++) {
@@ -117,6 +119,12 @@ const actions = {
         sortPrice: obj.sortPrice,
       }
     })
+    commit('GET_PRODUCTS', response.data);
+  },
+
+  async getFavoriteProducts({ commit }, obj) {
+    const response = await axios.get(`${process.env.VUE_APP_API_ROOT}/favorite/favoriteProducts/${obj.id}`,
+      { headers: { 'x-access-token': obj.token } })
     commit('GET_PRODUCTS', response.data);
   }
 };

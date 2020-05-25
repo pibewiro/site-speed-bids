@@ -101,7 +101,7 @@ export default {
 <style>
 .img-div {
   width: 100%;
-  height: calc(50vh - 74px);
+  height: calc(58vh - 74px);
   position: relative;
 }
 

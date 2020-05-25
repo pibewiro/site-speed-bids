@@ -210,6 +210,7 @@ export default {
   },
 
   async created() {
+    window.scrollTo(0, 0);
     this.userAuth = JSON.parse(localStorage.getItem('_speedbids'));
     await this.getUser({ id: this.userAuth.userId });
     this.imageUrl = process.env.VUE_APP_API_IMAGES;

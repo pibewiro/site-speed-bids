@@ -12,7 +12,9 @@ import MyProduct from '../src/components/organisms/Products/MyProduct/index.vue'
 import ProductsLogout from '../src/components/organisms/Products/ProductsLogout.vue'
 import EditProduct from '../src/components/organisms/Products/EditProduct/index.vue'
 import UserConfig from '../src/components/organisms/User/index.vue'
+import Favorites from '../src/components/organisms/Favorites/index.vue'
 import User from '../src/components/organisms/User/User.vue'
+import BuyProduct from '../src/components/organisms/Products/BuyProduct/index.vue'
 
 Vue.use(VueRouter);
 
@@ -23,14 +25,17 @@ const routes = [
   { path: '/products', component: ProductsLogout },
   {
     path: '/dashboard',
+    name: 'dashboard',
     component: Dashboard, children: [
-      { path: '/', component: Products },
+      { path: '/', name: 'products', component: Products },
       { path: '/add-product', component: AddProduct },
       { path: '/product/:id', component: Product },
       { path: '/my-product', component: MyProduct },
       { path: '/my-product/:id', component: EditProduct, name: 'my-product' },
       { path: '/user-config/:id', component: UserConfig },
-      { path: '/user/:id', component: User }
+      { path: '/user/:id', component: User },
+      { path: '/favorites', name: 'favorites', component: Favorites },
+      { path: '/buy-product/:id', component: BuyProduct }
     ]
   }
 ]

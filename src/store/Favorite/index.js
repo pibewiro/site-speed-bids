@@ -22,7 +22,7 @@ const actions = {
       { headers: { 'x-access-token': obj.token } })
     console.log(response.data)
     commit('GET_FAVORITES', response.data);
-  }
+  },
 };
 const getters = {};
 

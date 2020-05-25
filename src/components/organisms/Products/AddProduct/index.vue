@@ -2,6 +2,8 @@
   <div class="addProduct">
     <div class="productForm border p-4">
       <h1 class=text-center>Add Product</h1>
+      <p>{{endDate}}</p>
+      <p>{{endTime}}</p>
       <div class="form-group">
         <label for="">Name</label>
         <input
@@ -37,7 +39,27 @@
         <p class="text-danger">{{this.error.category}}</p>
       </div>
 
-      <div class="form-group">
+      <div class="timeSection">
+        <label for="example-datepicker">Choose a date and time</label>
+        <div class="timeSection2">
+          <div class="date mr-3">
+            <b-form-datepicker
+              id="example-datepicker"
+              v-model="form.endDate"
+            ></b-form-datepicker>
+          </div>
+
+          <div class="time">
+            <b-form-timepicker
+              locale="en"
+              v-model="form.endTime"
+            ></b-form-timepicker>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="form-group mt-4">
         <label for="">Description</label>
         <textarea
           type="text"
@@ -114,6 +136,8 @@ export default {
         description: null,
         user: null,
         image: { defaultImage: null, productImages: [] },
+        endDate: null,
+        endTime: null,
       },
       error: {},
       userAuth: null,
@@ -225,6 +249,11 @@ export default {
   background: red;
   cursor: pointer;
   color: #fff;
+}
+
+.timeSection2 {
+  display: flex;
+  align-items: center;
 }
 
 @media (max-width: 1000px) {

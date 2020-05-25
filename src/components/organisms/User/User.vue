@@ -30,7 +30,7 @@
             </div>
           </div>
 
-          <div class="userInfo">
+          <div class="userInfo mt-3">
             <div class="userInfoDiv">
               <p class="userLabel">City: </p>
               <p class="userData">{{user.address.city}}</p>
@@ -48,7 +48,26 @@
           </div>
 
           <div class="text-center mt-3">
-            <button class="site-btn btn btn-lg">Follow</button>
+            <div v-if="follows">
+              <button
+                v-if="follows.follows.includes(user._id)"
+                @click="handleFollow"
+                class="site-btn btn btn-lg"
+              >Unfollow</button>
+
+              <button
+                v-if="!follows.follows.includes(user._id)"
+                @click="handleFollow"
+                class="site-btn btn btn-lg"
+              >Follow</button>
+            </div>
+
+            <div v-if="!follows">
+              <button
+                @click="handleFollow"
+                class="site-btn btn btn-lg"
+              >Follow</button>
+            </div>
           </div>
         </div>
       </div>
@@ -103,11 +122,21 @@ export default {
   computed: {
     ...mapState('User', ['user']),
     ...mapState('Product', ['products']),
+    ...mapState('Follow', ['follows']),
   },
 
   methods: {
     ...mapActions('User', ['getUser']),
     ...mapActions('Product', ['getMyProducts']),
+    ...mapActions('Follow', ['addFollow', 'getFollows']),
+
+    handleFollow() {
+      this.addFollow({
+        token: this.userAuth.token,
+        id: this.user._id,
+        userId: this.userAuth.userId,
+      });
+    },
 
     formatTime(time) {
       return moment(time).format('LL');
@@ -119,12 +148,18 @@ export default {
   },
 
   async created() {
+    window.scrollTo(0, 0);
     this.userAuth = JSON.parse(localStorage.getItem('_speedbids'));
     await this.getUser({ id: this.$route.params.id });
 
     await this.getMyProducts({
       token: this.userAuth.token,
       id: this.user._id,
+    });
+
+    await this.getFollows({
+      token: this.userAuth.token,
+      id: this.userAuth.userId,
     });
     this.imageUrl = `${process.env.VUE_APP_API_IMAGES}`;
   },
@@ -138,10 +173,6 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-}
-
-.userInfo:last-child {
-  margin-top: 20px;
 }
 
 .userInfoDiv {
