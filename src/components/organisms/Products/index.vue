@@ -128,7 +128,6 @@
               <p><span class="font-weight-bold">Username: </span>
                 <router-link :to="`/user/${product.user._id}`">{{product.user.username}}</router-link>
               </p>
-              <p><span class="font-weight-bold">End Date:</span> {{formatProductTime2(product.endDate)}}</p>
               <p><span class="font-weight-bold">Uploaded:</span> {{formatProductTime(product.createdAt)}}</p>
               <div class="text-center">
                 <button
@@ -177,10 +176,6 @@ export default {
 
     formatProductTime(time) {
       return moment(time).fromNow();
-    },
-
-    formatProductTime2(time) {
-      return moment(time).format('lll');
     },
 
     handleFilter() {

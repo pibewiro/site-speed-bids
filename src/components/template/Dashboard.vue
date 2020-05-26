@@ -83,7 +83,7 @@
         <router-link
           id="menuItem"
           :class="`${this.menuClass} m-0`"
-          to="/products"
+          to="/purchases"
         >
           <div class="m-0 text-center">
             <span>

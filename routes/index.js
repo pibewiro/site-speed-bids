@@ -15,6 +15,7 @@ import UserConfig from '../src/components/organisms/User/index.vue'
 import Favorites from '../src/components/organisms/Favorites/index.vue'
 import User from '../src/components/organisms/User/User.vue'
 import BuyProduct from '../src/components/organisms/Products/BuyProduct/index.vue'
+import Purchases from '../src/components/organisms/Purchases/index.vue'
 
 Vue.use(VueRouter);
 
@@ -35,7 +36,8 @@ const routes = [
       { path: '/user-config/:id', component: UserConfig },
       { path: '/user/:id', component: User },
       { path: '/favorites', name: 'favorites', component: Favorites },
-      { path: '/buy-product/:id', component: BuyProduct }
+      { path: '/buy-product/:id', component: BuyProduct },
+      { path: '/purchases', component: Purchases }
     ]
   }
 ]

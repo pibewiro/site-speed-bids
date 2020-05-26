@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1 class="text-center">Place a Price</h1>
-    <div class="productSection border">
+    <div class="productSection border mb-4">
       <div class="prdImgDiv">
         <img
           :src="`${imageUrl}/${product.image.defaultImage}`"
@@ -10,15 +10,21 @@
       </div>
 
       <div class="productInfo">
-        <p class="m-0"><span>Seller:</span> {{product.user.username}}</p>
-        <p class="m-0"><span>Starting Price:</span> R${{product.price}}</p>
-        <p class="m-0"><span>Current Price:</span> R${{buyers.currentPrice}}</p>
-        <p class="m-0"><span>Date Added: </span> {{formatDate(product.createdAt)}}</p>
-        <p class="m-0"><span>Until: </span> {{formatDateTime(product.endDate)}}</p>
+        <div>
+          <p class="m-0"><span>Seller:</span> {{product.user.username}}</p>
+          <p class="m-0"><span>Starting Price:</span> R${{product.price}}</p>
+          <p class="m-0"><span>Current Price:</span> R${{buyers.currentPrice}}</p>
+          <p class="m-0"><span>Date Added: </span> {{formatDate(product.createdAt)}}</p>
+          <p class="m-0"><span>Until: </span> {{formatDateTime(product.endDate)}}</p>
+        </div>
+
       </div>
     </div>
 
-    <div class="form-group priceInput">
+    <div
+      v-if="product.user._id !== userAuth.userId"
+      class="form-group priceInput"
+    >
       <div>
         <label for="">Place a Price: </label>
         <input
@@ -97,6 +103,7 @@ export default {
         });
 
         this.placePrice = null;
+        this.error = {};
       } catch (err) {
         this.error = err.response.data;
       }
@@ -157,6 +164,11 @@ span {
 .productInfo {
   line-height: 2em;
   width: 400px;
+  margin: 0 auto;
+}
+
+.productInfo div {
+  width: 50%;
   margin: 0 auto;
 }
 
