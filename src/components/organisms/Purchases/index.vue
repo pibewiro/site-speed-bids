@@ -27,7 +27,11 @@
             class="site-btn btn mr-3"
             v-b-modal="`ModalProductInfo${row.item._id}`"
           >Product Info</button>
-          <button class="site-btn btn">Checkout</button>
+          <button
+            v-if="row.item.status === 'Pending'"
+            @click="checkout(row.item)"
+            class="site-btn btn"
+          >Checkout</button>
           <ModalProductInfo
             :id="row.item._id"
             :items="row.item"
@@ -74,6 +78,13 @@ export default {
     ...mapActions('Purchase', ['getPurchases']),
     formatDate(date) {
       return moment(date).format('DD/MM/YYYY');
+    },
+
+    checkout(data) {
+      this.$router.push({
+        name: 'checkout',
+        params: { purchaseData: data },
+      });
     },
   },
 
