@@ -28,7 +28,6 @@ const actions = {
       { headers: { 'x-access-token': obj.token } }
     )
 
-    console.log(response.data)
     commit('ADDED_PRICE', response.data)
   }
 };

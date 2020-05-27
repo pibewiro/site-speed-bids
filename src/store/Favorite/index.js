@@ -20,7 +20,6 @@ const actions = {
   async getFavorite({ commit }, obj) {
     const response = await axios.get(`${process.env.VUE_APP_API_ROOT}/favorite/${obj.id}`,
       { headers: { 'x-access-token': obj.token } })
-    console.log(response.data)
     commit('GET_FAVORITES', response.data);
   },
 };

@@ -1,6 +1,5 @@
 import axios from "axios";
 
-// const axios = require('axios');
 const state = {
   follows: null
 }
@@ -22,7 +21,6 @@ const actions = {
   },
 
   async getFollows({ commit }, obj) {
-    console.log(obj)
     const response = await axios.get(`${process.env.VUE_APP_API_ROOT}/follow/${obj.id}`, {
       headers: { 'x-access-token': obj.token }
     })

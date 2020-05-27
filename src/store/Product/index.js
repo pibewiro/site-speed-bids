@@ -50,7 +50,6 @@ const actions = {
   },
 
   async storeProduct(commit, obj) {
-    console.log(obj)
     const fd = new FormData();
     fd.set('productName', obj.data.productName);
     fd.set('price', obj.data.price);

@@ -2,8 +2,6 @@
   <div class="addProduct">
     <div class="productForm border p-4">
       <h1 class=text-center>Add Product</h1>
-      <p>{{endDate}}</p>
-      <p>{{endTime}}</p>
       <div class="form-group">
         <label for="">Name</label>
         <input
