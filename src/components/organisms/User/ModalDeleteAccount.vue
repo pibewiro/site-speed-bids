@@ -83,6 +83,7 @@ export default {
               },
             });
             localStorage.removeItem('_speedbids');
+            this.closeModal();
             this.$router.push('/');
           }
         })
