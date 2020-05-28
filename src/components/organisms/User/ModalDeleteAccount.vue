@@ -82,9 +82,9 @@ export default {
                 email: this.user.email,
               },
             });
-            await localStorage.removeItem('_speedbids');
             await this.closeModal();
             await this.$router.push('/');
+            await localStorage.removeItem('_speedbids');
           }
         })
         .catch(err => {
