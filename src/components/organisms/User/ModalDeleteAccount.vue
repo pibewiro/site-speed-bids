@@ -83,8 +83,8 @@ export default {
             //   },
             // });
             await this.$bvModal.hide('ModalDeleteAccount');
-            await this.$router.push('/');
             await localStorage.removeItem('_speedbids');
+            await this.$router.push('/');
           }
         })
         .catch(err => {
