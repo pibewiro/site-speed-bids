@@ -74,14 +74,14 @@ export default {
             );
             this.password = null;
             this.error = {};
-            await this.deleteUserEmail({
-              token: this.userAuth.token,
-              data: {
-                firstname: this.user.firstname,
-                lastname: this.user.lastname,
-                email: this.user.email,
-              },
-            });
+            // await this.deleteUserEmail({
+            //   token: this.userAuth.token,
+            //   data: {
+            //     firstname: this.user.firstname,
+            //     lastname: this.user.lastname,
+            //     email: this.user.email,
+            //   },
+            // });
             await this.$bvModal.hide('ModalDeleteAccount');
             await this.$router.push('/');
             await localStorage.removeItem('_speedbids');
