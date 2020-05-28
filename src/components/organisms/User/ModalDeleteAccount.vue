@@ -53,12 +53,12 @@ export default {
       swal
         .fire({
           title: 'Are you sure?',
-          text: "You won't be able to revert this!",
+          // text: "You won't be able to revert this!",
           icon: 'warning',
           showCancelButton: true,
           confirmButtonColor: '#29303b',
           cancelButtonColor: '#d33',
-          confirmButtonText: 'Yes, delete it!',
+          confirmButtonText: 'Ok',
         })
         .then(async result => {
           if (result.value) {
@@ -69,7 +69,7 @@ export default {
             });
             await swal.fire(
               'Deleted!',
-              'Your file has been deleted.',
+              'Your profile has been deleted.',
               'success',
             );
             this.password = null;
@@ -82,9 +82,9 @@ export default {
                 email: this.user.email,
               },
             });
-            localStorage.removeItem('_speedbids');
-            this.closeModal();
-            this.$router.push('/');
+            await localStorage.removeItem('_speedbids');
+            await this.closeModal();
+            await this.$router.push('/');
           }
         })
         .catch(err => {
