@@ -82,7 +82,7 @@ export default {
                 email: this.user.email,
               },
             });
-            await this.closeModal();
+            await this.$bvModal.hide('ModalDeleteAccount');
             await this.$router.push('/');
             await localStorage.removeItem('_speedbids');
           }
