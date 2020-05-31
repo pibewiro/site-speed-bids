@@ -1,4 +1,5 @@
 import axios from 'axios';
+import fileSaver from 'file-saver';
 
 const state = {
   purchases: null,
@@ -36,6 +37,18 @@ const actions = {
     await axios.put(`${process.env.VUE_APP_API_ROOT}/purchase/${obj.purchaseId}`, {}, {
       headers: { 'x-access-token': obj.token }
     })
+  },
+
+  async downloadReciept(commit, obj) {
+    const response = await axios({
+      url: `${process.env.VUE_APP_API_ROOT}/purchase/download/${obj.purchaseId}`,
+      method: 'GET',
+      responseType: 'blob',
+      headers: { 'x-access-token': obj.token }
+    })
+
+    const pdfBlob = new Blob([response.data], { type: 'application/pdf' });
+    fileSaver(pdfBlob, 'reciept.pdf');
   }
 };
 const getters = {};

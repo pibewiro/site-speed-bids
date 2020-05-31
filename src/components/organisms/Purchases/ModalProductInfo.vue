@@ -29,6 +29,7 @@
 
     <template v-slot:modal-footer>
       <button
+        @click="handleDownload"
         v-if="items.status === 'Paid'"
         class="site-btn btn btn-lg"
       >Download Recieipt</button>
@@ -42,6 +43,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
 import moment from 'moment';
 moment.locale('pt-br');
 
@@ -49,9 +51,19 @@ export default {
   props: ['id', 'items'],
   data: () => ({
     imageUrl: null,
+    userAuth: null,
   }),
 
   methods: {
+    ...mapActions('Purchase', ['downloadReciept']),
+
+    handleDownload() {
+      this.downloadReciept({
+        token: this.userAuth.token,
+        purchaseId: this.id,
+      });
+    },
+
     formatDate(date) {
       return moment(date).format('DD/MM/YYYY');
     },
@@ -62,6 +74,7 @@ export default {
   },
 
   created() {
+    this.userAuth = JSON.parse(localStorage.getItem('_speedbids'));
     this.imageUrl = process.env.VUE_APP_API_IMAGES;
   },
 };
