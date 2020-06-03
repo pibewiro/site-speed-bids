@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import io from 'socket.io-client'
+// import io from 'socket.io-client'
 export default {
     data:()=>({
         socket:null,
@@ -35,7 +35,7 @@ export default {
 
     created(){
         this.userAuth = JSON.parse(localStorage.getItem("_speedbids"))
-        this.socket = io.connect(process.env.VUE_APP_API_SOCKET);
+        this.socket = window.io.connect(process.env.VUE_APP_API_SOCKET);
         this.socket.emit("loggedIn", {bidId:this.$route.params.liveId, firstname:this.userAuth.firstname, lastname:this.userAuth.lastname, userId:this.userAuth.userId})
         this.socket.on("logInMessage", (data)=>{
             this.messages.push(data);
