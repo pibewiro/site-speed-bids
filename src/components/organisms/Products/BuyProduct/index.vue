@@ -11,11 +11,19 @@
 
       <div class="productInfo">
         <div>
+          <p class="m-0"><span>Product Name:</span> {{product.productName}}</p>
           <p class="m-0"><span>Seller:</span> {{product.user.username}}</p>
           <p class="m-0"><span>Starting Price:</span> R${{product.price}}</p>
           <p class="m-0"><span>Current Price:</span> R${{buyers.currentPrice}}</p>
           <p class="m-0"><span>Date Added: </span> {{formatDate(product.createdAt)}}</p>
-          <p class="m-0"><span>Until: </span> {{formatDateTime(product.endDate)}}</p>
+          <p
+            class="m-0"
+            v-if="buyers.bidType === 'Standard'"
+          ><span>Until: </span> {{formatDateTime(product.endDate)}}</p>
+          <p
+            v-if="buyers.bidType === 'Live'"
+            class="m-0"
+          ><span>Live Bid:</span> {{formatDateTime(product.endDate)}}</p>
         </div>
 
       </div>
@@ -25,7 +33,7 @@
       v-if="product.user._id !== userAuth.userId"
       class="form-group priceInput"
     >
-      <div>
+      <div v-if="buyers.bidType === 'Standard'">
         <label for="">Place a Price: </label>
         <input
           class="form-control"
@@ -37,8 +45,17 @@
           class="site-btn btn btn-lg"
         >Place Price</button>
       </div>
+
+      <div v-if="buyers.bidType === 'Live'">
+        <button
+          @click="handleLiveBid"
+          class="site-btn btn btn-lg"
+        >Join Live Bid</button>
+      </div>
+      <p class="text-danger text-center">{{this.error.liveBidder}}</p>
       <p class="text-danger">{{this.error.price}}</p>
     </div>
+
     <div class="priceSection">
       <div
         v-for="(buyer, i) in buyers.prices"
@@ -75,8 +92,23 @@ export default {
 
   methods: {
     ...mapActions('Product', ['getProduct']),
-    ...mapActions('Buyer', ['getBuyers', 'addPrice']),
+    ...mapActions('Buyer', ['getBuyers', 'addPrice', 'addLiveBidder']),
 
+    async handleLiveBid() {
+      try {
+        await this.addLiveBidder({
+          token: this.userAuth.token,
+          data: {
+            userId: this.userAuth.userId,
+            buyerId: this.buyers._id,
+          },
+        });
+
+        swal.fire('You have been added to this bid', '', 'success');
+      } catch (err) {
+        this.error = err.response.data;
+      }
+    },
     formatDate(time) {
       return moment(time).format('DD/MM/YYYY');
     },

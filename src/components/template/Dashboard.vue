@@ -144,6 +144,19 @@
           </div>
           <p>My Products</p>
         </router-link>
+
+        <router-link
+          id="menuItem"
+          :class="`${this.menuClass} m-0`"
+          to="/live-bids"
+        >
+          <div class="m-0 text-center">
+            <span>
+              <i class="fas fa-users"></i>
+            </span>
+          </div>
+          <p>Live Bids</p>
+        </router-link>
       </div>
       <div
         id="mainSec"

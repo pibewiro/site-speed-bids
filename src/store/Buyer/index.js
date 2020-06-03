@@ -2,7 +2,8 @@ import axios from 'axios';
 
 const state = {
   buyers: {},
-  addedPrice: null
+  addedPrice: null,
+  liveBids: {},
 };
 
 const mutations = {
@@ -12,6 +13,10 @@ const mutations = {
 
   ADDED_PRICE: function (state, payload) {
     state.addedPrice = payload.data
+  },
+
+  VIEW_BIDS: function (state, payload) {
+    state.liveBids = payload.data
   }
 };
 
@@ -29,6 +34,20 @@ const actions = {
     )
 
     commit('ADDED_PRICE', response.data)
+  },
+
+  async addLiveBidder(commit, obj) {
+    await axios.post(`${process.env.VUE_APP_API_ROOT}/buyer/liveBid`, { ...obj.data }, {
+      headers: { 'x-access-token': obj.token }
+    })
+  },
+
+  async viewLiveBids({ commit }, obj) {
+    const response = await axios.get(`${process.env.VUE_APP_API_ROOT}/buyer/view-bids/${obj.userId}`, {
+      headers: { 'x-access-token': obj.token }
+    });
+
+    commit('VIEW_BIDS', response.data);
   }
 };
 const getters = {};

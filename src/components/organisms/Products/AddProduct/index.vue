@@ -40,21 +40,31 @@
       <div class="timeSection">
         <label for="example-datepicker">Choose a date and time</label>
         <div class="timeSection2">
-          <div class="date mr-3">
+          <div class="mr-3">
             <b-form-datepicker
               id="example-datepicker"
               v-model="form.endDate"
             ></b-form-datepicker>
           </div>
 
-          <div class="time">
+          <div>
             <b-form-timepicker
               locale="en"
               v-model="form.endTime"
             ></b-form-timepicker>
           </div>
         </div>
+      </div>
 
+      <div class="form-group mt-4">
+        <label for="">Bid Type</label>
+        <select
+          class="form-control"
+          v-model="form.bidType"
+        >
+          <option value="Standard">Standard</option>
+          <option value="Live">Live</option>
+        </select>
       </div>
 
       <div class="form-group mt-4">
@@ -136,6 +146,7 @@ export default {
         image: { defaultImage: null, productImages: [] },
         endDate: null,
         endTime: null,
+        bidType: null,
       },
       error: {},
       userAuth: null,
