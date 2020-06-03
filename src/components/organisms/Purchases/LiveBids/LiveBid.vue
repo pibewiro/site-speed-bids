@@ -4,7 +4,7 @@
 
       <div class="chatForm border">
           <div class="messages border mb-3">
-      <p v-for="(message, i) in messages" :key="i" :class="userAuth.userId === message.userId ? 'myBid' : 'otherBid'"><span>{{userAuth.username}}:</span> {{message.info}}</p>
+      <p v-for="(message, i) in messages" :key="i" :class="userAuth.userId === message.userId ? 'myBid' : 'otherBid'"><span>{{message.username}}:</span> {{message.info}}</p>
           </div>
           <div class="btn-div">
               <textarea v-model="bidInput" class="form-control mb-2"></textarea>
@@ -28,7 +28,7 @@ export default {
 
     methods:{
         handleBid(){
-            this.socket.emit('bid', {price:this.bidInput, bidId:this.$route.params.liveId, userId:this.userAuth.userId});
+            this.socket.emit('bid', {price:this.bidInput, bidId:this.$route.params.liveId, userId:this.userAuth.userId, username:this.userAuth.username});
             this.bidInput = null
         }
     },
