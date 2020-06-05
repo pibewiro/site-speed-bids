@@ -7,7 +7,7 @@
     </div>
     <div class="chat-section">
         <div class="product-chat border">
-            <h2 class="text-center mt-2">Productt</h2>
+            <h2 class="text-center mt-2">Product</h2>
                 <div class="pc-img-div">
                     <img :src="`${imageUrl}/${buyer.product.image.defaultImage}`" alt="">
                 </div>
