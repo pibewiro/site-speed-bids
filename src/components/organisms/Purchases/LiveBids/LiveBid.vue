@@ -2,6 +2,7 @@
   <div>
       <h1 class="text-center mb-3">Live Bid</h1>
     <!-- <p>{{buyer}}</p> -->
+    
     <div class="timer">
         <p class="border">{{timer}}</p>
     </div>
