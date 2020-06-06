@@ -1,8 +1,12 @@
 <template>
   <div>
       <h1 class="text-center mb-3">Live Bid</h1>
-    <!-- <p>{{buyer}}</p> -->
-    
+    <div v-if="winner" class="winner-info border my-3 p-3">
+        <h3 class="text-center">{{buyer.winner.username}} has Won the Bid R${{buyer.currentPrice}}</h3>
+        <div v-if="userAuth.userId === buyer.winner._id" class="btn-div text-center mt-4">
+            <button @click="checkout" class="site-btn btn btn-lg">Checkout</button>
+        </div>
+    </div>
     <div class="timer">
         <p class="border">{{timer}}</p>
     </div>
@@ -17,7 +21,7 @@
                 <p><span>Owner:</span> {{buyer.owner.username}}</p>
                 <p><span>Starting Price:</span> R${{buyer.product.price}}</p>
                 <p><span>Current Bid:</span> R${{buyer.currentPrice}}</p>
-                <p><span>Last Bidder:</span> {{buyer.winner.username}}</p>
+                <p><span>Last Bidder:</span> {{buyer.winner ? buyer.winner.username : ''}}</p>
                 <p><span>Number of Bidders:</span> {{buyer.liveBidders.length}}</p>
             </div>
         </div>
@@ -28,7 +32,7 @@
           <div class="btn-div">
               <textarea v-model="bidInput" class="form-control mb-2"></textarea>
               <p class="text-danger">{{error}}</p>
-              <button @click="handleBid" class="site-btn btn btn-block">Enter</button>
+              <button @click="handleBid" class="site-btn btn btn-block b-button">Enter</button>
           </div>
       </div>
     </div>
@@ -48,11 +52,13 @@ export default {
         buyerId:null,
         imageUrl:null,
         error:null,
-        timer:null
+        timer:null,
+        winner:false
     }),
 
     computed:{
-        ...mapState('Buyer', ['buyer'])
+        ...mapState('Buyer', ['buyer']),
+        ...mapState('Purchase', ['session'])
     },
 
     watch:{
@@ -65,13 +71,22 @@ export default {
     },
 
     methods:{
-        ...mapActions('Buyer', ['getBuyer']),
+        ...mapActions('Buyer', ['getBuyer', 'updatePurchaseLive']),
+        ...mapActions('Purchase', ['updatePurchaseLive']),
 
-        handleBid(){
-            this.socket.emit('bid', {price:this.bidInput, bidId:this.buyerId, userId:this.userAuth.userId, username:this.userAuth.username});
-            this.bidInput = null;
-            this.error = null;
-        }
+    handleBid(){
+        this.socket.emit('bid', {price:this.bidInput, bidId:this.buyerId, userId:this.userAuth.userId, username:this.userAuth.username});
+        this.bidInput = null;
+        this.error = null;
+    },
+
+    checkout() {
+
+      this.$router.push({
+        name: 'checkout',
+        params: { purchaseData: this.session },
+      });
+    },
     },
 
     async created(){
@@ -82,6 +97,9 @@ export default {
             token:this.userAuth.token,
             buyerId:this.buyerId
         })
+        if(!this.buyer.liveStatus){
+            this.$router.push("/live-bids")
+        }
         this.socket = io.connect(process.env.VUE_APP_API_SOCKET);
         this.socket.emit("loggedIn", {bidId:this.buyerId, firstname:this.userAuth.firstname, lastname:this.userAuth.lastname, userId:this.userAuth.userId, username:this.userAuth.username})
         this.socket.on("logInMessage", (data)=>{
@@ -93,7 +111,19 @@ export default {
         })
 
         this.socket.on("finished", ()=>{
-            this.$router.push("/")
+            this.winner = true;
+            let timer = document.querySelector('.timer');
+            let btn = document.querySelector('.b-button');
+            timer.style.display = "none"
+            btn.disabled = true;
+
+            if(this.userAuth.userId === this.buyer.winner._id)
+            this.updatePurchaseLive({
+                token:this.userAuth.token,
+                data:{
+                    buyerId:this.buyer._id,                   
+                }
+            })
         })
 
         this.socket.on('error', (data)=>{
@@ -103,6 +133,10 @@ export default {
         this.socket.on('bid2', (data)=>{
             this.messages.push(data);
         })
+    },
+
+    async beforeDestroy(){
+        await this.socket.emit("closeSocket", 'Closing Socket')
     }
 }
 </script>

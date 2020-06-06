@@ -59,6 +59,7 @@ export default {
     this.purchaseData = this.$route.params.purchaseData;
     this.userAuth = JSON.parse(localStorage.getItem('_speedbids'));
     this.imageUrl = process.env.VUE_APP_API_IMAGES;
+
     await this.checkout({
       token: this.userAuth.token,
       purchaseId: this.purchaseData._id,
@@ -73,7 +74,7 @@ export default {
 
 <style>
 .checkout {
-  width: 50%;
+  width: 60%;
   margin: 0 auto;
   padding: 20px 20px 0 20px;
 }
