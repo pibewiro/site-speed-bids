@@ -135,9 +135,9 @@ export default {
         })
     },
 
-    async beforeDestroy(){
-        await this.socket.emit("closeSocket", 'Closing Socket')
-    }
+    // async beforeDestroy(){
+    //     await this.socket.emit("closeSocket", 'Closing Socket')
+    // }
 }
 </script>
 
