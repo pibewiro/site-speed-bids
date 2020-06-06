@@ -27,6 +27,7 @@
             class="site-btn btn mr-3"
             v-b-modal="`ModalProductInfo${row.item._id}`"
           >Product Info</button>
+          
           <button
             v-if="row.item.status === 'Pending'"
             @click="checkout(row.item)"
