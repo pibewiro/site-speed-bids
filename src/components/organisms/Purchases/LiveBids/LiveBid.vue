@@ -69,11 +69,6 @@ export default {
         ...mapState('Buyer', ['buyer', 'bidTimestamp']),
         ...mapState('Purchase', ['session']),
         timeLeft() {
-            this.checkTimes();
-            console.log(this.bidEndTime, this.timeNow);
-        if(this.bidEndTime < this.timeNow){
-            this.finshedBid();
-        }
         return this.timeLimit - this.timePassed
     }
     },
@@ -90,11 +85,6 @@ export default {
     methods:{
         ...mapActions('Buyer', ['getBuyer', 'updatePurchaseLive', 'bidderTimestamp']),
         ...mapActions('Purchase', ['updatePurchaseLive']),
-        
-        async checkTimes(){
-              this.timeNow = moment(new Date().getTime()).subtract(3, 'hours').format('DD/MM/YYYY hh:mm:ss')
-            this.bidEndTime = await moment(new Date(this.buyer.times.endTime).getTime()).format('DD/MM/YYYY hh:mm:ss');
-        },
 
         finshedBid(){
             this.winner = true;
@@ -116,7 +106,17 @@ export default {
         },
 
         formatMinutes(time){
-            return moment(time).startOf('day').seconds(time).format('mm:ss')
+
+            let formattedTime = moment(time).startOf('day').seconds(time).format('mm:ss')
+            if(formattedTime == '00:00'){
+                if(!this.loading){
+                    this.finshedBid();
+                }
+            }
+
+            else{
+                return formattedTime
+            }
         },
           startTimer() {
       this.timerInterval = setInterval(() => (this.timePassed += 1), 1000);
