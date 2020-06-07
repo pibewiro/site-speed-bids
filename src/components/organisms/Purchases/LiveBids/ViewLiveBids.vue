@@ -60,7 +60,7 @@ export default {
     ...mapActions('Buyer', ['viewLiveBids']),
 
     formatDate(time) {
-      return moment(time).format('DD/MM/YYYY');
+      return moment(time).format('DD/MM/YYYY HH:mm');
     },
   },
 

@@ -1,14 +1,15 @@
 <template>
   <div>
       <h1 class="text-center mb-3">Live Bid</h1>
+
     <div v-if="winner" class="winner-info border my-3 p-3">
         <h3 class="text-center">{{buyer.winner.username}} has Won the Bid R${{buyer.currentPrice}}</h3>
         <div v-if="userAuth.userId === buyer.winner._id" class="btn-div text-center mt-4">
             <button @click="checkout" class="site-btn btn btn-lg">Checkout</button>
         </div>
     </div>
-    <div class="timer">
-        <p class="border">{{timer}}</p>
+    <div v-if="timerDiv" class="timer">
+        <p>{{ formatMinutes(timeLeft) }}</p>
     </div>
     <div class="chat-section">
         <div class="product-chat border">
@@ -21,7 +22,7 @@
                 <p><span>Owner:</span> {{buyer.owner.username}}</p>
                 <p><span>Starting Price:</span> R${{buyer.product.price}}</p>
                 <p><span>Current Bid:</span> R${{buyer.currentPrice}}</p>
-                <p><span>Last Bidder:</span> {{buyer.winner ? buyer.winner.username : ''}}</p>
+                <p><span>Last Bidder:</span> {{!buyer.winner ? '' : buyer.winner.username}}</p>
                 <p><span>Number of Bidders:</span> {{buyer.liveBidders.length}}</p>
             </div>
         </div>
@@ -42,6 +43,7 @@
 
 <script>
 // import io from 'socket.io-client'
+import moment from 'moment';
 import {mapActions, mapState} from 'vuex';
 export default {
     data:()=>({
@@ -53,12 +55,25 @@ export default {
         imageUrl:null,
         error:null,
         timer:null,
-        winner:false
+        winner:false,
+        timeLimit: null,
+        timePassed: 0,
+        loading:null,
+        timerDiv:true,
+        timeNow:null,
+        bidEndTime:null
     }),
 
     computed:{
-        ...mapState('Buyer', ['buyer']),
-        ...mapState('Purchase', ['session'])
+        ...mapState('Buyer', ['buyer', 'bidTimestamp']),
+        ...mapState('Purchase', ['session']),
+        timeLeft() {
+            this.checkTimes();
+        if(this.bidEndTime < this.timeNow){
+            this.finshedBid();
+        }
+        return this.timeLimit - this.timePassed
+    }
     },
 
     watch:{
@@ -67,17 +82,54 @@ export default {
             token:this.userAuth.token,
             buyerId:this.buyerId
         })
-        }
+        },
     },
 
     methods:{
-        ...mapActions('Buyer', ['getBuyer', 'updatePurchaseLive']),
+        ...mapActions('Buyer', ['getBuyer', 'updatePurchaseLive', 'bidderTimestamp']),
         ...mapActions('Purchase', ['updatePurchaseLive']),
+        
+        async checkTimes(){
+              this.timeNow = moment(new Date().getTime()).format('DD/MM/YYYY hh:mm:ss');
+            this.bidEndTime = await moment(new Date(this.buyer.times.endTime).getTime()).format('DD/MM/YYYY hh:mm:ss');
+        },
+
+        finshedBid(){
+            this.winner = true;
+            let timer = document.querySelector('.timer');
+            let btn = document.querySelector('.b-button');
+            timer.style.display = "none"
+            btn.disabled = true;
+
+            if(this.userAuth.userId === this.buyer.winner._id)
+            {
+                this.updatePurchaseLive({
+                token:this.userAuth.token,
+                data:{
+                    buyerId:this.buyer._id,                   
+                }
+            })
+            }
+ 
+        },
+
+        formatMinutes(time){
+            return moment(time).startOf('day').seconds(time).format('mm:ss')
+        },
+          startTimer() {
+      this.timerInterval = setInterval(() => (this.timePassed += 1), 1000);
+    },
 
     handleBid(){
         this.socket.emit('bid', {price:this.bidInput, bidId:this.buyerId, userId:this.userAuth.userId, username:this.userAuth.username});
         this.bidInput = null;
         this.error = null;
+    },
+
+    handleTime(){
+        const userEnterRoom = new Date(this.bidTimestamp.timeEntered).getTime();
+        const bidEndTime = new Date(this.buyer.times.endTime).getTime();
+        this.timeLimit = (bidEndTime-userEnterRoom)/1000;
     },
 
     checkout() {
@@ -90,16 +142,39 @@ export default {
     },
 
     async created(){
+        console.log(this.$route)
+        this.loading = true;
         this.userAuth = JSON.parse(localStorage.getItem("_speedbids"))
+
         this.imageUrl = process.env.VUE_APP_API_IMAGES;
         this.buyerId = this.$route.params.liveId
         await this.getBuyer({
             token:this.userAuth.token,
             buyerId:this.buyerId
         })
+
+
         if(!this.buyer.liveStatus){
             this.$router.push("/live-bids")
         }
+
+        await this.bidderTimestamp({
+            token:this.userAuth.token,
+            buyerId:this.buyer._id,
+            entering:false
+        })
+
+        await this.bidderTimestamp({
+            token:this.userAuth.token,
+            buyerId:this.buyer._id,
+            entering:true
+        })
+
+        this.handleTime();
+        this.startTimer();
+
+        this.currentDate = new Date();
+
         this.socket = window.io.connect(`${process.env.VUE_APP_API_SOCKET}`);
         this.socket.emit("loggedIn", {bidId:this.buyerId, firstname:this.userAuth.firstname, lastname:this.userAuth.lastname, userId:this.userAuth.userId, username:this.userAuth.username})
         this.socket.on("logInMessage", (data)=>{
@@ -110,22 +185,6 @@ export default {
             this.timer = data;
         })
 
-        this.socket.on("finished", ()=>{
-            this.winner = true;
-            let timer = document.querySelector('.timer');
-            let btn = document.querySelector('.b-button');
-            timer.style.display = "none"
-            btn.disabled = true;
-
-            if(this.userAuth.userId === this.buyer.winner._id)
-            this.updatePurchaseLive({
-                token:this.userAuth.token,
-                data:{
-                    buyerId:this.buyer._id,                   
-                }
-            })
-        })
-
         this.socket.on('error', (data)=>{
             this.error = data.error;
         })
@@ -133,11 +192,18 @@ export default {
         this.socket.on('bid2', (data)=>{
             this.messages.push(data);
         })
+
+        this.loading = false;
     },
 
     async beforeDestroy(){
+        await this.bidderTimestamp({
+            token:this.userAuth.token,
+            buyerId:this.buyer._id,
+            entering:false
+        })
         await this.socket.emit("closeSocket", 'Closing Socket')
-    }
+    },
 }
 </script>
 

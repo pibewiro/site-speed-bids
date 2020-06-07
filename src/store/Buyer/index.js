@@ -5,6 +5,7 @@ const state = {
   buyer: {},
   addedPrice: null,
   liveBids: {},
+  bidTimestamp: null,
 };
 
 const mutations = {
@@ -22,6 +23,10 @@ const mutations = {
 
   VIEW_BIDS: function (state, payload) {
     state.liveBids = payload.data;
+  },
+
+  GET_TIMESTAMP: function (state, payload) {
+    state.bidTimestamp = payload.data;
   },
 };
 
@@ -74,6 +79,17 @@ const actions = {
     );
 
     commit("VIEW_BIDS", response.data);
+  },
+
+  async bidderTimestamp({ commit }, obj) {
+    const response = await axios.post(
+      `${process.env.VUE_APP_API_ROOT}/buyer/bidder-timestamp/${obj.buyerId}`,
+      { entering: obj.entering },
+      {
+        headers: { "x-access-token": obj.token },
+      }
+    );
+    commit("GET_TIMESTAMP", response.data);
   },
 };
 const getters = {};
