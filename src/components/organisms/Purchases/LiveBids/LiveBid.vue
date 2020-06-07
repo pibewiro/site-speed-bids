@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import io from 'socket.io-client'
+// import io from 'socket.io-client'
 import moment from 'moment';
 import {mapActions, mapState} from 'vuex';
 export default {
@@ -175,9 +175,8 @@ export default {
         this.handleTime();
         this.startTimer();
 
-        this.currentDate = new Date();
-
-        this.socket = io.connect(this.socketUrl);
+        console.log(this.socketUrl)
+        this.socket = window.io.connect('https://speedbuyerapi.herokuapp.com');
         this.socket.emit("loggedIn", {bidId:this.buyerId, firstname:this.userAuth.firstname, lastname:this.userAuth.lastname, userId:this.userAuth.userId, username:this.userAuth.username})
         this.socket.on("logInMessage", (data)=>{
         this.messages.push(data);
