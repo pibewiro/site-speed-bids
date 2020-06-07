@@ -143,6 +143,7 @@ export default {
 
     async created(){
         console.log(this.$route)
+        this.socket = io.connect(process.env.VUE_APP_API_SOCKET);
         this.loading = true;
         this.userAuth = JSON.parse(localStorage.getItem("_speedbids"))
 
@@ -175,7 +176,6 @@ export default {
 
         this.currentDate = new Date();
 
-        this.socket = io.connect(`${process.env.VUE_APP_API_SOCKET}`);
         this.socket.emit("loggedIn", {bidId:this.buyerId, firstname:this.userAuth.firstname, lastname:this.userAuth.lastname, userId:this.userAuth.userId, username:this.userAuth.username})
         this.socket.on("logInMessage", (data)=>{
         this.messages.push(data);
