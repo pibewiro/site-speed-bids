@@ -70,6 +70,7 @@ export default {
         ...mapState('Purchase', ['session']),
         timeLeft() {
             this.checkTimes();
+            console.log(this.bidEndTime, this.timeNow);
         if(this.bidEndTime < this.timeNow){
             this.finshedBid();
         }
@@ -91,8 +92,8 @@ export default {
         ...mapActions('Purchase', ['updatePurchaseLive']),
         
         async checkTimes(){
-              this.timeNow = new Date();
-            this.bidEndTime = new Date(this.buyer.times.endTime);
+              this.timeNow = moment(new Date().getTime()).format('DD/MM/YYYY hh:mm:ss');
+            this.bidEndTime = await moment(new Date(this.buyer.times.endTime).getTime()).format('DD/MM/YYYY hh:mm:ss');
         },
 
         finshedBid(){
