@@ -174,15 +174,17 @@ export default {
         this.handleTime();
         this.startTimer();
 
-
+        console.log(process.env.NODE_ENV);
         if(process.env.NODE_ENV === 'development'){
+            console.log('dev')
             this.socket = window.io.connect('https://speedbuyerapi.herokuapp.com');
         }
 
         else{
+            console.log('dev2')
             this.socket = window.io.connect(process.env.VUE_APP_API_SOCKET);
         }
-        
+
         this.socket.emit("loggedIn", {bidId:this.buyerId, firstname:this.userAuth.firstname, lastname:this.userAuth.lastname, userId:this.userAuth.userId, username:this.userAuth.username})
         this.socket.on("logInMessage", (data)=>{
         this.messages.push(data);
