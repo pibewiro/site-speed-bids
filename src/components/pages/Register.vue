@@ -9,7 +9,7 @@
       <div class="formReg p-4 border">
         <div class="logo-div text-center">
           <img
-            src="../../assets/logo.png"
+            src="../../assets/logo.jpg"
             alt=""
           >
         </div>

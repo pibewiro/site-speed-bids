@@ -2,13 +2,13 @@
   <div class="site-nav">
     <div class="div-left">
       <img
-        src="../../assets/logo.png"
+        src="../../assets/logo.jpg"
         alt=""
       >
       <h1
         @click="homePage"
         class="navheader"
-      >Speed Bids</h1>
+      >Speed Buyer</h1>
     </div>
 
     <input
@@ -31,12 +31,12 @@
         class="nav-items-ham-a"
         id="navLink"
         to="register"
-      >Register</router-link>
+      >Cadastrar</router-link>
       <router-link
         class="nav-items-ham-a"
         id="navLink"
         to="products"
-      >View Items</router-link>
+      >Ver Produtos</router-link>
 
       <a
         v-if="this.token"

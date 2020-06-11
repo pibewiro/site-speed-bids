@@ -1,9 +1,9 @@
 <template>
   <div class="addProduct">
     <div class="productForm border p-4">
-      <h1 class=text-center>Add Product</h1>
+      <h1 class=text-center>Addicionar Produto</h1>
       <div class="form-group">
-        <label for="">Name</label>
+        <label for="">Nome</label>
         <input
           type="text"
           class="form-control"
@@ -13,7 +13,7 @@
       </div>
 
       <div class="form-group">
-        <label for="">Price</label>
+        <label for="">Preço</label>
         <input
           type="text"
           class="form-control"
@@ -23,22 +23,22 @@
       </div>
 
       <div class="form-group">
-        <label for="">Category</label>
+        <label for="">Categoria</label>
         <select
           class="form-control"
           v-model="form.category"
         >
           <option value=""></option>
-          <option value="automobiles">Automobiles</option>
-          <option value="houses">Houses</option>
-          <option value="electronics">Electronics</option>
-          <option value="sports">Sports</option>
+          <option value="automobiles">Automoveis</option>
+          <option value="houses">Casas</option>
+          <option value="electronics">Eletronicos</option>
+          <option value="sports">Esportes</option>
         </select>
         <p class="text-danger">{{this.error.category}}</p>
       </div>
 
       <div class="timeSection">
-        <label for="example-datepicker">Choose a date and time</label>
+        <label for="example-datepicker">Escolher um data e hora</label>
         <div class="timeSection2">
           <div class="mr-3">
             <b-form-datepicker
@@ -57,7 +57,7 @@
       </div>
 
       <div class="form-group mt-4">
-        <label for="">Bid Type</label>
+        <label for="">Tipo da Lance</label>
         <select
           class="form-control"
           v-model="form.bidType"
@@ -68,7 +68,7 @@
       </div>
 
       <div class="form-group mt-4">
-        <label for="">Description</label>
+        <label for="">Descrição</label>
         <textarea
           type="text"
           class="form-control"
@@ -79,7 +79,7 @@
 
       <p class="text-center text-danger mb-0">{{this.error.images}}</p>
       <div class="form-group">
-        <label for="">Default Image</label>
+        <label for="">Default Imagen</label>
         <input
           class="d-block"
           type="file"
@@ -100,7 +100,7 @@
           <label
             class="d-block"
             for=""
-          >Add Images</label>
+          >Addicionar Imagens</label>
           <input
             type="file"
             @change="selectImages"
@@ -123,7 +123,7 @@
         <button
           @click="saveProduct"
           class="site-btn btn btn-lg"
-        >Enter</button>
+        >Salvar</button>
       </div>
     </div>
   </div>

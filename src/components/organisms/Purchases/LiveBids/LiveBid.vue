@@ -1,7 +1,6 @@
 <template>
   <div>
-      <h1 class="text-center mb-3">Live Bid</h1>
-
+      <h1 class="text-center mb-3">Live</h1>
     <div v-if="winner" class="winner-info border my-3 p-3">
         <h3 class="text-center">{{buyer.winner.username}} has Won the Bid R${{buyer.currentPrice}}</h3>
         <div v-if="userAuth.userId === buyer.winner._id" class="btn-div text-center mt-4">
@@ -18,12 +17,12 @@
                     <img :src="`${imageUrl}/${buyer.product.image.defaultImage}`" alt="">
                 </div>
             <div class="pc-info">
-                <p><span>Product Name:</span> {{buyer.product.productName}}</p>
-                <p><span>Owner:</span> {{buyer.owner.username}}</p>
-                <p><span>Starting Price:</span> R${{buyer.product.price}}</p>
-                <p><span>Current Bid:</span> R${{buyer.currentPrice}}</p>
-                <p><span>Last Bidder:</span> {{!buyer.winner ? '' : buyer.winner.username}}</p>
-                <p><span>Number of Bidders:</span> {{buyer.liveBidders.length}}</p>
+                <p><span>Nome do Produto:</span> {{buyer.product.productName}}</p>
+                <p><span>Vendador:</span> {{buyer.owner.username}}</p>
+                <p><span>Preço:</span> R${{buyer.product.price}}</p>
+                <p><span>Lance Atual:</span> R${{buyer.currentPrice}}</p>
+                <p><span>Ultimo Licitante:</span> {{!buyer.winner ? '' : buyer.winner.username}}</p>
+                <p><span>Numero de Licitantes:</span> {{buyer.liveBidders.length}}</p>
             </div>
         </div>
         <div class="chatForm border">
@@ -33,7 +32,7 @@
           <div class="btn-div">
               <textarea v-model="bidInput" class="form-control mb-2"></textarea>
               <p class="text-danger">{{error}}</p>
-              <button @click="handleBid" class="site-btn btn btn-block b-button">Enter</button>
+              <button @click="handleBid" class="site-btn btn btn-block b-button">Lance um Preço</button>
           </div>
       </div>
     </div>
@@ -144,7 +143,6 @@ export default {
     },
 
     async created(){
-        console.log(this.$route)
         this.loading = true;
         this.userAuth = JSON.parse(localStorage.getItem("_speedbids"));
 
@@ -177,12 +175,10 @@ export default {
 
         console.log(process.env.NODE_ENV);
         if(process.env.NODE_ENV == 'production'){
-            console.log('dev')
             this.socket = window.io.connect('https://speedbuyerapi.herokuapp.com');
         }
 
         else{
-            console.log('dev2')
             this.socket = window.io.connect(process.env.VUE_APP_API_SOCKET);
         }
 

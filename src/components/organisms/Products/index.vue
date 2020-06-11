@@ -7,7 +7,7 @@
       <div>
         <div class="filterDiv">
           <div class="filterDiv1">
-            <h1 class="text-center pt-2">Products</h1>
+            <h1 class="text-center pt-2">Produtos</h1>
             <label for="checkbox"><span>&#9660;</span></label>
           </div>
           <input
@@ -17,7 +17,7 @@
           <div class="filters">
             <div class="filters2">
               <div class="form-group">
-                <label for="">Product Name</label>
+                <label for="">Nome Do Produto</label>
                 <input
                   type="text"
                   class="form-control"
@@ -26,7 +26,7 @@
               </div>
 
               <div class="form-group">
-                <label for="">Category</label>
+                <label for="">Categoria</label>
                 <select
                   name=""
                   id=""
@@ -122,18 +122,18 @@
                   <i class="fa fa-star"></i>
                 </span>
               </div>
-              <p><span class="font-weight-bold">Product :</span> {{product.productName}}</p>
-              <p><span class="font-weight-bold">Price:</span> R${{product.price}}</p>
-              <p><span class="font-weight-bold">Category:</span> {{product.category}}</p>
-              <p><span class="font-weight-bold">Username: </span>
+              <p><span class="font-weight-bold">Produto :</span> {{product.productName}}</p>
+              <p><span class="font-weight-bold">Preço:</span> R${{product.price}}</p>
+              <p><span class="font-weight-bold">Categoria:</span> {{product.category}}</p>
+              <p><span class="font-weight-bold">Usuarío: </span>
                 <router-link :to="`/user/${product.user._id}`">{{product.user.username}}</router-link>
               </p>
-              <p><span class="font-weight-bold">Uploaded:</span> {{formatProductTime(product.createdAt)}}</p>
+              <p><span class="font-weight-bold">Carregado:</span> {{formatProductTime(product.createdAt)}}</p>
               <div class="text-center">
                 <button
                   @click="viewProduct(product._id)"
                   class="site-btn btn btn-lg"
-                >Enter</button>
+                >Ver</button>
               </div>
             </div>
           </div>
@@ -175,7 +175,7 @@ export default {
     ...mapActions('Favorite', ['addFavorite', 'getFavorite']),
 
     formatProductTime(time) {
-      return moment(time).fromNow();
+      return moment(time).format('DD/MM/YYYY hh:mm');
     },
 
     handleFilter() {

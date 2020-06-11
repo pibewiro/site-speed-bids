@@ -21,25 +21,27 @@
           </div>
           <div class="d-flex justify-content-between align-items-center pt-3">
             <h1>{{product.productName}}</h1>
-            <h3>End Date: {{formatProductTime2(product.endDate)}}</h3>
+            <h3>Dia da Lança: {{formatProductTime2(product.endDate)}}</h3>
+            <div class="prd-btns-div">
             <router-link
               class="site-btn btn btn-lg"
               :to="`/buy-product/${product._id}`"
-            >Buy Product</router-link>
+            >Comprar Produto</router-link>
+            </div>
           </div>
           <div class="desc">
-            <p>Price:${{product.price}}</p>
+            <p>Preço:${{product.price}}</p>
             <router-link :to="`/user/${product.user._id}`">{{product.user.username}}</router-link>
             <h2
               class=""
               for=""
-            >Description</h2>
+            >Descrição</h2>
             <p>{{product.description}}</p>
           </div>
         </div>
       </div>
       <div class="otherImg">
-        <h4 class="similarItems">Similar Items</h4>
+        <h4 class="similarItems">Itens Similantes</h4>
         <div
           class="otherProducts border-bottom"
           v-for="(prd, i) in products"

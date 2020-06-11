@@ -20,6 +20,9 @@ import Checkout from "../src/components/organisms/Purchases/Checkout.vue";
 import paymentSuccess from "../src/components/organisms/Purchases/PaymentSuccess.vue";
 import ViewLiveBids from "../src/components/organisms/Purchases/LiveBids/ViewLiveBids.vue";
 import LiveBid from "../src/components/organisms/Purchases/LiveBids/LiveBid.vue";
+import Follow from "../src/components/organisms/Follow/index.vue";
+import SendMessage from "../src/components/organisms/Message/SendMessages.vue";
+import MyMessage from "../src/components/organisms/Message/MyMessages.vue";
 
 Vue.use(VueRouter);
 
@@ -51,6 +54,9 @@ const routes = [
       { path: "/purchases", component: Purchases },
       { path: "/live-bids", component: ViewLiveBids },
       { path: "/live/:liveId", component: LiveBid },
+      { path: "/follows", component: Follow },
+      { path: "/send-message", component: SendMessage },
+      { path: "/messages", component: MyMessage },
     ],
   },
 ];

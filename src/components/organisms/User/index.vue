@@ -2,7 +2,7 @@
   <div>
     <div class="form-div">
       <div class="formReg p-4 border">
-        <h1 class="text-center mb-4">My Profile</h1>
+        <h1 class="text-center mb-4">Meu Perfil</h1>
         <div class="userImgDiv text-center">
           <div class="userImg">
             <img
@@ -30,14 +30,14 @@
             v-if="!this.fileDiv"
             @click="showFileClick()"
             class="site-btn btn btn-lg mt-3"
-          >Change Image</button>
+          >Alterar Imagen</button>
 
         </div>
         <div class="logo-div text-center">
         </div>
         <div class="form-row1">
           <div class="form-group regInline">
-            <label for="">First Name</label>
+            <label for="">Primeiro Nome</label>
             <input
               type="text"
               class="form-control"
@@ -46,7 +46,7 @@
             <p class="text-danger">{{this.error.firstname}}</p>
           </div>
           <div class="form-group regInline">
-            <label for="">Last Name</label>
+            <label for="">Sobenome</label>
             <input
               type="text"
               class="form-control"
@@ -78,7 +78,7 @@
           </div>
 
           <div class="form-group regInline">
-            <label for="">Username</label>
+            <label for="">Nome do usuarío</label>
             <input
               type="text"
               class="form-control"
@@ -98,7 +98,7 @@
 
         <div class="form-row1">
           <div class="form-group regInline">
-            <label for="">City</label>
+            <label for="">Cidade</label>
             <input
               type="text"
               class="form-control"
@@ -108,7 +108,7 @@
           </div>
 
           <div class="form-group regInline">
-            <label for="">State</label>
+            <label for="">Estado</label>
             <input
               type="text"
               class="form-control"
@@ -118,7 +118,7 @@
           </div>
 
           <div class="form-group regInline">
-            <label for="">Country</label>
+            <label for="">País</label>
             <input
               type="text"
               class="form-control"
@@ -132,15 +132,15 @@
           <button
             class="site-btn btn btn-lg"
             v-b-modal.ModalChangePassword
-          >Change Password</button>
+          >Alterar Senha</button>
           <button
             class="btn btn-outline-danger btn-lg"
             v-b-modal.ModalDeleteAccount
-          >Delete Account</button>
+          >Deletar Conta</button>
           <button
             @click="handleEditUser"
             class="site-btn btn btn-lg"
-          >Enter</button>
+          >Salvar Alterações</button>
         </div>
         <ModalChangePassword :userAuth="userAuth" />
         <ModalDeleteAccount

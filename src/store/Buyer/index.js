@@ -78,6 +78,7 @@ const actions = {
       }
     );
 
+    console.log(response.data);
     commit("VIEW_BIDS", response.data);
   },
 

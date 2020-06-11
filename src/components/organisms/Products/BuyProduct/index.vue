@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 class="text-center">Place a Price</h1>
+    <h1 class="text-center">Lance um Preço</h1>
     <div class="productSection border mb-4">
       <div class="prdImgDiv">
         <img
@@ -11,19 +11,19 @@
 
       <div class="productInfo">
         <div>
-          <p class="m-0"><span>Product Name:</span> {{product.productName}}</p>
-          <p class="m-0"><span>Seller:</span> {{product.user.username}}</p>
-          <p class="m-0"><span>Starting Price:</span> R${{product.price}}</p>
-          <p class="m-0"><span>Current Price:</span> R${{buyers.currentPrice}}</p>
-          <p class="m-0"><span>Date Added: </span> {{formatDate(product.createdAt)}}</p>
+          <p class="m-0"><span>Nome do Produto:</span> {{product.productName}}</p>
+          <p class="m-0"><span>Vendador:</span> {{product.user.username}}</p>
+          <p class="m-0"><span>Preço Inicial:</span> R${{product.price}}</p>
+          <p class="m-0"><span>Preço Atual:</span> R${{buyers.currentPrice}}</p>
+          <p class="m-0"><span>Dia Adicionado: </span> {{formatDate(product.createdAt)}}</p>
           <p
             class="m-0"
             v-if="buyers.bidType === 'Standard'"
-          ><span>Until: </span> {{formatDateTime(product.endDate)}}</p>
+          ><span>Dia de Lance: </span> {{formatDateTime(product.endDate)}}</p>
           <p
             v-if="buyers.bidType === 'Live'"
             class="m-0"
-          ><span>Live Bid:</span> {{formatDateTime(product.endDate)}}</p>
+          ><span>Live:</span> {{formatDateTime(product.endDate)}}</p>
         </div>
 
       </div>

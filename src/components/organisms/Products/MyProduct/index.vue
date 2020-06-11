@@ -20,8 +20,12 @@
             <p class="text-center"><span class="font-weight-bold">Status:</span> {{product.active ? 'Active' : 'Inactive'}}</p>
             <button
               @click="productInfo(product._id)"
-              class="site-btn btn btn-lg px-4 py-2"
+              class="site-btn btn btn-lg"
             >Edit Product</button>
+              <button
+              @click="productInfo(product._id)"
+              class="site-btn btn btn-lg ml-2"
+            >View Messages</button>
           </div>
         </div>
       </div>

@@ -8,7 +8,7 @@
       <div class="loginForm border p-4">
         <div class="logo-div text-center">
           <img
-            src="../../assets/logo.png"
+            src="../../assets/logo.jpg"
             alt=""
           >
         </div>
@@ -24,7 +24,7 @@
         </div>
 
         <div class="form-group">
-          <label for="">Password</label>
+          <label for="">Senha</label>
           <input
             type="password"
             class="form-control"
@@ -37,13 +37,13 @@
           <button
             @click="loginClick"
             class="site-btn btn btn-block"
-          >Enter</button>
+          >Login</button>
         </div>
         <div class="text-center">
           <router-link
             class="forgotPassword"
             to='/forgot-password'
-          >Forgot Password</router-link>
+          >Esqueceu Senha</router-link>
         </div>
       </div>
     </div>

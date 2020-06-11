@@ -9,15 +9,15 @@ const state = {
 const mutations = {
   updateField,
 
-  GET_PRODUCTS: function(state, payload) {
+  GET_PRODUCTS: function (state, payload) {
     state.products = payload.data;
   },
 
-  GET_PRODUCT: function(state, payload) {
+  GET_PRODUCT: function (state, payload) {
     state.product = payload.data;
   },
 
-  GET_MY_PRODUCTS: function(state, payload) {
+  GET_MY_PRODUCTS: function (state, payload) {
     state.products = payload.data;
   },
 };
@@ -81,6 +81,13 @@ const actions = {
 
   async getProducts({ commit }) {
     const response = await axios.get(`${process.env.VUE_APP_API_ROOT}/product`);
+    commit("GET_PRODUCTS", response.data);
+  },
+
+  async getProductsHomePage({ commit }) {
+    const response = await axios.get(
+      `${process.env.VUE_APP_API_ROOT}/product/home-page`
+    );
     commit("GET_PRODUCTS", response.data);
   },
 

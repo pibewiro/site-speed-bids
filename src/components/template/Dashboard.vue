@@ -11,13 +11,13 @@
           <div class="line"></div>
         </div>
         <img
-          src="../../assets/logo.png"
+          src="../../assets/logo.jpg"
           alt=""
         >
         <h1
           @click="homePage"
           class="navheader"
-        >Speed Bids</h1>
+        >Speed Buyer</h1>
       </div>
 
       <input
@@ -77,7 +77,7 @@
               <i class="fas fa-users"></i>
             </span>
           </div>
-          <p>Products</p>
+          <p>Produtos</p>
         </router-link>
 
         <router-link
@@ -90,7 +90,7 @@
               <i class="fas fa-users"></i>
             </span>
           </div>
-          <p>Purchases</p>
+          <p>Compras</p>
         </router-link>
 
         <router-link
@@ -103,20 +103,20 @@
               <i class="fas fa-users"></i>
             </span>
           </div>
-          <p>Favorites</p>
+          <p>Favoritos</p>
         </router-link>
 
         <router-link
           id="menuItem"
           :class="`${this.menuClass} m-0`"
-          to="/products"
+          to="/follows"
         >
           <div class="m-0 text-center">
             <span>
               <i class="fas fa-users"></i>
             </span>
           </div>
-          <p>Likes</p>
+          <p>Seguidores</p>
         </router-link>
 
         <router-link
@@ -129,7 +129,7 @@
               <i class="fas fa-users"></i>
             </span>
           </div>
-          <p>Add Product</p>
+          <p>Adicionar Produtos</p>
         </router-link>
 
         <router-link
@@ -142,7 +142,7 @@
               <i class="fas fa-users"></i>
             </span>
           </div>
-          <p>My Products</p>
+          <p>Meus Produtos</p>
         </router-link>
 
         <router-link
@@ -155,7 +155,20 @@
               <i class="fas fa-users"></i>
             </span>
           </div>
-          <p>Live Bids</p>
+          <p>Lives</p>
+        </router-link>
+
+        <router-link
+          id="menuItem"
+          :class="`${this.menuClass} m-0`"
+          to="/messages"
+        >
+          <div class="m-0 text-center">
+            <span>
+              <i class="fas fa-users"></i>
+            </span>
+          </div>
+          <p>Mensagens</p>
         </router-link>
       </div>
       <div
