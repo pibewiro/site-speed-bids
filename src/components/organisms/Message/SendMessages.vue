@@ -64,8 +64,8 @@ export default {
             receiverId:this.user._id
         })
 
-        if(process.NODE_ENV === 'production'){
-            this.socket = window.io.connect('https://speedbuyer.herokuapp.com');
+        if(process.env.NODE_ENV == 'production'){
+            this.socket = window.io.connect('https://speedbuyerapi.herokuapp.com');
         }
 
         else{
