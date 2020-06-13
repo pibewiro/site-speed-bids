@@ -1,7 +1,6 @@
 <template>
   <div>
       <h1 class="text-center mb-3">Mandar Mensagem Para {{user.username}}</h1>
-
     <div class="chat-section" v-if="loading">
         <div class="chatForm border">
           <div class="messages border mb-3">
@@ -73,12 +72,21 @@ export default {
         }
 
         this.socket.emit('register', this.userAuth.username)
-        this.socket.on('message-sent', async ()=>{
-                        await this.getMessages({
-            token:this.userAuth.token,
-            senderId:this.userAuth.userId,
-            receiverId:this.user._id
-        })
+        this.socket.on('message-sent', async (data)=>{
+
+            console.log(data)
+            console.log((this.user._id === data.receiver && this.userAuth.userId === data.sender) || 
+            (this.user._id === data.sender && this.userAuth.userId === data.receiver))
+
+            if((this.user._id === data.receiver && this.userAuth.userId === data.sender) || 
+            (this.user._id === data.sender && this.userAuth.userId === data.receiver)){
+                            await this.getMessages({
+                token:this.userAuth.token,
+                senderId:this.userAuth.userId,
+                receiverId:this.user._id
+            })
+            }
+
         })
         this.loading = true;
                 // await this.getUser({id:this.$route.params.id})
