@@ -173,7 +173,6 @@ export default {
         this.handleTime();
         this.startTimer();
 
-        console.log(process.env.NODE_ENV);
         if(process.env.NODE_ENV == 'production'){
             this.socket = window.io.connect('https://speedbuyerapi.herokuapp.com');
         }

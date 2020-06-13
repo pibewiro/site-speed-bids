@@ -24,9 +24,12 @@
     "serve-static": "^1.14.1",
     "socket.io-client": "^2.3.0",
     "sweetalert2": "^9.10.12",
+    "uuid": "^8.1.0",
+    "uuidv4": "^6.1.0",
     "vue": "^2.6.11",
     "vue-router": "^3.1.6",
     "vue-stripe-checkout": "^3.3.1",
+    "vue-uuid": "^2.0.2",
     "vuex": "^3.3.0",
     "vuex-map-fields": "^1.4.0",
     "vuex-persistedstate": "^3.0.1"

@@ -22,10 +22,6 @@
               @click="productInfo(product._id)"
               class="site-btn btn btn-lg"
             >Edit Product</button>
-              <button
-              @click="productInfo(product._id)"
-              class="site-btn btn btn-lg ml-2"
-            >View Messages</button>
           </div>
         </div>
       </div>
@@ -48,10 +44,6 @@ export default {
 
   methods: {
     ...mapActions('Product', ['getMyProducts']),
-
-    productInfo(id) {
-      this.$router.push(`/my-product/${id}`);
-    },
   },
 
   created() {

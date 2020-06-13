@@ -1,29 +1,17 @@
 <template>
   <div>
-      <h1 class="text-center mb-3">Live Bid</h1>
+      <h1 class="text-center mb-3">Mandar Mensagem Para {{user.username}}</h1>
 
-    <div class="chat-section">
-        <div class="product-chat border">
-            <h2 class="text-center mt-2">Product</h2>
-                <!-- <div class="pc-img-div">
-                    <img :src="`${imageUrl}/${buyer.product.image.defaultImage}`" alt="">
-                </div> -->
-            <div class="pc-info">
-                <!-- <p><span>Product Name:</span> {{buyer.product.productName}}</p>
-                <p><span>Owner:</span> {{buyer.owner.username}}</p>
-                <p><span>Starting Price:</span> R${{buyer.product.price}}</p>
-                <p><span>Current Bid:</span> R${{buyer.currentPrice}}</p>
-                <p><span>Last Bidder:</span> {{!buyer.winner ? '' : buyer.winner.username}}</p>
-                <p><span>Number of Bidders:</span> {{buyer.liveBidders.length}}</p> -->
-            </div>
-        </div>
+    <div class="chat-section" v-if="loading">
         <div class="chatForm border">
           <div class="messages border mb-3">
-                <!-- <p v-for="(message, i) in messages" :key="i" :class="userAuth.userId === message.userId ? 'myBid' : 'otherBid'"><span>{{message.username}}:</span> {{message.info}}</p> -->
+                <p v-for="(message, i) in messages" :key="i" :class="userAuth.userId === message.sender._id ? 'myBid' : 'otherBid'">
+                    <span>{{message.sender.username}}:</span> {{message.text}}
+                </p>
           </div>
           <div class="btn-div">
-              <textarea class="form-control mb-2"></textarea>
-              <button  class="site-btn btn btn-block b-button">Enter</button>
+              <textarea v-model="myMessage" class="form-control mb-2"></textarea>
+              <button  @click="handleMessage" class="site-btn btn btn-block b-button">Mandar Mensagen</button>
           </div>
       </div>
     </div>
@@ -33,8 +21,70 @@
 
 <script>
 // import io from 'socket.io-client'
+import {mapActions, mapState} from 'vuex';
 
 export default {
+    data:()=>({
+        userAuth:null,
+        recieverId:null,
+        socket:null,
+        myMessage:null,
+        loading:null,
+    }),
+
+    computed:{
+        ...mapState('User', ['user']),
+        ...mapState('Message', ['messages'])
+
+    },
+
+    methods:{
+        ...mapActions('User', ['getUser']),
+        ...mapActions('Message', ['getMessages']),
+
+        handleMessage(){
+            this.socket.emit('private_chat', {
+                receiver:{id:this.user._id, username:this.user.username},
+                sender:{id:this.userAuth.userId, username:this.userAuth.username},
+                message:this.myMessage
+            });
+
+            this.myMessage = null;
+        },
+    },
+
+    async created(){
+        this.loading = false;
+        this.userAuth = JSON.parse(localStorage.getItem('_speedbids'));
+        this.recieverId = this.$route.params.id;
+        await this.getUser({id:this.$route.params.id})
+        await this.getMessages({
+            token:this.userAuth.token,
+            senderId:this.userAuth.userId,
+            receiverId:this.user._id
+        })
+
+        if(process.NODE_ENV === 'production'){
+            this.socket = window.io.connect('https://speedbuyer.herokuapp.com');
+        }
+
+        else{
+             this.socket = window.io.connect(process.env.VUE_APP_API_SOCKET)
+        }
+
+        this.socket.emit('register', this.userAuth.username)
+        this.socket.on('message-sent', async ()=>{
+                        await this.getMessages({
+            token:this.userAuth.token,
+            senderId:this.userAuth.userId,
+            receiverId:this.user._id
+        })
+        })
+        this.loading = true;
+                // await this.getUser({id:this.$route.params.id})
+
+
+    }
 
 }
 </script>

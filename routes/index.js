@@ -3,6 +3,7 @@ import VueRouter from "vue-router";
 import Home from "../src/components/pages/Home/index.vue";
 import Register from "../src/components/pages/Register.vue";
 import Login from "../src/components/pages/Login.vue";
+import AdminLogin from "../src/components/pages/AdminLogin.vue";
 import Dashboard from "../src/components/template/Dashboard";
 import Products from "../src/components/organisms/Products/index.vue";
 // import DashHome from '../src/components/organisms/Dashboard/index.vue'
@@ -22,7 +23,7 @@ import ViewLiveBids from "../src/components/organisms/Purchases/LiveBids/ViewLiv
 import LiveBid from "../src/components/organisms/Purchases/LiveBids/LiveBid.vue";
 import Follow from "../src/components/organisms/Follow/index.vue";
 import SendMessage from "../src/components/organisms/Message/SendMessages.vue";
-import MyMessage from "../src/components/organisms/Message/MyMessages.vue";
+// import MyMessage from "../src/components/organisms/Message/MyMessages.vue";
 
 Vue.use(VueRouter);
 
@@ -32,6 +33,7 @@ const routes = [
   { path: "/register", component: Register },
   { path: "/products", component: ProductsLogout },
   { path: "/checkout", name: "checkout", component: Checkout },
+  { path: "/admin", component: AdminLogin },
   {
     path: "/payment-success/:purchaseId",
     name: "paymentSuccess",
@@ -55,8 +57,7 @@ const routes = [
       { path: "/live-bids", component: ViewLiveBids },
       { path: "/live/:liveId", component: LiveBid },
       { path: "/follows", component: Follow },
-      { path: "/send-message", component: SendMessage },
-      { path: "/messages", component: MyMessage },
+      { path: "/send-message/:id", component: SendMessage },
     ],
   },
 ];

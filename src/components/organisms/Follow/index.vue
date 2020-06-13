@@ -8,7 +8,7 @@
                   <img :src="`${imageUrl}/${follow.image}`" alt="">
               </div>
               <div class="btn-div text-center pt-2">
-                  <button @click="handleFollow(follow._id)" class="site-btn btn">Follow</button>
+                  <button @click="handleMessage(follow._id)" class="site-btn btn">Mandar Mensagen</button>
               </div>
           </div>
       </div>
@@ -31,18 +31,9 @@ export default {
     methods:{
         ...mapActions('Follow', ['showFollows', 'addFollow']),
 
-        async handleFollow(id){
-            await this.addFollow({
-                id,
-                token:this.userAuth.token,
-                userId:this.userAuth.userId
-            })
-
-        await this.showFollows({
-            token:this.userAuth.token,
-            id:this.userAuth.userId
-        })
-        }
+        handleMessage(id){
+            this.$router.push(`/send-message/${id}`)
+        },
     },
 
     async created(){
