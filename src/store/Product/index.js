@@ -9,15 +9,15 @@ const state = {
 const mutations = {
   updateField,
 
-  GET_PRODUCTS: function (state, payload) {
+  GET_PRODUCTS: function(state, payload) {
     state.products = payload.data;
   },
 
-  GET_PRODUCT: function (state, payload) {
+  GET_PRODUCT: function(state, payload) {
     state.product = payload.data;
   },
 
-  GET_MY_PRODUCTS: function (state, payload) {
+  GET_MY_PRODUCTS: function(state, payload) {
     state.products = payload.data;
   },
 };
@@ -158,6 +158,17 @@ const actions = {
     const response = await axios.get(
       `${process.env.VUE_APP_API_ROOT}/favorite/favoriteProducts/${obj.id}`,
       { headers: { "x-access-token": obj.token } }
+    );
+    commit("GET_PRODUCTS", response.data);
+  },
+
+  async getAllProductsAdmin({ commit }, obj) {
+    const response = await axios.get(
+      `${process.env.VUE_APP_API_ROOT}/product/getProductsAdmin`,
+      {
+        headers: { "x-access-token": obj.token },
+        params: { productFilter: obj.productFilter },
+      }
     );
     commit("GET_PRODUCTS", response.data);
   },

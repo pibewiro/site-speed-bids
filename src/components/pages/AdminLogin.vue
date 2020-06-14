@@ -35,7 +35,7 @@
 
         <div class="form-group">
           <button
-            @click="loginClick"
+            @click="loginClickAdmin"
             class="site-btn btn btn-block"
           >Login</button>
         </div>
@@ -52,13 +52,11 @@ export default {
     Navbar,
   },
 
-  data() {
-    return {
+  data:()=>({
       email: null,
       password: null,
       error: {},
-    };
-  },
+  }),
 
   computed: {
     ...mapState('Auth', ['token', 'auth']),
@@ -67,7 +65,7 @@ export default {
   methods: {
     ...mapActions('Auth', ['adminlogin']),
 
-    async loginClick() {
+    async loginClickAdmin() {
       try {
         await this.adminlogin({
           email: this.email,

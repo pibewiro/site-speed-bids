@@ -6,11 +6,11 @@ const state = {
 };
 
 const mutations = {
-  GET_FOLLOWS: function (state, payload) {
+  GET_FOLLOWS: function(state, payload) {
     state.follows = payload.data;
   },
 
-  SHOW_MY_FOLLOWS: function (state, payload) {
+  SHOW_MY_FOLLOWS: function(state, payload) {
     state.showMyFollows = payload.data;
   },
 };
@@ -44,6 +44,7 @@ const actions = {
       `${process.env.VUE_APP_API_ROOT}/follow/show-follows/${obj.id}`,
       {
         headers: { "x-access-token": obj.token },
+        params: { filter: obj.filter },
       }
     );
     commit("SHOW_MY_FOLLOWS", response.data);

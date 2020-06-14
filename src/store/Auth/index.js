@@ -49,7 +49,7 @@ const actions = {
     );
   },
 
-  async adminlogin(commit, obj) {
+  async adminlogin({ commit }, obj) {
     const response = await axios.post(
       `${process.env.VUE_APP_API_ROOT}/auth/admin`,
       {

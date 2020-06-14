@@ -68,6 +68,32 @@
         class="menu border-right border-top"
       >
         <router-link
+          v-if="userType == 'master'"
+          id="menuItem"
+          :class="`${this.menuClass} m-0`"
+          to="/admin/all-products"
+        >
+          <div class="m-0 text-center">
+            <span>
+              <i class="fas fa-users"></i>
+            </span>
+          </div>
+          <p>Todos Os Produtos</p>
+        </router-link>
+        <router-link
+          v-if="userType == 'master'"
+          id="menuItem"
+          :class="`${this.menuClass} m-0`"
+          to="/admin/all-users"
+        >
+          <div class="m-0 text-center">
+            <span>
+              <i class="fas fa-users"></i>
+            </span>
+          </div>
+          <p>Todos Os Usuários</p>
+        </router-link>
+        <router-link
           id="menuItem"
           :class="`${this.menuClass} m-0`"
           to="/dashboard"
@@ -188,6 +214,7 @@
 
 <script>
 import { mapState, mapActions } from 'vuex';
+import jwtDecode from 'jwt-decode';
 
 export default {
   data() {
@@ -198,6 +225,7 @@ export default {
       imageUrl: null,
       userAuth: null,
       image: null,
+      userType:null
     };
   },
 
@@ -209,12 +237,12 @@ export default {
     if (!localStorage.getItem('_speedbids')) {
       this.$router.push('/');
     }
-
     this.token = localStorage.getItem('_speedbids');
     this.menuClass = 'menuItem';
 
     this.userAuth = JSON.parse(localStorage.getItem('_speedbids'));
     await this.getUser({ id: this.userAuth.userId });
+    this.userType = jwtDecode(this.userAuth.token).type;
     this.image = this.user.image;
     this.imageUrl = process.env.VUE_APP_API_IMAGES;
   },
@@ -294,6 +322,7 @@ export default {
   text-align: center;
   border-bottom: 1px solid var(--siteText);
   padding: 5px 0 10px 0;
+  font-size:13px;
 }
 
 .menuItem:hover,
@@ -311,6 +340,7 @@ export default {
   text-align: center;
   border-bottom: 1px solid var(--siteText);
   padding: 13px 0 13px 20px;
+    font-size:13px;
 }
 
 .menuItem p {

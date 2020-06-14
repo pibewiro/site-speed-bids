@@ -12,6 +12,8 @@ import Product from "../src/components/organisms/Products/Product/index.vue";
 import MyProduct from "../src/components/organisms/Products/MyProduct/index.vue";
 import ProductsLogout from "../src/components/organisms/Products/ProductsLogout.vue";
 import EditProduct from "../src/components/organisms/Products/EditProduct/index.vue";
+import AllProducts from "../src/components/organisms/Products/AllProducts/index.vue";
+import AllUsers from "../src/components/organisms/User/AllUsers/index.vue";
 import UserConfig from "../src/components/organisms/User/index.vue";
 import Favorites from "../src/components/organisms/Favorites/index.vue";
 import User from "../src/components/organisms/User/User.vue";
@@ -58,6 +60,8 @@ const routes = [
       { path: "/live/:liveId", component: LiveBid },
       { path: "/follows", component: Follow },
       { path: "/send-message/:id", component: SendMessage },
+      { path: "/admin/all-products", component: AllProducts },
+      { path: "/admin/all-users", component: AllUsers },
     ],
   },
 ];

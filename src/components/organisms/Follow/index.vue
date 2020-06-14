@@ -1,7 +1,19 @@
 <template>
   <div>
       <h1 class="text-center">Follows</h1>
-      <div class="follow-div mt-3">
+
+      <div class="mb-3">
+          <label for="">Filtro:</label>
+          <div class="form-inline">
+              <input @keydown="handleFilter" type="text" class="form-control mr-2" v-model="filter">
+          </div>
+      </div>
+
+        <div>
+          <h1 v-if="loading">Carregando...</h1>
+      </div>
+
+      <div v-if="!loading" class="follow-div mt-3">
           <div v-for="(follow, i) in showMyFollows" :key="i" class="fd1 py-2 border">
               <h2 class="text-center"><router-link :to="`/user/${follow._id}`" class="user-link">{{follow.username}}</router-link></h2>
               <div class="img-div-follow">
@@ -21,7 +33,9 @@ import {mapActions, mapState} from 'vuex';
 export default {
     data:()=>({
         userAuth:null,
-        imageUrl:null
+        imageUrl:null,
+        filter:null,
+        loading:false,
     }),
 
     computed:{
@@ -34,17 +48,33 @@ export default {
         handleMessage(id){
             this.$router.push(`/send-message/${id}`)
         },
+
+        handleFilter(){
+            this.loading = true;
+            setTimeout(async ()=>{
+            await this.showFollows({
+            token:this.userAuth.token,
+            id:this.userAuth.userId,
+            filter:this.filter
+        })
+            }, 500)
+            this.loading = false;
+        }
     },
 
     async created(){
+        this.loading = true;
         this.imageUrl = process.env.VUE_APP_API_IMAGES;
 
         this.userAuth = JSON.parse(localStorage.getItem('_speedbids'));
 
         await this.showFollows({
             token:this.userAuth.token,
-            id:this.userAuth.userId
+            id:this.userAuth.userId,
+            filter:this.filter
         })
+
+        this.loading = false;
     }
 }
 </script>
