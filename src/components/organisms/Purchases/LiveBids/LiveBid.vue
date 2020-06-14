@@ -79,10 +79,21 @@ export default {
             buyerId:this.buyerId
         })
         },
+
+        winner: async function(){
+            if(this.userAuth.userId == this.buyer.winner._id){
+                await this.updatePurchaseLive({
+                token:this.userAuth.token,
+                data:{
+                    buyerId:this.buyer._id,                   
+                }
+                })
+            }
+        }
     },
 
     methods:{
-        ...mapActions('Buyer', ['getBuyer', 'updatePurchaseLive', 'bidderTimestamp']),
+        ...mapActions('Buyer', ['getBuyer', 'bidderTimestamp']),
         ...mapActions('Purchase', ['updatePurchaseLive']),
 
         finshedBid(){
@@ -92,24 +103,24 @@ export default {
             timer.style.display = "none"
             btn.disabled = true;
 
-            if(this.userAuth.userId === this.buyer.winner._id)
-            {
-                this.updatePurchaseLive({
-                token:this.userAuth.token,
-                data:{
-                    buyerId:this.buyer._id,                   
-                }
-            })
-            }
+            // if(this.userAuth.userId === this.buyer.winner._id)
+            // {
+            //     await this.updatePurchaseLive({
+            //         token:this.userAuth.token,
+            //         data:{
+            //             buyerId:this.buyer._id,                   
+            //         }
+            //     })
+            // }
  
         },
 
         formatMinutes(time){
 
             let formattedTime = moment(time).startOf('day').seconds(time).format('mm:ss')
-            if(formattedTime == '00:00'){
+            if(formattedTime === '00:00'){
                 if(!this.loading){
-                    this.finshedBid();
+                   this.finshedBid();
                 }
             }
 
