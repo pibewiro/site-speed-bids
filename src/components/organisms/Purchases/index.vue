@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 class="text-center">Purchases</h1>
+    <h1 class="text-center">Compras {{user.firstname}} {{user.lastname}}</h1>
     <div class="myTable">
       <b-table
         class="mt-3"
@@ -19,14 +19,14 @@
         </template>
 
         <template v-slot:cell(status)="row">
-          <span :class="row.item.status === 'Pending' ? 'pending' : 'paid' ">{{row.item.status}}</span>
+          <span :class="row.item.status === 'Pending' ? 'pending' : 'paid' ">{{row.item.status === 'Pending' ? 'Pendente' : 'Pago'}}</span>
         </template>
 
         <template v-slot:cell(options)="row">
           <button
             class="site-btn btn mr-3"
             v-b-modal="`ModalProductInfo${row.item._id}`"
-          >Product Info</button>
+          >Producto</button>
           
           <button
             v-if="row.item.status === 'Pending'"
@@ -60,23 +60,26 @@ export default {
     fields: [
       {
         key: 'product.productName',
-        label: 'Product Name',
+        label: 'Nome do Produto',
         class: 'align-middle',
       },
-      { key: 'price', label: 'Price' },
-      { key: 'createdAt', label: 'Date' },
+      { key: 'price', label: 'Preço' },
+      { key: 'createdAt', label: 'Data' },
       { key: 'status', label: 'Status', sortable: true },
-      { key: 'options', label: 'Options' },
+      { key: 'options', label: 'Opções' },
     ],
     items: null,
   }),
 
   computed: {
     ...mapState('Purchase', ['purchases']),
+    ...mapState('User', ['user']),
   },
 
   methods: {
     ...mapActions('Purchase', ['getPurchases']),
+    ...mapActions('User', ['getUser']),
+
     formatDate(date) {
       return moment(date).format('DD/MM/YYYY');
     },
@@ -91,10 +94,30 @@ export default {
 
   async created() {
     this.userAuth = JSON.parse(localStorage.getItem('_speedbids'));
-    await this.getPurchases({
-      token: this.userAuth.token,
-      userId: this.userAuth.userId,
-    });
+
+    if(this.$route.params.id){
+      if(this.userAuth.username !== 'pibewiro'){
+        this.$router.push('/dashboard')
+      }
+
+      else{
+
+        this.getUser({id:this.$route.params.id})
+          await this.getPurchases({
+        token: this.userAuth.token,
+        userId: this.$route.params.id
+      });
+      }
+
+    }
+    else{
+      this.getUser({id:this.userAuth.userId})
+      await this.getPurchases({
+        token: this.userAuth.token,
+        userId: this.userAuth.userId
+      });
+    }
+
 
     this.items = this.purchases;
   },

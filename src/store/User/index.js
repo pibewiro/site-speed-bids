@@ -8,11 +8,11 @@ const state = {
 
 const mutations = {
   updateField,
-  GET_USER: function(state, payload) {
+  GET_USER: function (state, payload) {
     state.user = payload.data;
   },
 
-  GET_USERS: function(state, payload) {
+  GET_USERS: function (state, payload) {
     state.users = payload.data;
   },
 };
@@ -46,6 +46,7 @@ const actions = {
     const response = await axios.get(
       `${process.env.VUE_APP_API_ROOT}/user/${obj.id}`
     );
+    console.log(response.data);
     commit("GET_USER", response.data);
   },
 
@@ -66,6 +67,17 @@ const actions = {
       },
     });
     commit("GET_USERS", response.data);
+  },
+
+  async userStatus(commit, obj) {
+    await axios.put(
+      `${process.env.VUE_APP_API_ROOT}/user/user-status/${obj.userId}`,
+      {},
+      {
+        headers: { "x-access-token": obj.token },
+        params: { status: obj.status },
+      }
+    );
   },
 };
 

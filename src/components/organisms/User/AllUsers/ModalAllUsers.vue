@@ -9,91 +9,117 @@
           <div class="all-user-form row">
               <div class="form-group col-4">
                     <label for="">Primeiro Nome</label>
-                    <input :type="text" v-model="firstname" class="form-control">
+                    <input readonly :type="text" v-model="form.firstname" class="form-control">
               </div>
 
              <div class="form-group col-4">
                     <label for="">Sobre Nome</label>
-                    <input :type="text" v-model="lastname" class="form-control">
+                    <input readonly :type="text" v-model="form.lastname" class="form-control">
               </div>
 
                 <div class="form-group col-4">
                     <label for="">Usuário</label>
-                    <input :type="text" v-model="username" class="form-control">
+                    <input readonly :type="text" v-model="form.username" class="form-control">
               </div>
 
                 <div class="form-group col-4">
                     <label for="">Email</label>
-                    <input :type="text" v-model="email" class="form-control">
+                    <input readonly :type="text" v-model="form.email" class="form-control">
               </div>
 
                 <div class="form-group col-4">
                     <label for="">CPF</label>
-                    <input :type="text" v-model="cpf" class="form-control">
+                    <input readonly :type="text" v-model="form.cpf" class="form-control">
               </div>
 
               <div class="col-12 row">
                 <div class="form-group col-4">
                     <label for="">Cidade</label>
-                    <input :type="text" v-model="city" class="form-control">
+                    <input readonly :type="text" v-model="form.city" class="form-control">
                 </div>
 
                 <div class="form-group col-4">
                     <label for="">Estado</label>
-                    <input :type="text" v-model="state" class="form-control">
+                    <input readonly :type="text" v-model="form.state" class="form-control">
                 </div>
 
                 <div class="form-group col-4">
                     <label for="">País</label>
-                    <input :type="text" v-model="country" class="form-control">
+                    <input readonly :type="text" v-model="form.country" class="form-control">
+              </div>
+
+              <div class="col-12">
+                  <p><span class="font-weight-bold">Status:</span> {{userData.active ? 'Ativo' : 'Desativado'}}</p>
               </div>
               </div>
           </div>
       </div>
 
     <template v-slot:modal-footer>
-        <button  class="site-btn btn mr-3">Cancelar</button>
-        <button  class="btn btn-outline-danger mr-3">Diabilitar Usuário</button>
-        <button @click="handleUser" class="site-btn btn">Salvar</button>
+        <button  @click="handleStatus" class="btn btn-outline-danger mr-3">Disabilitar Usuário</button>
+        <button  @click="handlePurchase" class="site-btn btn mr-3">Compras</button>
+        <button  @click="closeModal" class="site-btn btn">Ok</button>
     </template>
   </b-modal>
 </template>
 
 <script>
+import {mapActions} from 'vuex';
+
 export default {
-        props:['userData'],
+        props:['userData', 'userAuth'],
     data:()=>({
-        firstname:null,
-        lastname:null,
-        username:null,
-        email:null,
-        cpf:null,
-        city:null,
-        state:null,
-        country:null,
+        form:{
+            firstname:null,
+            lastname:null,
+            username:null,
+            email:null,
+            cpf:null,
+            city:null,
+            state:null,
+            country:null
+        }
     }),
 
     methods:{
-        handleUser(){
-            alert(this.firstname)
+        ...mapActions('User', ['userStatus', 'getUsers']),
+
+        closeModal() {
+            this.$bvModal.hide(`modalAllUsers${this.userData._id}`);
+        },
+        handlePurchase(){
+            this.$router.push(`/admin/purchases/${this.userData._id}`)
+        },
+
+        async handleStatus(){
+            await this.userStatus({
+                userId:this.userData._id,
+                status:this.userData.active,
+                token:this.userAuth.token
+            })
+
+            await this.getUsers({filter:null})
         }
     },
 
-    async created(){
-        this.firstname = this.userData.firstname
-        this.username = this.userData.username
-        this.lastname = this.userData.lastname
-        this.email = this.userData.email
-        this.cpf = this.userData.cpf
-        this.city = this.userData.address.city
-        this.state = this.userData.address.state
-        this.country = this.userData.address.country
+    created(){
+        this.form.firstname = this.userData.firstname
+        this.form.username = this.userData.username
+        this.form.lastname = this.userData.lastname
+        this.form.email = this.userData.email
+        this.form.cpf = this.userData.cpf
+        this.form.city = this.userData.address.city
+        this.form.state = this.userData.address.state
+        this.form.country = this.userData.address.country
     },
 
 
 }
 </script>
 
-<style>
+<style scoped>
+input:read-only{
+    background-color: #fff;
+}
 
 </style>

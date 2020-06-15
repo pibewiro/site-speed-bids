@@ -35,17 +35,17 @@
         </div>
         <div class="logo-div text-center">
         </div>
-        <div class="form-row1">
-          <div class="form-group regInline">
+        <div class="col-12 row">
+          <div class="form-group col-4">
             <label for="">Primeiro Nome</label>
             <input
-              type="text"
-              class="form-control"
-              v-model="user.firstname"
-            >
-            <p class="text-danger">{{this.error.firstname}}</p>
+            type="text"
+            class="form-control"
+            v-model="user.firstname"
+          >
+          <p class="text-danger">{{this.error.firstname}}</p>
           </div>
-          <div class="form-group regInline">
+          <div class="form-group col-4">
             <label for="">Sobenome</label>
             <input
               type="text"
@@ -55,7 +55,7 @@
             <p class="text-danger">{{this.error.lastname}}</p>
           </div>
 
-          <div class="form-group regInline">
+          <div class="form-group col-4">
             <label for="">CPF</label>
             <input
               type="text"
@@ -66,8 +66,8 @@
           </div>
         </div>
 
-        <div class="form-row1">
-          <div class="form-group regInline">
+        <div class="col-12 row">
+          <div class="form-group col-4">
             <label for="">Email</label>
             <input
               type="text"
@@ -77,7 +77,7 @@
             <p class="text-danger">{{this.error.email}}</p>
           </div>
 
-          <div class="form-group regInline">
+          <div class="form-group col-4">
             <label for="">Nome do usuarío</label>
             <input
               type="text"
@@ -86,18 +86,10 @@
             >
             <p class="text-danger">{{this.error.username}}</p>
           </div>
-
-          <div
-            class="form-group regInline"
-            style="visibility:hidden"
-          >
-            <label for="">Invisible</label>
-            <input class="form-control">
-          </div>
         </div>
 
-        <div class="form-row1">
-          <div class="form-group regInline">
+        <div class="col-12 row">
+          <div class="form-group col-4">
             <label for="">Cidade</label>
             <input
               type="text"
@@ -107,7 +99,7 @@
             <p class="text-danger">{{this.error.city}}</p>
           </div>
 
-          <div class="form-group regInline">
+          <div class="form-group col-4">
             <label for="">Estado</label>
             <input
               type="text"
@@ -117,7 +109,7 @@
             <p class="text-danger">{{this.error.state}}</p>
           </div>
 
-          <div class="form-group regInline">
+          <div class="form-group col-4">
             <label for="">País</label>
             <input
               type="text"
@@ -126,6 +118,12 @@
             >
             <p class="text-danger">{{this.error.country}}</p>
           </div>
+        </div>
+
+        <div class="col-12 row m-0">
+          <p class="col-4 p-0"><span class="font-weight-bold">Número de produtos vendidos:</span><br /> {{this.userPurchaseData.itemsSold}}</p>
+          <p class="col-3 p-0"><span class="font-weight-bold">Total ganho em vendas:</span><br /> R${{this.userPurchaseData.totalPrice}}</p>
+          <p class="col-3 p-0"><span class="font-weight-bold">Total ganho em bônus:</span> R${{this.userPurchaseData.totalBonus}}</p>          
         </div>
 
         <div class="text-center mt-4 my-profile-btns">
@@ -153,7 +151,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapState } from 'vuex';
 import { mapFields } from 'vuex-map-fields';
 import swal from 'sweetalert2';
 import ModalChangePassword from './ModalChangePassword';
@@ -162,6 +160,7 @@ import ModalDeleteAccount from './ModalDeleteAccount';
 export default {
   computed: {
     ...mapFields('User', ['user']),
+    ...mapState('Purchase', ['userPurchaseData']),
   },
 
   components: {
@@ -179,6 +178,7 @@ export default {
 
   methods: {
     ...mapActions('User', ['getUser', 'updateUser']),
+    ...mapActions('Purchase', ['getUserPurchaseData']),
 
     handleFile(e) {
       this.selectedFile = e.target.files[0];
@@ -213,6 +213,10 @@ export default {
     window.scrollTo(0, 0);
     this.userAuth = JSON.parse(localStorage.getItem('_speedbids'));
     await this.getUser({ id: this.userAuth.userId });
+    await this.getUserPurchaseData({
+      token:this.userAuth.token,
+      userId:this.userAuth.userId
+    })
     this.imageUrl = process.env.VUE_APP_API_IMAGES;
   },
 };

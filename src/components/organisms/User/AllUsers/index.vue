@@ -21,11 +21,15 @@
           <span class="align-middle">{{row.item.firstname}} {{row.item.lastname}}</span>
         </template>
 
+        <template v-slot:cell(active)="row">
+          <span class="align-middle">{{row.item.active ? 'Ativo' : 'Desativado' }}</span>
+        </template>
+
         <template v-slot:cell(options)="row">
           <button class="site-btn btn mr-3" v-b-modal="`modalAllUsers${row.item._id}`">Detalhes</button>
-          <ModalAllUsers :userData="row.item" />
+          <ModalAllUsers :userData="row.item" :userAuth="userAuth"/>
           <button v-b-modal="`modalSendUserMessage${row.item._id}`" class="site-btn btn">Mensagen</button>
-          <ModalSendUserMessage :recieverId="row.item._id" :fullname="`${row.item.firstname} ${row.item.lastname}`" />
+          <ModalSendUserMessage :userData="row.item" :userAuth="userAuth" />
         </template>
       </b-table>
   </div>
@@ -43,6 +47,7 @@ export default {
       {key:'username', label:'Usuário', sortable:true},
       {key:'email', label:'Email', sortable:true},
       {key:'cpf', label:'CPF'},
+      {key:'active', label:'Status', sortable:true},
       {key:'options', label:'Opções'}
     ],
     filter:null,

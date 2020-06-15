@@ -62,6 +62,7 @@ const routes = [
       { path: "/send-message/:id", component: SendMessage },
       { path: "/admin/all-products", component: AllProducts },
       { path: "/admin/all-users", component: AllUsers },
+      { path: "/admin/purchases/:id", component: Purchases },
     ],
   },
 ];

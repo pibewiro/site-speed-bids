@@ -45,6 +45,7 @@
               id="example-datepicker"
               v-model="form.endDate"
             ></b-form-datepicker>
+            <p class="text-danger">{{this.error.endDate}}</p>
           </div>
 
           <div>
@@ -52,6 +53,7 @@
               locale="en"
               v-model="form.endTime"
             ></b-form-timepicker>
+              <p class="text-danger">{{this.error.endTime}}</p>
           </div>
         </div>
       </div>
@@ -65,6 +67,7 @@
           <option value="Standard">Standard</option>
           <option value="Live">Live</option>
         </select>
+          <p class="text-danger">{{this.error.bidType}}</p>
       </div>
 
       <div class="form-group mt-4">

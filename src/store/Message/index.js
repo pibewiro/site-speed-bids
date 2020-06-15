@@ -5,7 +5,7 @@ const state = {
 };
 
 const mutations = {
-  GET_MESSAGES: function(state, payload) {
+  GET_MESSAGES: function (state, payload) {
     state.messages = payload.data;
   },
 };
@@ -19,6 +19,16 @@ const actions = {
       }
     );
     commit("GET_MESSAGES", response.data);
+  },
+
+  async messageAdminUser(commit, obj) {
+    await axios.post(
+      `${process.env.VUE_APP_API_ROOT}/message/send-message-admin/${obj.receiverId}/${obj.senderId}`,
+      { ...obj.data },
+      {
+        headers: { "x-access-token": obj.token },
+      }
+    );
   },
 };
 

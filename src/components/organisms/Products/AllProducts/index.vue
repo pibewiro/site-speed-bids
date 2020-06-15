@@ -31,7 +31,7 @@
 
             <template v-slot:cell(options)="row">
                 <button v-b-modal="`modalAllProducts${row.item._id}`" class="site-btn btn">Detalhes</button>
-                <ModalAllProducts :productData="row.item" />
+                <ModalAllProducts :productData="row.item" :userAuth="userAuth" />
             </template>
           </b-table>
       </div>

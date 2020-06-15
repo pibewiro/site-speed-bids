@@ -4,6 +4,7 @@ import fileSaver from "file-saver";
 const state = {
   purchases: null,
   session: null,
+  userPurchaseData: {},
 };
 
 const mutations = {
@@ -13,6 +14,10 @@ const mutations = {
 
   GET_SESSION: function (state, payload) {
     state.session = payload.data;
+  },
+
+  GET_USER_PURCHASE_DATA: function (state, payload) {
+    state.userPurchaseData = payload.data;
   },
 };
 const actions = {
@@ -71,6 +76,16 @@ const actions = {
     );
 
     commit("GET_SESSION", response.data);
+  },
+
+  async getUserPurchaseData({ commit }, obj) {
+    const response = await axios.get(
+      `${process.env.VUE_APP_API_ROOT}/purchase/user-purchase-data/${obj.userId}`,
+      {
+        headers: { "x-access-token": obj.token },
+      }
+    );
+    commit("GET_USER_PURCHASE_DATA", response.data);
   },
 };
 const getters = {};
