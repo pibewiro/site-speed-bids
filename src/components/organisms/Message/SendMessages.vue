@@ -28,7 +28,7 @@ export default {
         recieverId:null,
         socket:null,
         myMessage:null,
-        loading:null,
+        loading:false,
     }),
 
     computed:{
@@ -74,10 +74,6 @@ export default {
         this.socket.emit('register', this.userAuth.username)
         this.socket.on('message-sent', async (data)=>{
 
-            console.log(data)
-            console.log((this.user._id === data.receiver && this.userAuth.userId === data.sender) || 
-            (this.user._id === data.sender && this.userAuth.userId === data.receiver))
-
             if((this.user._id === data.receiver && this.userAuth.userId === data.sender) || 
             (this.user._id === data.sender && this.userAuth.userId === data.receiver)){
                             await this.getMessages({
@@ -90,8 +86,6 @@ export default {
         })
         this.loading = true;
                 // await this.getUser({id:this.$route.params.id})
-
-
     }
 
 }

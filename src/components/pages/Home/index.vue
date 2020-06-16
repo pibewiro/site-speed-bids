@@ -26,8 +26,8 @@
         <!-- <div class="slider border">
           <i class="arrow left"></i>
         </div> -->
-        <div class="items">
-          <div v-for="(product, i) in products" :key="i" class="item">
+        <div class="home-items">
+          <div v-for="(product, i) in products" :key="i" class="home-item">
             <div class="i-prd-img-div">
               <img :src="`${imageUrl}/${product.image.defaultImage}`" alt="">
             </div>
@@ -156,21 +156,23 @@ export default {
   /* height: 80vh; */
 }
 
-.items {
-  display: flex;
-  justify-content: space-evenly;
+.home-items {
+  /* display: flex; */
+  /* justify-content: space-evenly; */
   align-items: center;
   width: 85%;
-  /* background: red; */
+    display: grid;
+  justify-content: center;
+  grid-template-columns: repeat(4, 25%);
+  grid-gap: 1em;
+  margin-bottom: 20px;
 }
 
-.item {
-  width: 23%;
-  height: 300px;
-  /* margin-left: 20px; */
+ .home-item {
+  margin-left: 20px;
   border: 1px solid #e6e6e6;
   box-shadow: 5px 5px 10px#ebebeb;
-}
+} 
 
 .alert-form {
   width: 30%;
@@ -193,25 +195,6 @@ export default {
   cursor: pointer;
   width: 120px;
   height: 120px;
-}
-
-.arrow {
-  border: solid var(--primaryColor);
-  border-width: 0 1px 1px 0px;
-  display: inline-block;
-  padding: 1px;
-  width: 40px;
-  height: 40px;
-}
-
-.right {
-  transform: rotate(-45deg);
-  -webkit-transform: rotate(-45deg);
-}
-
-.left {
-  transform: rotate(135deg);
-  -webkit-transform: rotate(135deg);
 }
 
 .div1 {

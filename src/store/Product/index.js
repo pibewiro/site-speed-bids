@@ -47,6 +47,7 @@ const actions = {
   },
 
   async updateProduct({ commit }, obj) {
+    console.log(obj);
     const response = await axios.put(
       `${process.env.VUE_APP_API_ROOT}/product/${obj.id}`,
       { ...state.product },

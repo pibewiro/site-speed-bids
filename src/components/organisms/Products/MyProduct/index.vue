@@ -18,10 +18,10 @@
             <p class="text-center"><span class="font-weight-bold">Product Name:</span> {{product.productName}}</p>
             <p class="text-center"><span class="font-weight-bold">Price:</span> {{product.price}}</p>
             <p class="text-center"><span class="font-weight-bold">Status:</span> {{product.active ? 'Active' : 'Inactive'}}</p>
-            <button
-              @click="productInfo(product._id)"
+            <router-link
+              :to="`/my-product/${product._id}`"
               class="site-btn btn btn-lg"
-            >Edit Product</button>
+            >Edit Product</router-link>
           </div>
         </div>
       </div>

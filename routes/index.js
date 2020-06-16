@@ -10,7 +10,7 @@ import Products from "../src/components/organisms/Products/index.vue";
 import AddProduct from "../src/components/organisms/Products/AddProduct/index.vue";
 import Product from "../src/components/organisms/Products/Product/index.vue";
 import MyProduct from "../src/components/organisms/Products/MyProduct/index.vue";
-import ProductsLogout from "../src/components/organisms/Products/ProductsLogout.vue";
+// import ProductsLogout from "../src/components/organisms/Products/ProductsLogout.vue";
 import EditProduct from "../src/components/organisms/Products/EditProduct/index.vue";
 import AllProducts from "../src/components/organisms/Products/AllProducts/index.vue";
 import AllUsers from "../src/components/organisms/User/AllUsers/index.vue";
@@ -25,7 +25,7 @@ import ViewLiveBids from "../src/components/organisms/Purchases/LiveBids/ViewLiv
 import LiveBid from "../src/components/organisms/Purchases/LiveBids/LiveBid.vue";
 import Follow from "../src/components/organisms/Follow/index.vue";
 import SendMessage from "../src/components/organisms/Message/SendMessages.vue";
-// import MyMessage from "../src/components/organisms/Message/MyMessages.vue";
+import MyMessages from "../src/components/organisms/Message/MyMessages.vue";
 
 Vue.use(VueRouter);
 
@@ -33,7 +33,7 @@ const routes = [
   { path: "/", component: Home },
   { path: "/login", component: Login },
   { path: "/register", component: Register },
-  { path: "/products", component: ProductsLogout },
+  { path: "/products", component: Dashboard },
   { path: "/checkout", name: "checkout", component: Checkout },
   { path: "/admin", component: AdminLogin },
   {
@@ -63,6 +63,7 @@ const routes = [
       { path: "/admin/all-products", component: AllProducts },
       { path: "/admin/all-users", component: AllUsers },
       { path: "/admin/purchases/:id", component: Purchases },
+      { path: "/messages", component: MyMessages },
     ],
   },
 ];
