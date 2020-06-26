@@ -7,7 +7,7 @@
         alt=""
       >
       <div class="content">
-        <h1 class="text-center mb-4">Speed Buyerrr</h1>
+        <h1 class="text-center mb-4">Speed Buyer</h1>
         <div class="text-center">
           <button
             @click="login"
