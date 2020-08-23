@@ -9,8 +9,8 @@
           </div>
       </div>
 
-        <div>
-          <h1 v-if="loading">Carregando...</h1>
+        <div v-if="loading">
+          <h1>Carregando...</h1>
       </div>
 
       <div v-if="!loading" class="follow-div mt-3">

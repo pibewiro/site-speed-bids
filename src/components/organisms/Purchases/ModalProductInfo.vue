@@ -17,6 +17,7 @@
       <div class="pd2">
         <div class="pd2-data">
           <p><span>Product:</span> {{items.product.productName}}</p>
+          <p><span>Date Paid:</span> {{items.datePaid ? formatDate(items.datePaid) : null}}</p>
           <p><span>Owner:</span> {{items.owner.username}}</p>
           <p><span>Original Price:</span> R${{items.product.price}}</p>
           <p><span>Date Posted:</span> {{ formatDate(items.product.createdAt)}}</p>

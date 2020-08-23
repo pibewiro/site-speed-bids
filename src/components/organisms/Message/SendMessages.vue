@@ -53,6 +53,7 @@ export default {
     },
 
     async created(){
+        console.log(window)
         this.loading = false;
         this.userAuth = JSON.parse(localStorage.getItem('_speedbids'));
         this.recieverId = this.$route.params.id;

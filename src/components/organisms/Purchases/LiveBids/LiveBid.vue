@@ -29,7 +29,7 @@
           <div class="messages border mb-3">
                 <p v-for="(message, i) in messages" :key="i" :class="userAuth.userId === message.userId ? 'myBid' : 'otherBid'"><span>{{message.username}}:</span> {{message.info}}</p>
           </div>
-          <div class="btn-div">
+          <div class="btn-div" v-if="buyer.owner._id !== userAuth.userId">
               <textarea v-model="bidInput" class="form-control mb-2"></textarea>
               <p class="text-danger">{{error}}</p>
               <button @click="handleBid" class="site-btn btn btn-block b-button">Lance um Preço</button>

@@ -14,10 +14,18 @@
           >
         </div>
         <div class="prdContentInfo">
+  
           <div>
             <p class="text-center"><span class="font-weight-bold">Product Name:</span> {{product.productName}}</p>
-            <p class="text-center"><span class="font-weight-bold">Price:</span> {{product.price}}</p>
+            <p class="text-center"><span class="font-weight-bold">Price:</span> R${{product.price}}</p>
             <p class="text-center"><span class="font-weight-bold">Status:</span> {{product.active ? 'Active' : 'Inactive'}}</p>
+            <div v-if="product.purchaseId">
+              <div v-if="product.purchaseId.status === 'Paid'">
+                <p class="text-center"><span class="font-weight-bold">Price With Bonus:</span> R${{product.purchaseId.priceTaxedBonus}}</p>
+                <p class="text-center"><span class="font-weight-bold">Bonus:</span> R${{product.purchaseId.bonus}}</p>
+                <p class="text-center"><span class="font-weight-bold">Tax:</span> R${{ formatNumber(product.purchaseId.tax)}}</p>
+              </div>
+            </div>
             <button
               @click="productInfo(product._id)"
               class="site-btn btn btn-lg"
@@ -44,6 +52,14 @@ export default {
 
   methods: {
     ...mapActions('Product', ['getMyProducts']),
+
+    productInfo(id){
+      this.$router.push(`/my-product/${id}`);
+    },
+
+    formatNumber(num){
+      return Number(num).toFixed(2);
+    }
   },
 
   created() {
