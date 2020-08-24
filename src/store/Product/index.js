@@ -5,6 +5,7 @@ const state = {
   products: null,
   product: null,
   filter: {},
+  productsLogout: null
 };
 const mutations = {
   updateField,
@@ -20,6 +21,10 @@ const mutations = {
   GET_MY_PRODUCTS: function (state, payload) {
     state.products = payload.data;
   },
+
+  GET_ALL_PRODUCTS_LOGOUT: function (state, payload) {
+    state.productsLogout = payload.data;
+  }
 };
 const actions = {
   async updateDefaultImg({ commit }, obj) {
@@ -182,6 +187,11 @@ const actions = {
       }
     );
   },
+
+  async getProductsLogout({ commit }) {
+    const response = await axios.get(`${process.env.VUE_APP_API_ROOT}/product/getAllLogout`);
+    commit('GET_ALL_PRODUCTS_LOGOUT', response.data);
+  }
 };
 const getters = {
   getField,

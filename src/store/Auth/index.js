@@ -3,12 +3,17 @@ import axios from "axios";
 const state = {
   token: {},
   auth: {},
+  recoverPass: {}
 };
 const mutations = {
   authData: (state, resp) => {
     state.token = resp.user.token;
     state.auth = resp;
   },
+
+  RECOVER_PASSWORD: (state, resp) => {
+    state.recoverPass = resp
+  }
 };
 
 const actions = {
@@ -16,7 +21,7 @@ const actions = {
     const response = await axios.post(`${process.env.VUE_APP_API_ROOT}/auth`, {
       ...obj,
     });
-    console.log(response.data);
+
     commit("authData", response.data);
   },
 
@@ -56,9 +61,14 @@ const actions = {
         ...obj,
       }
     );
-    console.log(response.data);
+
     commit("authData", response.data);
   },
+
+  async recoverPassword({ commit }, obj) {
+    const response = await axios.get(`${process.env.VUE_APP_API_ROOT}/auth/recover-password/${obj.email}`);
+    commit('RECOVER_PASSWORD', response.data);
+  }
 };
 const getters = {};
 
