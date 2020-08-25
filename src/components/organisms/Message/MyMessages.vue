@@ -1,10 +1,10 @@
 <template>
   <div>
-      <h1 class="text-center">My Messages</h1>
+      <h1 class="text-center">Minhas Mensagens</h1>
 
       <div class="myMessages">
         <div class="myMessages-div border p-2" v-for="(message, i) in myMessages" :key="i">
-          <p class="m-0"><span class="font-weight-bold">Username:</span> {{message.username}}</p>
+          <p class="m-0"><span class="font-weight-bold">Usuário:</span> {{message.username}}</p>
           <router-link :to="`/send-message/${message.id}`" class="btn site-btn">Ver Mensagen</router-link>
         </div>
       </div>

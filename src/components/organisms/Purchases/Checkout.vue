@@ -13,10 +13,10 @@
         </div>
         <div class="cs2">
           <div>
-            <p><span>Product:</span> {{purchaseData.product.productName}}</p>
-            <p><span>Price:</span> R${{purchaseData.price}}</p>
-            <p><span>Owner:</span> {{purchaseData.owner.firstname}} {{purchaseData.owner.lastname}}</p>
-            <p><span>Buyer:</span> {{purchaseData.user.firstname}} {{purchaseData.user.lastname}}</p>
+            <p><span>Produto:</span> {{purchaseData.product.productName}}</p>
+            <p><span>Preço:</span> R${{purchaseData.price}}</p>
+            <p><span>Dono:</span> {{purchaseData.owner.firstname}} {{purchaseData.owner.lastname}}</p>
+            <p><span>Comprador:</span> {{purchaseData.user.firstname}} {{purchaseData.user.lastname}}</p>
           </div>
         </div>
       </div>

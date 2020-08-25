@@ -15,34 +15,34 @@
         <div>
           <div class="userInfo">
             <div class="userInfoDiv">
-              <p class="userLabel">Firstname: </p>
+              <p class="userLabel">Primeiro Nome: </p>
               <p class="userData">{{user.firstname}}</p>
             </div>
 
             <div class="userInfoDiv">
-              <p class="userLabel">Lastname: </p>
+              <p class="userLabel">Sobrenome: </p>
               <p class="userData">{{user.lastname}}</p>
             </div>
 
             <div class="userInfoDiv">
-              <p class="userLabel">Username: </p>
+              <p class="userLabel">Usuário: </p>
               <p class="userData">{{user.username}}</p>
             </div>
           </div>
 
           <div class="userInfo mt-3">
             <div class="userInfoDiv">
-              <p class="userLabel">City: </p>
+              <p class="userLabel">Cidade: </p>
               <p class="userData">{{user.address.city}}</p>
             </div>
 
             <div class="userInfoDiv">
-              <p class="userLabel">State: </p>
+              <p class="userLabel">Estado: </p>
               <p class="userData">{{user.address.state}}</p>
             </div>
 
             <div class="userInfoDiv">
-              <p class="userLabel">Country: </p>
+              <p class="userLabel">País: </p>
               <p class="userData">{{user.address.country}}</p>
             </div>
           </div>
@@ -73,7 +73,7 @@
       </div>
 
       <div class="userProducts">
-        <h1 class="text-center mt-5">{{user.firstname}}´s Products</h1>
+        <h1 class="text-center mt-5">{{user.firstname}}´s Produtos</h1>
 
         <div class="userProductsDiv">
           <div
@@ -91,14 +91,14 @@
 
             <div class="productInfoDiv">
               <div class="productInfo">
-                <p><span class="userLabel">Product Name: </span><span class="userData">{{product.productName}}</span></p>
-                <p><span class="userLabel">Price: </span><span class="userData">R${{product.price}}</span></p>
-                <p><span class="userLabel">Uploaded: </span><span class="userData">{{formatTime(product.createdAt)}}</span></p>
+                <p><span class="userLabel">Nome do Produto: </span><span class="userData">{{product.productName}}</span></p>
+                <p><span class="userLabel">Preço: </span><span class="userData">R${{product.price}}</span></p>
+                <p><span class="userLabel">Carregado: </span><span class="userData">{{formatTime(product.createdAt)}}</span></p>
                 <div class="text-center">
                   <button
                     @click="handleUserProduct(product._id)"
                     class="site-btn btn btn-lg"
-                  >Enter</button>
+                  >Salvar</button>
                 </div>
               </div>
             </div>

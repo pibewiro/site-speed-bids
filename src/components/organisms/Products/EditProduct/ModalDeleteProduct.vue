@@ -5,10 +5,10 @@
     size="lg"
   >
     <div>
-      <h1 class="text-center">Delete Product</h1>
-      <p class="text-center">Type the name <span class="font-weight-bold">{{productName}}</span> to delete the product</p>
+      <h1 class="text-center">Deletar Produto</h1>
+      <p class="text-center">Digite o nome <span class="font-weight-bold">{{productName}}</span> para deletar o produto</p>
       <div class="form-group">
-        <label for="">Type product name:</label>
+        <label for="">Digite o nome do produto:</label>
         <input
           type="text"
           class="form-control"
@@ -21,11 +21,11 @@
       <button
         @click="closeModal"
         class="btn btn-secondary btn-lg"
-      >Cancel</button>
+      >Cancelar</button>
       <button
         @click="handleDelete"
         class="btn btn-lg btn-outline-danger"
-      >Enter</button>
+      >Deletar</button>
     </template>
   </b-modal>
 </template>

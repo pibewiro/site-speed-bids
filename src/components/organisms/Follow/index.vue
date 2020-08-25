@@ -1,6 +1,6 @@
 <template>
   <div>
-      <h1 class="text-center">Follows</h1>
+      <h1 class="text-center">Seguindo</h1>
 
       <div class="mb-3">
           <label for="">Filtro:</label>

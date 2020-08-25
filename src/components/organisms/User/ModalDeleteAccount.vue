@@ -3,12 +3,12 @@
     <b-modal
       id="ModalDeleteAccount"
       size="lg"
-      title="Delete Account"
+      title="Deletar conta"
       centered
     >
-      <p class="text-center text-danger">To delete your account please type in your password</p>
+      <p class="text-center text-danger">Para deletar sua conta, digite sua senha</p>
       <div class="form-group">
-        <label for="">Type Password</label>
+        <label for="">Digite Senha</label>
         <input
           type="password"
           class="form-control"
@@ -21,11 +21,11 @@
         <button
           @click="closeModal"
           class="btn btn-lg btn-secondary"
-        >Cancel</button>
+        >Cancelar</button>
         <button
           @click="handleDeleteUser"
           class="site-btn btn btn-lg"
-        >Enter</button>
+        >Deletar Conta</button>
       </template>
     </b-modal>
   </div>

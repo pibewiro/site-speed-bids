@@ -1,139 +1,111 @@
 <template>
   <div>
-    <div
-      v-if="!loading"
-      class="filter"
-    >
+    <div v-if="!loading" class="filter">
       <div>
         <div class="filterDiv">
           <div class="filterDiv1">
             <h1 class="text-center pt-2">Produtos</h1>
-            <label for="checkbox"><span>&#9660;</span></label>
+            <label for="checkbox">
+              <span>&#9660;</span>
+            </label>
           </div>
-          <input
-            type="checkbox"
-            id="checkbox"
-          >
+          <input type="checkbox" id="checkbox" />
           <div class="filters">
             <div class="filters2">
               <div class="form-group">
-                <label for="">Nome Do Produto</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  v-model="filter.productName"
-                >
+                <label for>Nome Do Produto</label>
+                <input type="text" class="form-control" v-model="filter.productName" />
               </div>
 
               <div class="form-group">
-                <label for="">Categoria</label>
-                <select
-                  name=""
-                  id=""
-                  class="form-control"
-                  v-model="filter.category"
-                >
-                  <option value=""></option>
-                  <option value="electronics">electronics</option>
-                  <option value="automobiles">Automobiles</option>
-                  <option value="">electronics</option>
-                  <option value="">electronics</option>
+                <label for>Categoria</label>
+                <select name id class="form-control" v-model="filter.category">
+                  <option value></option>
+                  <option value="automobiles">Automóveis</option>
+                  <option value="houses">Casas</option>
+                  <option value="electronics">Eletronicos</option>
+                  <option value="sports">Esportes</option>
+                  <option value="music">Musica</option>
+                  <option value="outhers">Outras</option>
                 </select>
               </div>
 
               <div class="form-group">
-                <label for="">Min Price</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  v-model="filter.minPrice"
-                >
+                <label for>Preço Mínimo</label>
+                <input type="text" class="form-control" v-model="filter.minPrice" />
               </div>
 
               <div class="form-group">
-                <label for="">Max Price</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  v-model="filter.maxPrice"
-                >
+                <label for>Preço Máximo</label>
+                <input type="text" class="form-control" v-model="filter.maxPrice" />
               </div>
             </div>
 
             <div class="filters2">
               <div class="form-group">
-                <label for="">Sort By Date:</label>
-                <select
-                  class="form-control"
-                  v-model="filter.sortDate"
-                >
-                  <option value="newOld">Newest - Oldest</option>
-                  <option value="oldNew">Oldest - Newest</option>
+                <label for="">Classificar por data:</label>
+                <select class="form-control" v-model="filter.sortDate">
+                  <option value="newOld">Mais Novo - Mais Antigo</option>
+                  <option value="oldNew">Mais Antigo - Mais Novo</option>
                 </select>
               </div>
 
               <div class="form-group">
-                <label for="">Sort By Price:</label>
-                <select
-                  class="form-control"
-                  v-model="filter.sortPrice"
-                >
-                  <option value="highLow">Highest - Lowest</option>
-                  <option value="lowHigh">Lowest - Highest</option>
+                <label for="">Classificar por preço:</label>
+                <select class="form-control" v-model="filter.sortPrice">
+                  <option value="highLow">Mais Alto - Mais Baixo</option>
+                  <option value="lowHigh">Mais Baixo - Mais Alto</option>
                 </select>
               </div>
             </div>
 
             <div class="text-center mt-2">
-              <button
-                @click="handleFilter"
-                class="site-btn btn btn-lg"
-              >Filter</button>
+              <button @click="handleFilter" class="site-btn btn btn-lg">Filter</button>
             </div>
           </div>
         </div>
         <div class="itemsP border-top">
-          <div
-            class="itemP border"
-            v-for="(product, i) in products"
-            :key="i"
-          >
+          <div class="itemP border" v-for="(product, i) in products" :key="i">
             <div class="itemImg border border-bottom-0">
-              <img
-                :src="`${imageUrl}/${product.image.defaultImage}`"
-                alt=""
-              >
-              <div
-                v-b-modal="`productImageModal${product._id}`"
-                class="imgOverlay"
-              >
-              </div>
+              <img :src="`${imageUrl}/${product.image.defaultImage}`" alt />
+              <div v-b-modal="`productImageModal${product._id}`" class="imgOverlay"></div>
 
               <ProductModal
                 :id="product._id"
                 :images="product.image.productImages"
                 :defaultImage="product.image.defaultImage"
               />
-
             </div>
             <div class="itemInfo">
-              <div :class="favorites ? checkFavorites(product._id)  ? 'starDiv' : 'starDiv2' : 'starDiv2'">
+              <div
+                :class="favorites ? checkFavorites(product._id)  ? 'starDiv' : 'starDiv2' : 'starDiv2'"
+              >
                 <span @click="handleFavorite(product._id)">
                   <i class="fa fa-star"></i>
                 </span>
               </div>
-              <p><span class="font-weight-bold">Produto :</span> {{product.productName}}</p>
-              <p><span class="font-weight-bold">Preço:</span> R${{product.price}}</p>
-              <p><span class="font-weight-bold">Categoria:</span> {{product.category}}</p>
-              <p><span class="font-weight-bold">Usuarío: </span>
+              <p>
+                <span class="font-weight-bold">Produto:</span>
+                {{product.productName}}
+              </p>
+              <p>
+                <span class="font-weight-bold">Preço:</span>
+                R${{product.price}}
+              </p>
+              <p>
+                <span class="font-weight-bold">Categoria:</span>
+                {{product.category}}
+              </p>
+              <p>
+                <span class="font-weight-bold">Usuário: </span>
                 <router-link :to="`/user/${product.user._id}`">{{product.user.username}}</router-link>
               </p>
-              <p><span class="font-weight-bold">Carregado:</span> {{formatProductTime(product.createdAt)}}</p>
+              <p>
+                <span class="font-weight-bold">Carregado:</span>
+                {{formatProductTime(product.createdAt)}}
+              </p>
               <div class="text-center">
-                <button
-                  @click="viewProduct(product._id)"
-                  class="site-btn btn btn-lg"
-                >Ver</button>
+                <button @click="viewProduct(product._id)" class="site-btn btn btn-lg">Ver Produto</button>
               </div>
             </div>
           </div>
@@ -144,11 +116,11 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex';
-import ProductModal from './Product/ProductModal.vue';
-import { mapFields } from 'vuex-map-fields';
-import moment from 'moment';
-moment.locale('pt-br');
+import { mapState, mapActions } from "vuex";
+import ProductModal from "./Product/ProductModal.vue";
+import { mapFields } from "vuex-map-fields";
+import moment from "moment";
+moment.locale("pt-br");
 
 export default {
   components: {
@@ -159,23 +131,23 @@ export default {
     size: false,
     imageUrl: null,
     fav: false,
-    favoriteColor: 'starDiv',
+    favoriteColor: "starDiv",
     userAuth: null,
     loading: false,
   }),
 
   computed: {
-    ...mapState('Product', ['products']),
-    ...mapState('Favorite', ['favorites']),
-    ...mapFields('Product', ['filter']),
+    ...mapState("Product", ["products"]),
+    ...mapState("Favorite", ["favorites"]),
+    ...mapFields("Product", ["filter"]),
   },
 
   methods: {
-    ...mapActions('Product', ['getProducts', 'filterProducts']),
-    ...mapActions('Favorite', ['addFavorite', 'getFavorite']),
+    ...mapActions("Product", ["getProducts", "filterProducts"]),
+    ...mapActions("Favorite", ["addFavorite", "getFavorite"]),
 
     formatProductTime(time) {
-      return moment(time).format('DD/MM/YYYY hh:mm');
+      return moment(time).format("DD/MM/YYYY hh:mm");
     },
 
     handleFilter() {
@@ -184,7 +156,7 @@ export default {
 
     checkFavorites(productId) {
       return this.favorites.productDetails.some(
-        obj => obj.productId === productId && obj.active === true,
+        (obj) => obj.productId === productId && obj.active === true
       );
     },
 
@@ -200,27 +172,27 @@ export default {
     },
 
     changeDivs() {
-      let up = document.getElementById('arrowUp');
-      let down = document.getElementById('arrowDown');
+      let up = document.getElementById("arrowUp");
+      let down = document.getElementById("arrowDown");
       if (!this.size) {
-        document.querySelector('.filter2').style.height = '10vh';
-        document.querySelector('.itemsP').style.minHeight = '81.5vh';
+        document.querySelector(".filter2").style.height = "10vh";
+        document.querySelector(".itemsP").style.minHeight = "81.5vh";
         this.size = true;
-        up.style.display = 'none';
-        down.style.display = 'inline';
+        up.style.display = "none";
+        down.style.display = "inline";
       } else {
-        document.querySelector('.filter2').style.height = '20vh';
-        document.querySelector('.itemsP').style.minHeight = '71.5vh';
+        document.querySelector(".filter2").style.height = "20vh";
+        document.querySelector(".itemsP").style.minHeight = "71.5vh";
         this.size = false;
-        up.style.display = 'inline';
-        down.style.display = 'none';
+        up.style.display = "inline";
+        down.style.display = "none";
       }
     },
   },
 
   async created() {
     this.loading = true;
-    this.userAuth = await JSON.parse(localStorage.getItem('_speedbids'));
+    this.userAuth = await JSON.parse(localStorage.getItem("_speedbids"));
 
     await this.getProducts();
     await this.getFavorite({

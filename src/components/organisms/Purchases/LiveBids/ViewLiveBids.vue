@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 class="text-center">Live Bids</h1>
+    <h1 class="text-center">Live Lances</h1>
     <div class="liveBidsCards">
       <div
         v-for="(liveBid, i) in liveBids"
@@ -17,10 +17,10 @@
         </div>
         <div class="lbc2">
           <div class="bid-info">
-            <p><span>Product Name:</span> {{liveBid.product.productName}}<p>
-                <p><span>Seller: </span>{{liveBid.owner.username}}</p>
-                <p><span>Live Date:</span> {{formatDate(liveBid.product.endDate)}}</p>
-                <p><span>Starting Price:</span> R${{liveBid.product.price}}</p>
+            <p><span>Nome do Produto:</span> {{liveBid.product.productName}}<p>
+                <p><span>Vendedor: </span>{{liveBid.owner.username}}</p>
+                <p><span>Data do Live:</span> {{formatDate(liveBid.product.endDate)}}</p>
+                <p><span>Preço Inicial:</span> R${{liveBid.product.price}}</p>
                 <div
                   v-if="liveBid.liveStatus"
                   class="statusSection"
@@ -32,7 +32,7 @@
                   v-if="liveBid.liveStatus"
                   class="text-center mt-4"
                 >
-                  <router-link :to="`/live/${liveBid._id}`" class="site-btn btn btn-lg">Join Bid</router-link>
+                  <router-link :to="`/live/${liveBid._id}`" class="site-btn btn btn-lg">Participar</router-link>
                 </div>
           </div>
         </div>

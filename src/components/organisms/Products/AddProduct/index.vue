@@ -1,7 +1,7 @@
 <template>
   <div class="addProduct">
     <div class="productForm border p-4">
-      <h1 class=text-center>Addicionar Produto</h1>
+      <h1 class=text-center>Adicionar Produto</h1>
       <div class="form-group">
         <label for="">Nome</label>
         <input
@@ -29,10 +29,12 @@
           v-model="form.category"
         >
           <option value=""></option>
-          <option value="automobiles">Automoveis</option>
+          <option value="automobiles">Automóveis</option>
           <option value="houses">Casas</option>
           <option value="electronics">Eletronicos</option>
           <option value="sports">Esportes</option>
+          <option value="music">Musica</option>
+          <option value="outhers">Outras</option>
         </select>
         <p class="text-danger">{{this.error.category}}</p>
       </div>
@@ -64,7 +66,7 @@
           class="form-control"
           v-model="form.bidType"
         >
-          <option value="Standard">Standard</option>
+          <option value="Standard">Padrão</option>
           <option value="Live">Live</option>
         </select>
           <p class="text-danger">{{this.error.bidType}}</p>
@@ -103,7 +105,7 @@
           <label
             class="d-block"
             for=""
-          >Addicionar Imagens</label>
+          >Adicionar Imagens</label>
           <input
             type="file"
             @change="selectImages"

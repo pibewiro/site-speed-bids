@@ -1,6 +1,6 @@
 <template>
   <div class="myProducts">
-    <h1 class="text-center">My Products</h1>
+    <h1 class="text-center">Meus Produtos</h1>
     <div class="productsContent">
       <div
         v-for="(product, i) in products"
@@ -16,20 +16,20 @@
         <div class="prdContentInfo">
   
           <div>
-            <p class="text-center"><span class="font-weight-bold">Product Name:</span> {{product.productName}}</p>
-            <p class="text-center"><span class="font-weight-bold">Price:</span> R${{product.price}}</p>
-            <p class="text-center"><span class="font-weight-bold">Status:</span> {{product.active ? 'Active' : 'Inactive'}}</p>
+            <p class="text-center"><span class="font-weight-bold">Nome do Produto:</span> {{product.productName}}</p>
+            <p class="text-center"><span class="font-weight-bold">Preço:</span> R${{product.price}}</p>
+            <p class="text-center"><span class="font-weight-bold">Status:</span> {{product.active ? 'Ativo' : 'Inativo'}}</p>
             <div v-if="product.purchaseId">
               <div v-if="product.purchaseId.status === 'Paid'">
-                <p class="text-center"><span class="font-weight-bold">Price With Bonus:</span> R${{product.purchaseId.priceTaxedBonus}}</p>
-                <p class="text-center"><span class="font-weight-bold">Bonus:</span> R${{product.purchaseId.bonus}}</p>
-                <p class="text-center"><span class="font-weight-bold">Tax:</span> R${{ formatNumber(product.purchaseId.tax)}}</p>
+                <p class="text-center"><span class="font-weight-bold">Preço com bonus:</span> R${{ formatNumber(product.purchaseId.priceTaxedBonus) }}</p>
+                <p class="text-center"><span class="font-weight-bold">Bonus:</span> R${{ formatNumber(product.purchaseId.bonus)}}</p>
+                <p class="text-center"><span class="font-weight-bold">Taxa:</span> R${{ formatNumber(product.purchaseId.tax)}}</p>
               </div>
             </div>
             <button
               @click="productInfo(product._id)"
               class="site-btn btn btn-lg"
-            >Edit Product</button>
+            >Editar Produto</button>
           </div>
         </div>
       </div>

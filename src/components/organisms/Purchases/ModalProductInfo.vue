@@ -3,7 +3,7 @@
     :id="`ModalProductInfo${id}`"
     centered
     size="xl"
-    title="Product Information"
+    title="Informação do Produto"
   >
     <div class="productData">
       <div class="pd1">
@@ -16,13 +16,13 @@
       </div>
       <div class="pd2">
         <div class="pd2-data">
-          <p><span>Product:</span> {{items.product.productName}}</p>
-          <p><span>Date Paid:</span> {{items.datePaid ? formatDate(items.datePaid) : null}}</p>
-          <p><span>Owner:</span> {{items.owner.username}}</p>
-          <p><span>Original Price:</span> R${{items.product.price}}</p>
-          <p><span>Date Posted:</span> {{ formatDate(items.product.createdAt)}}</p>
-          <p><span>Price:</span> R${{items.price}}</p>
-          <p><span>Date Offered:</span> {{ formatDate(items.createdAt)}}</p>
+          <p><span>Produto:</span> {{items.product.productName}}</p>
+          <p><span>Data do pagamento:</span> {{items.datePaid ? formatDate(items.datePaid) : null}}</p>
+          <p><span>Dono:</span> {{items.owner.username}}</p>
+          <p><span>Preço Original:</span> R${{items.product.price}}</p>
+          <p><span>Data de Publicação:</span> {{ formatDate(items.product.createdAt)}}</p>
+          <p><span>Preço:</span> R${{items.price}}</p>
+          <p><span>Data Oferecido:</span> {{ formatDate(items.createdAt)}}</p>
           <p><span>Status:</span> {{items.status}}</p>
         </div>
       </div>
@@ -33,12 +33,12 @@
         @click="handleDownload"
         v-if="items.status === 'Paid'"
         class="site-btn btn btn-lg"
-      >Download Recieipt</button>
+      >Baixar Recibo</button>
 
       <button
         @click="closeModal"
         class="site-btn btn btn-lg"
-      >Enter</button>
+      >Fechar</button>
     </template>
   </b-modal>
 </template>

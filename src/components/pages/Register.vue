@@ -3,7 +3,7 @@
     <Navbar />
 
     <div class="titleDiv">
-      <h1 class="text-center">Register</h1>
+      <h1 class="text-center">Cadastrar</h1>
     </div>
     <div class="form-div">
       <div class="formReg p-4 border">
@@ -16,7 +16,7 @@
 
         <div class="form-row1">
           <div class="form-group regInline">
-            <label for="">First Name</label>
+            <label for="">Primeiro Nome</label>
             <input
               type="text"
               class="form-control"
@@ -25,7 +25,7 @@
             <p class="text-danger m-0">{{this.error.firstname}}</p>
           </div>
           <div class="form-group regInline">
-            <label for="">Last Name</label>
+            <label for="">Sobrenome</label>
             <input
               type="text"
               class="form-control"
@@ -57,7 +57,7 @@
           </div>
 
           <div class="form-group regInline">
-            <label for="">Username</label>
+            <label for="">Usuário</label>
             <input
               type="text"
               class="form-control"
@@ -67,7 +67,7 @@
           </div>
 
           <div class="form-group regInline">
-            <label for="">Password</label>
+            <label for="">Senha</label>
             <input
               type="password"
               class="form-control"
@@ -79,7 +79,7 @@
 
         <div class="form-row1">
           <div class="form-group regInline">
-            <label for="">City</label>
+            <label for="">Cidade</label>
             <input
               type="text"
               class="form-control"
@@ -89,7 +89,7 @@
           </div>
 
           <div class="form-group regInline">
-            <label for="">State</label>
+            <label for="">Estado</label>
             <input
               type="text"
               class="form-control"
@@ -99,7 +99,7 @@
           </div>
 
           <div class="form-group regInline">
-            <label for="">Country</label>
+            <label for="">País</label>
             <input
               type="text"
               class="form-control"
@@ -113,7 +113,7 @@
           <button
             @click="registerClick"
             class="site-btn btn btn-lg"
-          >Enter</button>
+          >Salvar</button>
         </div>
       </div>
     </div>

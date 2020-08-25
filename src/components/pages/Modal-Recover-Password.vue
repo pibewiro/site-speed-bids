@@ -5,8 +5,8 @@
     size="md"
     centered
   >
-    <p>A New Password Has been sent to your e-mail account</p>
-    <p>After recievient your email please login to and go to your profile page to change your password</p>
+    <p>Uma nova senha foi enviada para sua conta de e-mail.</p>
+    <p>Após receber seu e-mail, faça o login e vá para a página de seu perfil para alterar sua senha</p>
     <template v-slot:modal-footer>
       <button @click="loginPage" class="btn site-btn">OK</button>
     </template>

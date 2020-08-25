@@ -26,7 +26,7 @@
           <button
             class="site-btn btn mr-3"
             v-b-modal="`ModalProductInfo${row.item._id}`"
-          >Producto</button>
+          >Produto</button>
           
           <button
             v-if="row.item.status === 'Pending'"

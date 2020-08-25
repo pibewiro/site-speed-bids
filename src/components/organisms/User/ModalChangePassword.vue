@@ -7,7 +7,7 @@
       size="lg"
     >
       <div class="form-group">
-        <label for="">Current Password:</label>
+        <label for="">Senha Atual:</label>
         <input
           type="password"
           class="form-control"
@@ -17,7 +17,7 @@
       </div>
 
       <div class="form-group">
-        <label for="">New Password:</label>
+        <label for="">Nova Senha:</label>
         <input
           type="password"
           class="form-control"
@@ -27,7 +27,7 @@
       </div>
 
       <div class="form-group">
-        <label for="">Confirm Password:</label>
+        <label for="">Confirmar Senha:</label>
         <input
           type="password"
           class="form-control"
@@ -41,13 +41,13 @@
           class="btn btn-lg btn-secondary"
           @click="closeModal"
         >
-          Cancel
+          Cancelar
         </button>
         <button
           class="site-btn btn btn-lg"
           @click="handlePassword"
         >
-          OK
+          Salvar
         </button>
       </template>
     </b-modal>

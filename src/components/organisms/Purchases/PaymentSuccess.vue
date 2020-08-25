@@ -1,14 +1,14 @@
 <template>
   <div>
-    <h1 class="text-center mt-5 mb-5">Payment Success</h1>
+    <h1 class="text-center mt-5 mb-5">Sucesso de Pagamento</h1>
     <div class="text-center">
-      <h1 class="mb-5">Thank you for shopping at SpeedBuyer.com</h1>
-      <h2 class="mb-5">Your Product will be arriving soon</h2>
+      <h1 class="mb-5">Obrigado por comprar em speedbuyer.com.</h1>
+      <h2 class="mb-5">Seu produto chegará em breve.</h2>
       <div class="text-center">
         <router-link
           to="/purchases"
           class="site-btn btn btn-lg"
-        >Return to Site</router-link>
+        >Retornar ao Site</router-link>
       </div>
     </div>
   </div>

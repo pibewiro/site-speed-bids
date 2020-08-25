@@ -22,7 +22,7 @@
             <button
               @click="showFileClick()"
               class="site-btn btn btn-lg"
-            >Cancel</button>
+            >Cancelar</button>
             <p class="text-danger">{{this.error.image}}</p>
           </div>
 
@@ -46,7 +46,7 @@
           <p class="text-danger">{{this.error.firstname}}</p>
           </div>
           <div class="form-group col-4">
-            <label for="">Sobenome</label>
+            <label for="">Sobrenome</label>
             <input
               type="text"
               class="form-control"
@@ -78,7 +78,7 @@
           </div>
 
           <div class="form-group col-4">
-            <label for="">Nome do usuarío</label>
+            <label for="">Nome do usuário</label>
             <input
               type="text"
               class="form-control"

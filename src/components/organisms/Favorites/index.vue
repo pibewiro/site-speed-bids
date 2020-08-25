@@ -7,7 +7,7 @@
       <div>
         <div class="filterDiv">
           <div class="filterDiv1">
-            <h1 class="text-center pt-2">Favorites</h1>
+            <h1 class="text-center pt-2">Favoritos</h1>
           </div>
           <input
             type="checkbox"
@@ -44,13 +44,13 @@
                   <i class="fa fa-star"></i>
                 </span>
               </div>
-              <p><span class="font-weight-bold">Product :</span> {{product.productName}}</p>
-              <p><span class="font-weight-bold">Price:</span> R${{product.price}}</p>
-              <p><span class="font-weight-bold">Category:</span> {{product.category}}</p>
-              <p><span class="font-weight-bold">Username: </span>
+              <p><span class="font-weight-bold">Produto :</span> {{product.productName}}</p>
+              <p><span class="font-weight-bold">Preço:</span> R${{product.price}}</p>
+              <p><span class="font-weight-bold">Categoria:</span> {{product.category}}</p>
+              <p><span class="font-weight-bold">Usuário: </span>
                 <router-link :to="`/user/${product.user._id}`">{{product.user.username}}</router-link>
               </p>
-              <p><span class="font-weight-bold">Uploaded:</span> {{formatProductTime(product.createdAt)}}</p>
+              <p><span class="font-weight-bold">Carregado:</span> {{formatProductTime(product.createdAt)}}</p>
               <div class="text-center">
                 <button
                   @click="viewProduct(product._id)"

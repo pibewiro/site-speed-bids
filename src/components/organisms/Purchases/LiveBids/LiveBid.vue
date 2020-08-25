@@ -2,9 +2,9 @@
   <div>
       <h1 class="text-center mb-3">Live</h1>
     <div v-if="winner" class="winner-info border my-3 p-3">
-        <h3 class="text-center">{{buyer.winner.username}} has Won the Bid R${{buyer.currentPrice}}</h3>
+        <h3 class="text-center">{{buyer.winner.username}} ganhou a licitação R${{buyer.currentPrice}}</h3>
         <div v-if="userAuth.userId === buyer.winner._id" class="btn-div text-center mt-4">
-            <button @click="checkout" class="site-btn btn btn-lg">Checkout</button>
+            <button @click="checkout" class="site-btn btn btn-lg">Ir Para Checkout</button>
         </div>
     </div>
     <div v-if="timerDiv" class="timer">
@@ -12,7 +12,7 @@
     </div>
     <div class="chat-section">
         <div class="product-chat border">
-            <h2 class="text-center mt-2">Product</h2>
+            <h2 class="text-center mt-2">Produto</h2>
                 <div class="pc-img-div">
                     <img :src="`${imageUrl}/${buyer.product.image.defaultImage}`" alt="">
                 </div>

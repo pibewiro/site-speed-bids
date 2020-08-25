@@ -2,7 +2,7 @@
   <b-modal
     :id="`productImageModal${id}`"
     size="xl"
-    :title="'Images'"
+    :title="'Imagens'"
     centered
   >
     <div class="productSlider">

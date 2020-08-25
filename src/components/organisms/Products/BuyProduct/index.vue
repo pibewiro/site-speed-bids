@@ -34,7 +34,7 @@
       class="form-group priceInput"
     >
       <div v-if="buyers.bidType === 'Standard'">
-        <label for="">Place a Price: </label>
+        <label for="">Lançar um Preço: </label>
         <input
           class="form-control"
           type="text"
@@ -42,15 +42,15 @@
         >
         <button
           @click="handlePrice"
-          class="site-btn btn btn-lg"
-        >Place Price</button>
+          class="site-btn btn"
+        >Lançar Preço</button>
       </div>
 
       <div v-if="buyers.bidType === 'Live'">
         <button
           @click="handleLiveBid"
           class="site-btn btn btn-lg"
-        >Join Live Bid</button>
+        >Participe do Live</button>
       </div>
       <p class="text-danger text-center">{{this.error.liveBidder}}</p>
       <p class="text-danger">{{this.error.price}}</p>
@@ -62,9 +62,9 @@
         :key="i"
         class="priceCard border"
       >
-        <p class="m-0"><span>Username:</span> {{buyer.buyerId.username}}</p>
-        <p class="m-0"><span>Bid:</span> ${{buyer.price}}</p>
-        <p class="m-0"><span>Date Added: </span> {{formatDateTime(buyer.dateAdded)}}</p>
+        <p class="m-0"><span>Usuário:</span> {{buyer.buyerId.username}}</p>
+        <p class="m-0"><span>Licitação:</span> ${{buyer.price}}</p>
+        <p class="m-0"><span>Data Adicionado: </span> {{formatDateTime(buyer.dateAdded)}}</p>
       </div>
     </div>
   </div>
@@ -104,7 +104,7 @@ export default {
           },
         });
 
-        swal.fire('You have been added to this bid', '', 'success');
+        swal.fire('Você foi adicionado a este lance', '', 'success');
       } catch (err) {
         this.error = err.response.data;
       }
@@ -128,7 +128,7 @@ export default {
           },
         });
 
-        swal.fire('Price Updated', `${this.addedPrice}`, 'success');
+        swal.fire('Preço Atualizado', `${this.addedPrice}`, 'success');
         await this.getBuyers({
           id: this.productId,
           token: this.userAuth.token,

@@ -1,9 +1,9 @@
 <template>
   <div class="editProduct">
     <div class="prdEditForm border">
-      <h1 class="text-center">Edit Product</h1>
+      <h1 class="text-center">Editar Produto</h1>
       <div class="form-group">
-        <label for="">Product Name</label>
+        <label for="">Nome do Produto</label>
         <input
           type="text"
           class="form-control"
@@ -12,7 +12,7 @@
       </div>
 
       <div class="form-group">
-        <label for="">Price</label>
+        <label for="">Preço</label>
         <input
           type="text"
           class="form-control"
@@ -21,21 +21,23 @@
       </div>
 
       <div class="form-group">
-        <label for="">Category</label>
+        <label for="">Categoria</label>
         <select
           class="form-control"
           v-model="product.category"
         >
           <option value=""></option>
-          <option value="automobiles">Automobiles</option>
-          <option value="houses">Houses</option>
-          <option value="electronics">Electronics</option>
-          <option value="sports">Sports</option>
+          <option value="automobiles">Automóveis</option>
+          <option value="houses">Casas</option>
+          <option value="electronics">Eletrônicos</option>
+          <option value="sports">Esportes</option>
+          <option value="music">Musicas</option>
+          <option value="outhers">Outras</option>
         </select>
       </div>
 
       <div class="form-group">
-        <label for="">Description</label>
+        <label for="">Descrição</label>
         <textarea
           class="form-control"
           v-model="product.description"
@@ -49,11 +51,11 @@
         <button
           v-b-modal.ModalDeleteProduct
           class="btn btn-outline-danger btn-lg"
-        >Delete</button>
+        >Deletar</button>
         <button
           @click="handleEditProduct"
           class="site-btn btn btn-lg"
-        >Enter</button>
+        >Editar</button>
       </div>
       <ModalDeleteProduct
         :productName="product.productName"
@@ -78,7 +80,7 @@
             v-if="!defaultImageFile"
             @click="defaultImageFile = true"
             class="site-btn btn btn-lg"
-          >Replace Default Image</button>
+          >Substituir imagem padrão</button>
           <div v-if="defaultImageFile">
             <input
               type="file"
@@ -88,11 +90,11 @@
               <button
                 @click="defaultImageFile = false"
                 class="site-btn btn btn-lg mt-3"
-              >Cancel</button>
+              >Cancelar</button>
               <button
                 @click="handleDefaultImg(product.image.defaultImage)"
                 class="site-btn btn btn-lg mt-3 ml-3"
-              >Enter</button>
+              >Salvar</button>
             </div>
           </div>
         </div>
@@ -126,7 +128,7 @@
           <p
             style="font-size:20px;"
             class="m-0 text-center"
-          >Add image</p>
+          >Adicionar Imagen</p>
         </div>
 
         <p style="font-size:20px;">{{addedImageName}}</p>
@@ -138,7 +140,7 @@
           @click="saveImage"
           class="site-btn btn btn-lg"
           v-if="!hideAddImage"
-        >Save Image</button>
+        >Salavr Imagen</button>
       </div>
     </div>
   </div>
