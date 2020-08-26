@@ -20,11 +20,6 @@
         >Speed Buyer</h1>
       </div>
 
-      <input
-        type="checkbox"
-        class="hamMenu"
-      >
-
       <div
         id="nav"
         class="nav-items-ham nav-items"
@@ -60,6 +55,24 @@
           </div>
         </div>
       </div>
+
+        <div id="responsive-pic" class="navPic">
+          <img
+            :src="`${imageUrl}/${image}`"
+            alt=""
+          >
+          <div class="navOptions">
+            <p
+              v-if="this.token"
+              @click="logoutClick"
+              class="border-bottom m-0 p-3"
+            >Logout</p>
+            <router-link
+              class="userConfig border-bottom m-0 p-3"
+              :to="`/user-config/${this.userAuth.userId}`"
+            >User</router-link>
+          </div>
+        </div>
 
     </div>
     <div class="divA">
@@ -474,7 +487,21 @@ export default {
   background: var(--hoverColor);
 }
 
+  #responsive-pic{
+    display: none;
+  }
+
 @media (max-width: 1000px) {
+  #responsive-pic{
+    display: block;
+  }
+
+#responsive-pic:hover > .navOptions {
+  display: block;
+  position:absolute;
+  top:10px;
+  z-index: 10000 !important;
+}
   .nav-items {
     display: none;
   }
@@ -552,4 +579,5 @@ export default {
     align-items: center;
   }
 }
+
 </style>

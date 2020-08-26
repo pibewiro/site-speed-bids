@@ -8,7 +8,7 @@
       >
       <div class="content">
         <h1 class="text-center mb-4">Speed Buyer</h1>
-        <div class="text-center">
+        <div class="text-center content-btn-div">
           <button
             @click="login"
             class="site-btn login-btn btn btn-lg mr-2"
@@ -253,6 +253,20 @@ h1 {
 }
 
 @media (max-width: 1000px) {
+.content-btn-div{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.content-btn-div button{
+  padding:10px 35px;
+  font-size: 20px;
+}
+.content h1 {
+  padding-top:100px;
+  font-weight: 500;
+  font-size: 40px;
+}
   .items {
     display: block;
   }

@@ -20,7 +20,7 @@
 
 <script>
 import {mapState, mapActions} from 'vuex';
-import Navbar2 from '../../template/Navbar2'
+import Navbar2 from '../../template/Navbar'
 import moment from 'moment';
 moment.locale('pt-br');
 

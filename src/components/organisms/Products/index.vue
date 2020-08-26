@@ -206,7 +206,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .filters {
   height: 0;
   overflow: hidden;
@@ -337,5 +337,15 @@ export default {
 .starDiv span:hover,
 .starDiv2 span:hover {
   cursor: pointer;
+}
+
+@media(max-width:1000px){
+  .itemsP{
+    display: block;
+  }
+
+  .itemP{
+    margin:20px auto;
+  }
 }
 </style>

@@ -11,11 +11,6 @@
       >Speed Buyer</h1>
     </div>
 
-    <input
-      type="checkbox"
-      class="hamMenu"
-    >
-
     <div
       id="nav"
       class="nav-items-ham nav-items"
