@@ -18,15 +18,15 @@
               </div>
 
               <div class="form-group">
-                <label for>Categoria</label>
-                <select name id class="form-control" v-model="filter.category">
+                <label>Categoria</label>
+                <select class="form-control" v-model="filter.category">
                   <option value></option>
                   <option value="automobiles">Automóveis</option>
                   <option value="houses">Casas</option>
-                  <option value="electronics">Eletronicos</option>
+                  <option value="electronics">Eletrônicos</option>
                   <option value="sports">Esportes</option>
-                  <option value="music">Musica</option>
-                  <option value="outhers">Outras</option>
+                  <option value="music">Música</option>
+                  <option value="outhers">Outros</option>
                 </select>
               </div>
 
@@ -97,7 +97,7 @@
               </p>
               <p>
                 <span class="font-weight-bold">Categoria:</span>
-                {{product.category}}
+                {{formatCategory(product.category)}}
               </p>
               <p>
                 <span class="font-weight-bold">Usuário: </span>
@@ -148,6 +148,24 @@ export default {
   methods: {
     ...mapActions("Product", ["getProducts", "filterProducts"]),
     ...mapActions("Favorite", ["addFavorite", "getFavorite"]),
+
+    formatCategory(name){
+      let newName;
+        if(name === 'houses'){
+          newName = 'Casas'
+        } else if(name === 'electronics'){
+          newName = 'Eletrônicos'
+        }else if(name === 'sports'){
+          newName = 'Esportes'
+        }else if(name === 'music'){
+          newName = 'Música'
+        } else if(name === 'outhers'){
+          newName = 'Outros'
+        } else if(name === 'automobiles'){
+            newName = 'Automóveis'
+        }
+        return newName;
+    },
 
     formatProductTime(time) {
       return moment(time).format("DD/MM/YYYY hh:mm");

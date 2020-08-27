@@ -31,10 +31,10 @@
           <option value=""></option>
           <option value="automobiles">Automóveis</option>
           <option value="houses">Casas</option>
-          <option value="electronics">Eletronicos</option>
+          <option value="electronics">Eletrônicos</option>
           <option value="sports">Esportes</option>
-          <option value="music">Musica</option>
-          <option value="outhers">Outras</option>
+          <option value="music">Música</option>
+          <option value="outhers">Outros</option>
         </select>
         <p class="text-danger">{{this.error.category}}</p>
       </div>
