@@ -60,7 +60,7 @@
             </div>
 
             <div class="text-center mt-2">
-              <button @click="handleFilter" class="site-btn btn btn-lg">Filter</button>
+              <button @click="handleFilter" class="site-btn btn btn-lg">Filtro</button>
             </div>
           </div>
         </div>
