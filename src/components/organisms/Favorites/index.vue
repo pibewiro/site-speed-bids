@@ -51,7 +51,7 @@
                 {{formatProductTime(product.createdAt)}}
               </p>
               <div class="text-center">
-                <button @click="viewProduct(product._id)" class="site-btn btn btn-lg">Enter</button>
+                <button @click="viewProduct(product._id)" class="site-btn btn btn-lg">Ver Produto</button>
               </div>
             </div>
           </div>
