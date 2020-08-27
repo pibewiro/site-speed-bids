@@ -158,8 +158,8 @@ export default {
         await this.register(this.form);
 
         await swal.fire(
-          'Successivley Registered',
-          'Welcome!\nA confirmation email will be sent to you',
+          'Cadastrado',
+          'Bem-vindo!\nUm e-mail de confirmação será enviado para você',
           'success',
         );
 

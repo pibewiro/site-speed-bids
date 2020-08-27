@@ -210,8 +210,8 @@ export default {
         };
         await this.storeProduct(obj);
         await swal.fire(
-          'Successivley Registered an Product',
-          'New Product!',
+          'Produto Cadastrado',
+          'Novo produto foi cadastrado!',
           'success',
         );
         this.$router.push('/dashboard');

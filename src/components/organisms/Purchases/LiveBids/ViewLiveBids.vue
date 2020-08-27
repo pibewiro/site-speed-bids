@@ -1,7 +1,10 @@
 <template>
   <div>
     <h1 class="text-center">Live Lances</h1>
-    <div class="liveBidsCards">
+    <div v-if="loading">
+      <h1>Carregando...</h1>
+    </div>
+    <div v-else class="liveBidsCards">
       <div
         v-for="(liveBid, i) in liveBids"
         :key="i"
@@ -50,6 +53,7 @@ export default {
   data: () => ({
     userAuth: null,
     imageUrl: null,
+    loading: false
   }),
 
   computed: {
@@ -65,12 +69,14 @@ export default {
   },
 
   async created() {
+    this.loading = true;
     this.userAuth = JSON.parse(localStorage.getItem('_speedbids'));
     this.imageUrl = process.env.VUE_APP_API_IMAGES;
     await this.viewLiveBids({
       token: this.userAuth.token,
       userId: this.userAuth.userId,
     });
+    this.loading = false;
   },
 };
 </script>

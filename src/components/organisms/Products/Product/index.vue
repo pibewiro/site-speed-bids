@@ -1,17 +1,14 @@
 <template>
   <div>
-    <div class="productDiv">
+    <div v-if="loading">
+      <h1>Carregando...</h1>
+    </div>
+    <div v-else class="productDiv">
       <div class="defaultImgDiv">
         <div class="defaultImgDiv2">
           <div class="imgDiv border">
-            <img
-              :src="`${imageUrl}/${product.image.defaultImage}`"
-              alt=""
-            >
-            <div
-              v-b-modal="`productImageModal${product._id}`"
-              class="imgOverlayProduct"
-            ></div>
+            <img :src="`${imageUrl}/${product.image.defaultImage}`" alt />
+            <div v-b-modal="`productImageModal${product._id}`" class="imgOverlayProduct"></div>
 
             <ProductModal
               :id="product._id"
@@ -19,29 +16,29 @@
               :defaultImage="product.image.defaultImage"
             />
           </div>
-          <div class="d-flex justify-content-between align-items-center pt-3">
-            <h1>{{product.productName}}</h1>
-            <h3>Dia da Lança: {{formatProductTime2(product.endDate)}}</h3>
-            <div class="prd-btns-div">
-            <router-link
-              class="site-btn btn btn-lg"
-              :to="`/buy-product/${product._id}`"
-            >Comprar Produto</router-link>
+          <div class="pt-3">
+            <div class="prd-info-div-cust">
+              <h1>{{product.productName}}</h1>
+
+              <div class="prd-btns-div">
+                <router-link
+                  class="site-btn btn btn-lg"
+                  :to="`/buy-product/${product._id}`"
+                >Comprar Produto</router-link>
+              </div>
             </div>
+            <h3>Dia da Lança: {{formatProductTime2(product.endDate)}}</h3>
           </div>
           <div class="desc">
-            <p>Preço:${{product.price}}</p>
+            <h2>Preço:${{product.price}}</h2>
             <router-link :to="`/user/${product.user._id}`">{{product.user.username}}</router-link>
-            <h2
-              class=""
-              for=""
-            >Descrição</h2>
+            <h2 class for>Descrição</h2>
             <p>{{product.description}}</p>
           </div>
         </div>
       </div>
       <div class="otherImg">
-        <h4 class="similarItems">Itens Similantes</h4>
+        <h4 class="similarItems">Itens Similares</h4>
         <div
           class="otherProducts border-bottom"
           v-for="(prd, i) in products"
@@ -49,12 +46,9 @@
           @click="viewProduct(prd._id)"
         >
           <div class="imgDiv2">
-            <img
-              :src="`${imageUrl}/${prd.image.defaultImage}`"
-              alt=""
-            >
+            <img :src="`${imageUrl}/${prd.image.defaultImage}`" alt />
           </div>
-          <div :to="`/product/${prd._id}`">
+          <div @click="handleSimilarItem(prd._id)">
             <p class="m-0">{{prd.productName}}</p>
             <p class="m-0">R${{prd.price}}</p>
             <p class="m-0">{{prd.user.username}}</p>
@@ -66,10 +60,10 @@
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex';
-import ProductModal from '../Product/ProductModal.vue';
-import moment from 'moment';
-moment.locale('pt-br');
+import { mapActions, mapState } from "vuex";
+import ProductModal from "../Product/ProductModal.vue";
+import moment from "moment";
+moment.locale("pt-br");
 
 export default {
   data: () => ({
@@ -82,13 +76,19 @@ export default {
   },
 
   computed: {
-    ...mapState('Product', ['product', 'products']),
+    ...mapState("Product", ["product", "products"]),
   },
 
   methods: {
-    ...mapActions('Product', ['getProduct', 'getSimilarProducts']),
+    ...mapActions("Product", ["getProduct", "getSimilarProducts"]),
+    handleSimilarItem(id){
+      this.loading = true;
+      this.$router.push(`/product/${id}`);
+      this.loading = false;
+    },
+
     formatProductTime2(time) {
-      return moment(time).format('lll');
+      return moment(time).format("lll");
     },
     async viewProduct(id) {
       await this.getProduct({ id });
@@ -103,6 +103,8 @@ export default {
   },
 
   async created() {
+    this.loading = true;
+
     await this.getProduct({ id: this.$route.params.id });
 
     await this.getSimilarProducts({
@@ -110,6 +112,7 @@ export default {
       category: this.product.category,
     });
     this.imageUrl = process.env.VUE_APP_API_IMAGES;
+    this.loading = false;
   },
 };
 </script>
@@ -198,5 +201,11 @@ h3 {
   margin-bottom: 0;
   margin-top: 20px;
   font-weight: 300;
+}
+
+.prd-info-div-cust{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 </style>

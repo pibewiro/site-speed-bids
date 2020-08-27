@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="!loading" class="filter">
+    <div class="filter">
       <div>
         <div class="filterDiv">
           <div class="filterDiv1">
@@ -64,7 +64,10 @@
             </div>
           </div>
         </div>
-        <div class="itemsP border-top">
+        <div v-if="loading">
+          <h1 class="p-2">Carregando...</h1>
+        </div>
+        <div class="itemsP border-top" v-else>
           <div class="itemP border" v-for="(product, i) in products" :key="i">
             <div class="itemImg border border-bottom-0">
               <img :src="`${imageUrl}/${product.image.defaultImage}`" alt />

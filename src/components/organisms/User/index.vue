@@ -1,6 +1,9 @@
 <template>
   <div>
-    <div class="form-div">
+    <div v-if="loading">
+      <h1>Carregando...</h1>
+    </div>
+    <div v-else class="form-div">
       <div class="formReg p-4 border">
         <h1 class="text-center mb-4">Meu Perfil</h1>
         <div class="userImgDiv text-center">
@@ -123,7 +126,7 @@
         <div class="col-12 row m-0">
           <p class="col-4 p-0"><span class="font-weight-bold">Número de produtos vendidos:</span><br /> {{this.userPurchaseData.itemsSold}}</p>
           <p class="col-3 p-0"><span class="font-weight-bold">Total ganho em vendas:</span><br /> R${{this.userPurchaseData.totalPrice}}</p>
-          <p class="col-3 p-0"><span class="font-weight-bold">Total ganho em bônus:</span> R${{this.userPurchaseData.totalBonus}}</p>          
+          <p class="col-3 p-0"><span class="font-weight-bold">Total ganho em bônus:</span><br /> R${{this.userPurchaseData.totalBonus}}</p>          
         </div>
 
         <div class="text-center mt-4 my-profile-btns">
@@ -174,6 +177,7 @@ export default {
     selectedFile: null,
     userAuth: null,
     error: {},
+    loading:false,
   }),
 
   methods: {
@@ -211,6 +215,7 @@ export default {
 
   async created() {
     window.scrollTo(0, 0);
+    this.loading = true;
     this.userAuth = JSON.parse(localStorage.getItem('_speedbids'));
     await this.getUser({ id: this.userAuth.userId });
     await this.getUserPurchaseData({
@@ -218,6 +223,7 @@ export default {
       userId:this.userAuth.userId
     })
     this.imageUrl = process.env.VUE_APP_API_IMAGES;
+    this.loading = false;
   },
 };
 </script>

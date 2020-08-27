@@ -1,20 +1,18 @@
 <template>
   <div>
     <div
-      v-if="!loading"
       class="filter"
     >
       <div>
         <div class="filterDiv">
           <div class="filterDiv1">
-            <h1 class="text-center pt-2">Favoritos</h1>
+            <h1 class="text-center">Favoritos</h1>
           </div>
-          <input
-            type="checkbox"
-            id="checkbox"
-          >
         </div>
-        <div class="itemsP border-top">
+        <div v-if="loading">
+          <h1>Carregando...</h1>
+        </div>
+        <div class="itemsP border-top" v-else>
           <div
             class="itemP border"
             v-for="(product, i) in products"

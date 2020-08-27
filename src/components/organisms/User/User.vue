@@ -1,6 +1,9 @@
 <template>
   <div>
-    <div class="form-div">
+    <div v-if="loading">
+      <h1>Carregando...</h1>
+    </div>
+    <div v-else class="form-div">
       <div class="formReg p-4 border">
         <h1 class="text-center mb-4">{{user.firstname}} {{user.lastname}}</h1>
         <div class="userImgDiv text-center">
@@ -98,7 +101,7 @@
                   <button
                     @click="handleUserProduct(product._id)"
                     class="site-btn btn btn-lg"
-                  >Salvar</button>
+                  >Ver Produto</button>
                 </div>
               </div>
             </div>
@@ -117,6 +120,7 @@ export default {
   data: () => ({
     imageUrl: null,
     userAuth: null,
+    loading: false,
   }),
 
   computed: {
@@ -149,6 +153,7 @@ export default {
 
   async created() {
     window.scrollTo(0, 0);
+        this.loading = true;
     this.userAuth = JSON.parse(localStorage.getItem('_speedbids'));
     await this.getUser({ id: this.$route.params.id });
 
@@ -162,6 +167,7 @@ export default {
       id: this.userAuth.userId,
     });
     this.imageUrl = `${process.env.VUE_APP_API_IMAGES}`;
+    this.loading = false;
   },
 };
 </script>

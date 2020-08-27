@@ -51,7 +51,7 @@
             <router-link
               class="userConfig border-bottom m-0 p-3"
               :to="`/user-config/${this.userAuth.userId}`"
-            >User</router-link>
+            >Usuário</router-link>
           </div>
         </div>
       </div>

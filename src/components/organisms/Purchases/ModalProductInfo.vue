@@ -23,7 +23,7 @@
           <p><span>Data de Publicação:</span> {{ formatDate(items.product.createdAt)}}</p>
           <p><span>Preço:</span> R${{items.price}}</p>
           <p><span>Data Oferecido:</span> {{ formatDate(items.createdAt)}}</p>
-          <p><span>Status:</span> {{items.status}}</p>
+          <p><span>Status:</span> {{items.status === 'Paid' ? 'Pago' : 'Pendente'}}</p>
         </div>
       </div>
     </div>
