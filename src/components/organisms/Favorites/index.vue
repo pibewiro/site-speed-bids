@@ -31,7 +31,7 @@
                 </span>
               </div>
               <p>
-                <span class="font-weight-bold">Produto :</span>
+                <span class="font-weight-bold">Produto:</span>
                 {{product.productName}}
               </p>
               <p>
