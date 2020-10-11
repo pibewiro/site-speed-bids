@@ -9,9 +9,14 @@ import Vue from 'vue';
 import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
+import VueGlide from "vue-glide-js";
+import "vue-glide-js/dist/vue-glide.css";
 
 Vue.use(BootstrapVue);
 Vue.use(BootstrapVueIcons);
+
+Vue.use(VueGlide);
+
 
 export default {
   name: 'App',

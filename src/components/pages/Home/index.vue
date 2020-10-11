@@ -1,124 +1,151 @@
 <template>
-  <div class="home">
-    <Navbar />
-    <div class="img-div">
-      <img
-        src="../../../assets/home.gif"
-        alt=""
-      >
-      <div class="content">
-        <h1 class="text-center mb-4">Speed Buyer</h1>
-        <div class="text-center content-btn-div">
-          <button
-            @click="login"
-            class="site-btn login-btn btn btn-lg mr-2"
-          >Login</button>
-          <button
-            @click="register"
-            class="site-btn login-btn btn btn-lg"
-          >Cadastrar</button>
-        </div>
-      </div>
+  <div>
+    <div v-if="loading">
+      <h1>Carregando...</h1>
     </div>
-    <div class="product-div">
-      <h1 class="text-center pt-3">Produtos Recentes</h1>
-      <div class="div1">
-        <!-- <div class="slider border">
-          <i class="arrow left"></i>
-        </div> -->
-        <div class="items">
-          <div v-for="(product, i) in products" :key="i" class="item">
-            <div class="i-prd-img-div">
-              <img :src="`${imageUrl}/${product.image.defaultImage}`" alt="">
-            </div>
-            <div class="i-prd-info">
-              <p><span>Nome do Produto:</span> {{product.productName}}</p>
-              <p><span>Preço:</span> R${{product.price}}</p>
-            </div>
+
+    <div class="home">
+      <Navbar />
+      <div class="img-div">
+        <img src="../../../assets/home.gif" alt="" />
+        <div class="content">
+          <h1 class="text-center mb-4">Speed Buyer</h1>
+          <div class="text-center content-btn-div">
+            <button @click="login" class="site-btn login-btn btn btn-lg mr-2">
+              Login
+            </button>
+            <button @click="register" class="site-btn login-btn btn btn-lg">
+              Cadastrar
+            </button>
           </div>
         </div>
-        <!-- <div class="slider border">
-          <i class="arrow right"></i>
-        </div> -->
       </div>
-
-      <!-- <div class="alert">
-        <h1 class="text-center">Recieve alerts on new items</h1>
-        <form class="alert-form p-4 border">
-          <div class="form-group">
-            <label for="">Name:</label>
-            <input
-              type="text"
-              class="form-control"
-            >
-          </div>
-
-          <div class="form-group">
-            <label for="">Name:</label>
-            <input
-              type="text"
-              class="form-control"
-            >
-          </div>
-
-          <div class="form-group">
-            <label for="">Name:</label>
-            <input
-              type="text"
-              class="form-control"
-            >
-          </div>
-
-          <div class="">
-            <button class="site-btn btn btn-lg">Login</button>
-          </div>
-        </form>
-      </div> -->
+      <div class="product-div">
+        <h1 class="text-center pt-3">Produtos Recentes</h1>
+        <div v-if="!loading" class="glide">
+          <vue-glide :options="options">
+            <vue-glide-slide v-for="(product, i) in products" :key="i">
+              <div class="i-prd-img-div">
+                <img
+                  :src="`${imageUrl}/${product.image.defaultImage}`"
+                  alt=""
+                />
+              </div>
+              <div class="i-prd-info">
+                <p><span>Nome do Produto:</span> {{ product.productName }}</p>
+                <p><span>Preço:</span> R${{ product.price }}</p>
+              </div>
+            </vue-glide-slide>
+            <template slot="control">
+              <div class="glide-div-left border" data-glide-dir="<">
+                <div class="arrow left"></div>
+              </div>
+              <div class="glide-div-right border" data-glide-dir=">">
+                <div class="arrow right"></div>
+              </div>
+            </template>
+          </vue-glide>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import Navbar from '../../template/Navbar';
-import {mapActions, mapState} from 'vuex'
+import { Glide, GlideSlide } from "vue-glide-js";
+import Navbar from "../../template/Navbar";
+import { mapActions, mapState } from "vuex";
 export default {
-  data:()=>({
-    imageUrl:null
+  data: () => ({
+    loading: false,
+    imageUrl: null,
+    options: {
+      type: "carousel",
+      perView: 4,
+      animationDuration: 1000,
+      autoplay: 5000,
+    },
   }),
 
   components: {
     Navbar,
+    [Glide.name]: Glide,
+    [GlideSlide.name]: GlideSlide,
   },
 
-  computed:{
-    ...mapState('Product', ['products'])
+  computed: {
+    ...mapState("Product", ["products"]),
   },
 
   methods: {
-    ...mapActions('Product', ['getProductsHomePage']),
+    ...mapActions("Product", ["getProductsHomePage"]),
 
     login() {
-      this.$router.push('/login');
+      this.$router.push("/login");
     },
 
     register() {
-      this.$router.push('/register');
+      this.$router.push("/register");
     },
   },
 
-  created() {
-    if (localStorage.getItem('_speedbids')) {
-      this.$router.push('/dashboard');
+  async created() {
+    this.loading = true;
+    if (localStorage.getItem("_speedbids")) {
+      this.$router.push("/dashboard");
     }
 
-    this.imageUrl = process.env.VUE_APP_API_IMAGES
+    this.imageUrl = process.env.VUE_APP_API_IMAGES;
 
-    this.getProductsHomePage();
+    await this.getProductsHomePage();
+    this.loading = false;
   },
 };
 </script>
 
 <style>
+.glide {
+  position: relative;
+  width: 90%;
+  margin: 0 auto;
+}
+
+.glide-div-left,
+.glide-div-right {
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  position: absolute;
+  top: 0;
+  height: 100px;
+  width: 100px;
+  border: 0;
+  font-weight: 100;
+  text-align: center;
+  transform: translateY(50%);
+  margin: 0;
+  padding: 0;
+  transition: all 100ms ease-in-out;
+    color: #e6e6e6;
+    font-size: 40px;
+
+}
+
+.glide-div-left {
+  left: -120px;
+}
+
+.glide-div-right {
+  right: -120px;
+}
+
+.glide-div-left:hover,
+.glide-div-right:hover {
+  cursor: pointer;
+  height: 115px;
+  width: 115px;
+}
+
 .img-div {
   width: 100%;
   height: calc(58vh - 74px);
@@ -132,7 +159,7 @@ export default {
 }
 
 .img-div:after {
-  content: '';
+  content: "";
   background: rgba(0, 0, 0, 0.8);
   width: 100%;
   height: 100%;
@@ -196,8 +223,8 @@ export default {
 }
 
 .arrow {
-  border: solid var(--primaryColor);
-  border-width: 0 1px 1px 0px;
+  border: solid #e6e6e6;
+  border-width: 0 3px 3px 0px;
   display: inline-block;
   padding: 1px;
   width: 40px;
@@ -229,44 +256,44 @@ h1 {
   font-size: 60px;
 }
 
-.login-btn{
+.login-btn {
   padding: 20px 100px;
   font-size: 30px;
 }
 
-.i-prd-img-div{
-    height: 200px;
+.i-prd-img-div {
+  height: 200px;
   width: 100%;
   background: gray;
 }
 
-.i-prd-img-div img{
+.i-prd-img-div img {
   width: 100%;
   height: 100%;
 }
 
-.i-prd-info{
-  padding:10px;
+.i-prd-info {
+  padding: 10px;
 }
-.i-prd-info span{
+.i-prd-info span {
   font-weight: bold;
 }
 
 @media (max-width: 1000px) {
-.content-btn-div{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.content-btn-div button{
-  padding:10px 35px;
-  font-size: 20px;
-}
-.content h1 {
-  padding-top:100px;
-  font-weight: 500;
-  font-size: 40px;
-}
+  .content-btn-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .content-btn-div button {
+    padding: 10px 35px;
+    font-size: 20px;
+  }
+  .content h1 {
+    padding-top: 100px;
+    font-weight: 500;
+    font-size: 40px;
+  }
   .items {
     display: block;
   }
