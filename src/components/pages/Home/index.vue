@@ -23,7 +23,7 @@
       <div class="product-div">
         <h1 class="text-center pt-3">Produtos Recentes</h1>
         <div v-if="!loading" class="glide">
-          <vue-glide :options="options">
+          <vue-glide :options="options" v-model="active">
             <vue-glide-slide v-for="(product, i) in products" :key="i">
               <div class="i-prd-img-div">
                 <img
@@ -45,6 +45,11 @@
               </div>
             </template>
           </vue-glide>
+          <div class="glide-dots-container">
+                      <div class="glide-dots">
+            <div @click="handleSlide(i-1)" v-for="i in products.length" :key="i" :class="active === i-1 ? 'glide-dots-inactive' : 'glide-dots-active'"></div>
+          </div>
+          </div>
         </div>
       </div>
     </div>
@@ -57,6 +62,7 @@ import Navbar from "../../template/Navbar";
 import { mapActions, mapState } from "vuex";
 export default {
   data: () => ({
+    active:16,
     loading: false,
     imageUrl: null,
     options: {
@@ -79,7 +85,9 @@ export default {
 
   methods: {
     ...mapActions("Product", ["getProductsHomePage"]),
-
+    handleSlide(slide){
+      this.active = slide
+    },
     login() {
       this.$router.push("/login");
     },
@@ -104,6 +112,34 @@ export default {
 </script>
 
 <style>
+.glide-dots-container{
+  padding: 10px 0;
+}
+.glide-dots{
+  display: flex;
+  justify-items: center;
+  align-items: center;
+  width: 450px;
+  margin:0 auto;
+}
+
+.glide-dots-inactive, .glide-dots-active{
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  margin: 0 5px;
+}
+
+.glide-dots-inactive{
+    border:1px solid var(--primaryColor);
+}
+
+.glide-dots-active{
+    background-color: var(--primaryColor);
+}
+
+
+
 .glide {
   position: relative;
   width: 90%;
