@@ -47,7 +47,7 @@
           </vue-glide>
           <div class="glide-dots-container">
                       <div class="glide-dots">
-            <div @click="handleSlide(i-1)" v-for="i in products.length" :key="i" :class="active === i-1 ? 'glide-dots-inactive' : 'glide-dots-active'"></div>
+            <div @click="handleSlide(i-1)" v-for="i in products.length" :key="i" :class="active === i-1 ? 'glide-dots-active' : 'glide-dots-inactive'"></div>
           </div>
           </div>
         </div>
@@ -132,6 +132,14 @@ export default {
 
 .glide-dots-inactive{
     border:1px solid var(--primaryColor);
+}
+
+.glide-dots-inactive:hover, .glide-dots-active:hover{
+  cursor: pointer;
+}
+
+.glide-dots-inactive:hover{
+  background: #e6e6e6;
 }
 
 .glide-dots-active{
