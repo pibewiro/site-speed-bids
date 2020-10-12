@@ -24,9 +24,12 @@
         <h1 class="text-center pt-3">Produtos Recentes</h1>
         <div v-if="!loading" class="glide">
           <vue-glide :options="options" v-model="active">
-            <vue-glide-slide v-for="(product, i) in products" :key="i">
+            <vue-glide-slide v-for="(product, i) in products" :key="i" class="item">
               <div class="i-prd-img-div">
                 <img
+                  @click="
+                    handleImage(`${imageUrl}/${product.image.defaultImage}`)
+                  "
                   :src="`${imageUrl}/${product.image.defaultImage}`"
                   alt=""
                 />
@@ -46,9 +49,16 @@
             </template>
           </vue-glide>
           <div class="glide-dots-container">
-                      <div class="glide-dots">
-            <div @click="handleSlide(i-1)" v-for="i in products.length" :key="i" :class="active === i-1 ? 'glide-dots-active' : 'glide-dots-inactive'"></div>
-          </div>
+            <div class="glide-dots">
+              <div
+                @click="handleSlide(i - 1)"
+                v-for="i in products.length"
+                :key="i"
+                :class="
+                  active === i - 1 ? 'glide-dots-active' : 'glide-dots-inactive'
+                "
+              ></div>
+            </div>
           </div>
         </div>
       </div>
@@ -62,7 +72,7 @@ import Navbar from "../../template/Navbar";
 import { mapActions, mapState } from "vuex";
 export default {
   data: () => ({
-    active:16,
+    active: 0,
     loading: false,
     imageUrl: null,
     options: {
@@ -85,8 +95,22 @@ export default {
 
   methods: {
     ...mapActions("Product", ["getProductsHomePage"]),
-    handleSlide(slide){
-      this.active = slide
+    handleImage(image) {
+      const home = document.querySelector(".home");
+      const overlay = document.createElement("div");
+      const img = document.createElement("img");
+      img.src = image;
+      overlay.appendChild(img);
+      home.appendChild(overlay);
+      overlay.classList.add("home-image-overlay");
+        overlay.addEventListener("click", function (e) {
+          if (e.target !== img) {
+            home.removeChild(overlay);
+          }
+        });
+    },
+    handleSlide(slide) {
+      this.active = slide;
     },
     login() {
       this.$router.push("/login");
@@ -112,41 +136,60 @@ export default {
 </script>
 
 <style>
-.glide-dots-container{
-  padding: 10px 0;
+.home {
+  position: relative;
 }
-.glide-dots{
+.home-image-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.8);
+  height: 100vh;
+  width: 100%;
+  z-index: 9999;
+  display: grid;
+  place-items: center;
+}
+
+.home-image-overlay img {
+  width: 500px;
+  height: 500px;
+}
+.glide-dots-container {
+  display: absolute;
+}
+.glide-dots {
   display: flex;
   justify-items: center;
   align-items: center;
   width: 450px;
-  margin:0 auto;
+  margin: 0 auto;
 }
 
-.glide-dots-inactive, .glide-dots-active{
+.glide-dots-inactive,
+.glide-dots-active {
   width: 20px;
   height: 20px;
   border-radius: 50%;
   margin: 0 5px;
 }
 
-.glide-dots-inactive{
-    border:1px solid var(--primaryColor);
+.glide-dots-inactive {
+  border: 1px solid var(--primaryColor);
 }
 
-.glide-dots-inactive:hover, .glide-dots-active:hover{
+.glide-dots-inactive:hover,
+.glide-dots-active:hover {
   cursor: pointer;
 }
 
-.glide-dots-inactive:hover{
+.glide-dots-inactive:hover {
   background: #e6e6e6;
 }
 
-.glide-dots-active{
-    background-color: var(--primaryColor);
+.glide-dots-active {
+  background-color: var(--primaryColor);
 }
-
-
 
 .glide {
   position: relative;
@@ -170,9 +213,8 @@ export default {
   margin: 0;
   padding: 0;
   transition: all 100ms ease-in-out;
-    color: #e6e6e6;
-    font-size: 40px;
-
+  color: #e6e6e6;
+  font-size: 40px;
 }
 
 .glide-div-left {
@@ -238,7 +280,6 @@ export default {
 .item {
   width: 23%;
   height: 300px;
-  /* margin-left: 20px; */
   border: 1px solid #e6e6e6;
   box-shadow: 5px 5px 10px#ebebeb;
 }
@@ -309,6 +350,10 @@ h1 {
   height: 200px;
   width: 100%;
   background: gray;
+}
+
+.i-prd-img-div:hover {
+  cursor: pointer;
 }
 
 .i-prd-img-div img {
