@@ -24,12 +24,18 @@
         <h1 class="text-center pt-3">Produtos Recentes</h1>
         <div v-if="!loading" class="glide">
           <vue-glide :options="options" v-model="active">
-            <vue-glide-slide v-for="(product, i) in products" :key="i" class="item">
-              <div class="i-prd-img-div">
+            <vue-glide-slide
+              v-for="(product, i) in products"
+              :key="i"
+              class="item"
+            >
+              <div
+                class="i-prd-img-div"
+                @click="
+                  handleImage(`${imageUrl}/${product.image.defaultImage}`)
+                "
+              >
                 <img
-                  @click="
-                    handleImage(`${imageUrl}/${product.image.defaultImage}`)
-                  "
                   :src="`${imageUrl}/${product.image.defaultImage}`"
                   alt=""
                 />
@@ -103,11 +109,11 @@ export default {
       overlay.appendChild(img);
       home.appendChild(overlay);
       overlay.classList.add("home-image-overlay");
-        overlay.addEventListener("click", function (e) {
-          if (e.target !== img) {
-            home.removeChild(overlay);
-          }
-        });
+      overlay.addEventListener("click", function (e) {
+        if (e.target !== img) {
+          home.removeChild(overlay);
+        }
+      });
     },
     handleSlide(slide) {
       this.active = slide;

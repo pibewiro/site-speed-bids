@@ -1,7 +1,7 @@
-const express = require('express');
-const path = require('path');
+const express = require("express");
+const path = require("path");
 // const serverStatic = require("serve-static");
-const history = require('connect-history-api-fallback');
+const history = require("connect-history-api-fallback");
 
 const app = express();
 app.use(history());
@@ -9,4 +9,4 @@ app.use(history());
 app.use("/", express.static(path.join(__dirname, "dist")));
 
 let port = process.env.PORT || 3000;
-app.listen(port, () => console.log('Listening to Port:', port))
+app.listen(port, () => console.log("Listening to Port:", port));
